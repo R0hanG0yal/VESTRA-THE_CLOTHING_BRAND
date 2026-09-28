@@ -301,7 +301,7 @@ with open(os.path.join(layout_dir, 'activity_main.xml'), 'w', encoding='utf-8') 
 with open(os.path.join(values_dir, 'strings.xml'), 'w', encoding='utf-8') as f:
     f.write('''<resources>
     <string name="app_name">VESTRA Atelier</string>
-    <string name="upi_payee_vpa">9729309927@ptyes</string>
+    <string name="upi_payee_vpa">vestra-atelier@ilb</string>
     <string name="upi_payee_name">VESTRA Atelier</string>
 </resources>
 ''')
@@ -348,7 +348,7 @@ if os.path.exists(qr_src):
     shutil.copy2(qr_src, os.path.join(drawable_dir, 'upi_qr.png'))
     shutil.copy2(qr_src, os.path.join(assets_dir, 'upi-qr.png'))
     with open(os.path.join(assets_dir, 'payment_config.json'), 'w', encoding='utf-8') as pf:
-        pf.write('{\n  "upi_vpa": "9729309927@ptyes",\n  "payee_name": "VESTRA Atelier",\n  "qr_asset": "assets/upi-qr.png"\n}\n')
+        pf.write('{\n  "upi_vpa": "vestra-atelier@ilb",\n  "payee_name": "VESTRA Atelier",\n  "qr_asset": "assets/upi-qr.png"\n}\n')
 
 # Launcher icons in different mipmap densities
 icon_img = Image.open('public/icons/icon-512.png')
@@ -396,7 +396,7 @@ with zipfile.ZipFile(apk_path, 'w', compression=zipfile.ZIP_DEFLATED) as apk:
             qr_bytes = qrf.read()
             apk.writestr('res/drawable/upi_qr.png', qr_bytes)
             apk.writestr('assets/upi-qr.png', qr_bytes)
-        apk.writestr('assets/payment_config.json', '{\n  "upi_vpa": "9729309927@ptyes",\n  "payee_name": "VESTRA Atelier",\n  "qr_asset": "assets/upi-qr.png"\n}\n')
+        apk.writestr('assets/payment_config.json', '{\n  "upi_vpa": "vestra-atelier@ilb",\n  "payee_name": "VESTRA Atelier",\n  "qr_asset": "assets/upi-qr.png"\n}\n')
             
     # META-INF Signature
     apk.writestr('META-INF/MANIFEST.MF', 'Manifest-Version: 1.0\nCreated-By: 17.0.9 (VESTRA Atelier Android Builder)\n\n')

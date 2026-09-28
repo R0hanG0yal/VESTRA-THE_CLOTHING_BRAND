@@ -16,7 +16,7 @@ export const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
 
 /** Server-only secrets. Never expose to client bundles. */
 export const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
-export const UPI_PAYEE_VPA = process.env.UPI_PAYEE_VPA ?? "9729309927@ptyes";
+export const UPI_PAYEE_VPA = process.env.UPI_PAYEE_VPA ?? "vestra-atelier@ilb";
 export const UPI_PAYEE_NAME = process.env.UPI_PAYEE_NAME ?? "VESTRA Atelier";
 
 /** Placeholder so local demo mode works without configuration. */

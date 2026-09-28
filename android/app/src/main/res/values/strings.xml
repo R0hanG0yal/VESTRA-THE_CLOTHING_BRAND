@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">VESTRA Atelier</string>
-    <string name="upi_payee_vpa">9729309927@ptyes</string>
+    <string name="upi_payee_vpa">vestra-atelier@ilb</string>
     <string name="upi_payee_name">VESTRA Atelier</string>
 </resources>

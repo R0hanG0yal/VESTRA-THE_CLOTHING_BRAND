@@ -22,7 +22,7 @@ export const BRAND_AGENCY = "DAGEROZ digital agency";
 export const BRAND_LOCATION = "Jaipur, Rajasthan, India";
 export const SUPPORT_EMAIL = "dageroz@gmail.com";
 export const GRIEVANCE_EMAIL = "dageroz@gmail.com";
-export const PUBLIC_UPI_VPA = "9729309927@ptyes";
+export const PUBLIC_UPI_VPA = "vestra-atelier@ilb";
 export const PUBLIC_UPI_PAYEE_NAME = "VESTRA Atelier";
 
 export const CORPORATE_DETAILS = {

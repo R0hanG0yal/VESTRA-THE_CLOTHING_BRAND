@@ -14,6 +14,7 @@ import { MEMBERSHIP_PRICE, memberPriceFor } from "@/lib/member-pricing";
 import { BANK_OFFERS, COUPONS } from "@/lib/data/catalog";
 import { computeTotals } from "@/lib/pricing";
 import { cn, formatINR } from "@/lib/utils";
+import { PUBLIC_UPI_VPA } from "@/lib/env-public";
 import type { Address } from "@/lib/types";
 
 function generateFallbackTxnRef(): string {
@@ -814,12 +815,12 @@ export function CheckoutClient() {
                 <div className="mt-3 flex flex-col items-center gap-1.5">
                   <div className="flex items-center gap-2 bg-foreground/5 border border-foreground/15 px-3 py-1.5 rounded-full">
                     <span className="font-mono text-xs text-foreground font-semibold">
-                      9729309927@ptyes
+                      {PUBLIC_UPI_VPA}
                     </span>
                     <button
                       type="button"
                       onClick={() => {
-                        navigator.clipboard?.writeText("9729309927@ptyes");
+                        navigator.clipboard?.writeText(PUBLIC_UPI_VPA);
                         setCopiedUpi(true);
                         setTimeout(() => setCopiedUpi(false), 2200);
                       }}
