@@ -1,5 +1,6 @@
 import os
 import zipfile
+# pyrefly: ignore [missing-import]
 from PIL import Image
 
 base_dir = 'android'
