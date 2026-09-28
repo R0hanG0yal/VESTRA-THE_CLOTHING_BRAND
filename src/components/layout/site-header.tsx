@@ -180,12 +180,12 @@ export function SiteHeader() {
             className="group flex items-center text-left"
             aria-label={`${BRAND_NAME} Home`}
           >
-            <span
-              className="font-serif italic text-base sm:text-2xl uppercase tracking-[0.14em] text-foreground font-semibold transition-opacity group-hover:opacity-75 text-left"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              {BRAND_NAME}
-            </span>
+            {/* The mix-blend modes and invert automatically remove the white background in both light and dark modes! */}
+            <img
+              src="/logo.jpg"
+              alt="VESTRA Atelier"
+              className="h-7 sm:h-9 w-auto object-contain transition-opacity group-hover:opacity-75 mix-blend-multiply dark:invert dark:mix-blend-screen"
+            />
           </Link>
         </div>
 
