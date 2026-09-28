@@ -3,7 +3,7 @@ import { referralSchema } from "@/lib/security/validation";
 
 export const dynamic = "force-dynamic";
 
-export const REFERRAL_REWARD = 250;
+const REFERRAL_REWARD = 250;
 
 export async function POST(request: Request) {
   const limited = enforceRateLimit(request, "referral", 20, 60_000);
