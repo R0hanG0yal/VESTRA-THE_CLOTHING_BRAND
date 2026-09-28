@@ -118,8 +118,7 @@ export function ProductDetail({ product }: { product: Product }) {
             aria-label="Save to archive"
             className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full border border-foreground/20 bg-background/90 backdrop-blur-md px-3 py-1.5 text-left font-mono text-xs uppercase tracking-wider text-foreground transition hover:bg-background shadow-xs"
           >
-            <IconImage type={saved ? "wishlist-active" : "wishlist"} size={14} className="border-none" />
-            <span>{saved ? "ARCHIVED" : "SAVE"}</span>
+            <span>{saved ? "★ ARCHIVED" : "☆ SAVE"}</span>
           </button>
 
           {/* 3D Try-On Action - Left-aligned with Photo Indicator */}
@@ -129,7 +128,6 @@ export function ProductDetail({ product }: { product: Product }) {
                 href={`/try-on?product=${product.id}`}
                 className="flex items-center gap-2 rounded-xl border border-foreground bg-foreground/95 backdrop-blur-md px-3.5 py-2 font-mono text-xs uppercase tracking-wider text-background transition hover:opacity-90 text-left shadow-lg"
               >
-                <IconImage type="tryon" size={14} className="border-none invert dark:invert-0" />
                 <span className="text-left font-bold">3D VIRTUAL FITTING</span>
               </Link>
             </div>
@@ -204,7 +202,6 @@ export function ProductDetail({ product }: { product: Product }) {
         {/* Member Privilege Valuation - Flat Hairline Box */}
         <div className="mt-5 border border-foreground/20 bg-surface p-4 text-left">
           <div className="flex items-center gap-2 text-left">
-            <IconImage type="crown" size={16} />
             <span className="font-mono text-xs uppercase tracking-wider font-semibold text-foreground text-left">
               ATELIER PRIVILEGE VALUATION: {formatINR(memberPrice)}
             </span>
@@ -217,7 +214,6 @@ export function ProductDetail({ product }: { product: Product }) {
         {/* Concession Offers Strip */}
         <div className="mt-5 border border-foreground/15 p-4 text-left">
           <div className="flex items-center gap-2 text-left mb-2">
-            <IconImage type="gift" size={14} />
             <span className="font-mono text-[10px] uppercase tracking-widest font-semibold text-foreground text-left">
               APPLICABLE ATELIER CONCESSIONS
             </span>
@@ -321,29 +317,26 @@ export function ProductDetail({ product }: { product: Product }) {
           </p>
         )}
 
-        {/* Primary Actions with Photographic Thumbnails */}
+        {/* Primary Actions with Pure Clean Typography */}
         <div className="mt-8 flex gap-3 text-left">
           <button
             onClick={addToBag}
-            className="flex flex-1 items-center justify-between border border-foreground bg-transparent px-4 py-3.5 font-mono text-xs uppercase tracking-widest text-foreground transition hover:bg-foreground hover:text-background text-left"
+            className="flex flex-1 items-center justify-center border border-foreground bg-transparent px-4 py-3.5 font-mono text-xs uppercase tracking-widest text-foreground transition hover:bg-foreground hover:text-background text-center font-bold"
           >
-            <span className="text-left font-bold">ADD TO PRIVATE BAG</span>
-            <IconImage type="bag" size={14} className="border-none" />
+            ADD TO PRIVATE BAG
           </button>
           <button
             onClick={buyNow}
-            className="flex flex-1 items-center justify-between border border-foreground bg-foreground px-4 py-3.5 font-mono text-xs uppercase tracking-widest text-background transition hover:opacity-90 text-left"
+            className="flex flex-1 items-center justify-center border border-foreground bg-foreground px-4 py-3.5 font-mono text-xs uppercase tracking-widest text-background transition hover:opacity-90 text-center font-bold"
           >
-            <span className="text-left font-bold">DIRECT CHECKOUT</span>
-            <IconImage type="arrow" size={14} className="border-none invert dark:invert-0" />
+            DIRECT CHECKOUT
           </button>
         </div>
 
         {/* Provenance & Delivery Guarantees - Left-aligned */}
         <div className="mt-8 grid grid-cols-3 gap-4 border-t border-foreground/15 pt-5 text-left">
           <div className="text-left">
-            <IconImage type="delivery" size={16} />
-            <p className="mt-1 font-mono text-[10px] uppercase font-semibold text-foreground text-left">
+            <p className="font-mono text-[10px] uppercase font-semibold text-foreground text-left">
               DISPATCH
             </p>
             <p className="font-serif text-xs italic text-foreground/55 text-left">
@@ -351,8 +344,7 @@ export function ProductDetail({ product }: { product: Product }) {
             </p>
           </div>
           <div className="text-left">
-            <IconImage type="return" size={16} />
-            <p className="mt-1 font-mono text-[10px] uppercase font-semibold text-foreground text-left">
+            <p className="font-mono text-[10px] uppercase font-semibold text-foreground text-left">
               EXCHANGE
             </p>
             <p className="font-serif text-xs italic text-foreground/55 text-left">
@@ -360,8 +352,7 @@ export function ProductDetail({ product }: { product: Product }) {
             </p>
           </div>
           <div className="text-left">
-            <IconImage type="shield" size={16} />
-            <p className="mt-1 font-mono text-[10px] uppercase font-semibold text-foreground text-left">
+            <p className="font-mono text-[10px] uppercase font-semibold text-foreground text-left">
               PAYMENTS
             </p>
             <p className="font-serif text-xs italic text-foreground/55 text-left">

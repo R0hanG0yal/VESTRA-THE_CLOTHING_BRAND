@@ -128,9 +128,6 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
       {!hideHeader && (
         <div className="flex items-center justify-between border-b border-white/25 dark:border-white/15 pb-3.5 mb-1 text-left">
           <div className="flex items-center gap-2 text-left">
-            <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-foreground/10 border border-foreground/20">
-              <IconImage type="filter" size={14} className="opacity-90 grayscale" />
-            </div>
             <div>
               <h3 className="font-mono text-sm uppercase tracking-[0.2em] font-black text-zinc-950 dark:text-white text-left">
                 Specification Filter
@@ -155,9 +152,9 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
                 type="button"
                 onClick={onClose}
                 aria-label="Close filter panel"
-                className="rounded-full p-2 hover:bg-white/20 text-zinc-950 dark:text-white transition-colors cursor-pointer"
+                className="rounded-full px-2.5 py-1 hover:bg-white/20 text-zinc-950 dark:text-white font-mono text-xs font-bold transition-colors cursor-pointer"
               >
-                <IconImage type="close" size={16} className="opacity-90" />
+                ✕ Close
               </button>
             )}
           </div>

@@ -782,10 +782,10 @@ export function ShopWorkspace({
           <Link
             href="/cart"
             aria-label={`Shopping bag with ${cartCount} items`}
-            className="flex items-center gap-1 rounded-full px-2.5 sm:px-3 py-1.5 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 text-xs font-black transition-all shadow-sm shrink-0"
+            className="flex items-center gap-1.5 rounded-full px-3 py-1.5 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 text-xs font-black transition-all shadow-sm shrink-0"
           >
-            <IconImage type="order" size={13} className="border-none invert dark:invert-0" />
-            <span className="font-mono text-xs">({cartCount})</span>
+            <span className="font-mono text-xs uppercase tracking-wider">Bag</span>
+            <span className="font-mono text-xs font-black">({cartCount})</span>
           </Link>
         </div>
       </div>

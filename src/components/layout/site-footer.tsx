@@ -46,7 +46,6 @@ export function SiteFooter() {
               className="rounded-xl p-2.5 sm:p-3.5 bg-white/[0.03] dark:bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all text-left flex flex-col justify-between"
             >
               <div>
-                <IconImage type={t.iconType} size={15} className="grayscale opacity-75 mb-1.5" />
                 <p className="label-ui text-[9px] sm:text-[10px] font-bold tracking-wider text-foreground text-left uppercase">
                   {t.title}
                 </p>

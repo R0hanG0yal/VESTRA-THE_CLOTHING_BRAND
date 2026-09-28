@@ -113,10 +113,9 @@ export function LookCard({ look, className }: { look: Look; className?: string }
         </div>
         <button
           onClick={addAll}
-          className="flex items-center gap-1.5 border border-foreground bg-foreground px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-background transition hover:opacity-90 shrink-0 text-left"
+          className="flex items-center justify-center border border-foreground bg-foreground px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-background transition hover:opacity-90 shrink-0 text-center font-bold"
         >
-          <IconImage type="bag" size={12} className="border-none invert dark:invert-0" />
-          <span className="text-left">ACQUIRE ALL</span>
+          <span>ACQUIRE ALL</span>
         </button>
       </div>
     </article>

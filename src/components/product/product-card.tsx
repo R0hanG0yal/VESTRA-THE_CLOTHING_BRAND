@@ -95,14 +95,14 @@ export function ProductCard({
                 <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
-                <span className="hidden min-[380px]:inline">Added</span>
+                <span>Added</span>
               </>
             ) : (
               <>
                 <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
-                <span className="hidden min-[380px]:inline">Bag</span>
+                <span>Bag</span>
               </>
             )}
           </button>

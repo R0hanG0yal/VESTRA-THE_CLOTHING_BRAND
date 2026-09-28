@@ -230,7 +230,6 @@ export function SiteHeader() {
             aria-label={`Shopping bag with ${count} items`}
             className="hidden sm:flex items-center gap-1.5 sm:gap-2 rounded-full px-3 sm:px-4 py-2 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-zinc-950 dark:text-white font-black transition-all duration-300 text-left shadow-xs"
           >
-            <IconImage type="order" size={15} className="border-none grayscale opacity-95" />
             <span className="font-mono text-xs sm:text-[13px] tracking-[0.15em] text-left uppercase">
               Bag
             </span>
@@ -249,8 +248,8 @@ export function SiteHeader() {
           aria-label={`Shopping bag with ${count} items`}
           className="fixed bottom-5 right-4 z-40 sm:hidden pointer-events-auto flex items-center gap-1.5 rounded-full px-4 py-2.5 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-[0_12px_36px_rgba(0,0,0,0.4)] border border-white/30 active:scale-95 transition-all font-mono text-xs font-black"
         >
-          <IconImage type="order" size={15} className="border-none invert dark:invert-0" />
-          <span>Bag ({count})</span>
+          <span className="font-mono text-xs uppercase tracking-wider">Bag</span>
+          <span className="font-mono text-xs font-black">({count})</span>
         </Link>
       )}
 
@@ -290,9 +289,6 @@ export function SiteHeader() {
                         className="group flex items-center gap-2 text-[13px] text-foreground font-semibold hover:text-accent hover:translate-x-1 transition-all text-left"
                         style={{ fontFamily: "var(--font-sans)" }}
                       >
-                        {"icon" in item && item.icon && (
-                          <IconImage type={item.icon} size={12} className="grayscale opacity-80 group-hover:opacity-100" />
-                        )}
                         <span className="group-hover:underline underline-offset-4">{item.label}</span>
                       </Link>
                     </li>
@@ -331,7 +327,6 @@ export function SiteHeader() {
               onClick={() => setMenuOpen(false)}
               className="flex items-center gap-2 rounded-full px-4 py-2 bg-white/30 hover:bg-white/45 dark:bg-white/15 dark:hover:bg-white/25 border border-white/35 dark:border-white/25 text-xs text-foreground font-bold label-ui tracking-wider transition-all text-left"
             >
-              <IconImage type="user" size={12} className="grayscale opacity-90" />
               <span>{user ? "Client Suite" : "Client Sign In"}</span>
             </Link>
           </div>
