@@ -72,6 +72,7 @@ export function CheckoutClient() {
   const [showOrderSummary, setShowOrderSummary] = useState(false);
   const [countdown, setCountdown] = useState(600); // 10 minutes
   const [utrRef, setUtrRef] = useState("");
+  const [copiedUpi, setCopiedUpi] = useState(false);
 
   const isMobile =
     typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -797,23 +798,42 @@ export function CheckoutClient() {
                 "Transaction verification could not be completed. Please check or enter your UPI Ref ID below."}
             </p>
 
-            {/* Live QR Code (if on desktop or QR requested) */}
-            {!isMobile && intent.qr && pollingStatus === "awaiting" && (
+            {/* Live QR Code (shown on both mobile and desktop so users can scan, screenshot, or copy UPI ID) */}
+            {intent.qr && pollingStatus === "awaiting" && (
               <div className="mt-5 flex flex-col items-center">
                 <div className="rounded-2xl p-3 bg-white border border-foreground/15 shadow-sm inline-block">
                   <Image
-                    src={intent.qr}
+                    src={intent.qr || "/payments/upi-qr.png"}
                     alt="UPI Payment QR Code"
                     width={180}
                     height={180}
                     unoptimized
-                    className="rounded-lg"
+                    className="rounded-lg object-contain"
                   />
                 </div>
-                <div className="mt-3 flex items-center gap-2 font-mono text-[11px] text-foreground font-bold">
-                  <span>Payee VPA: vestra@upi</span>
-                  <span>·</span>
-                  <span className="font-bold">{formatTime(countdown)}</span>
+                <div className="mt-3 flex flex-col items-center gap-1.5">
+                  <div className="flex items-center gap-2 bg-foreground/5 border border-foreground/15 px-3 py-1.5 rounded-full">
+                    <span className="font-mono text-xs text-foreground font-semibold">
+                      9729309927@ptyes
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard?.writeText("9729309927@ptyes");
+                        setCopiedUpi(true);
+                        setTimeout(() => setCopiedUpi(false), 2200);
+                      }}
+                      className="font-mono text-[10px] uppercase font-bold text-accent px-2 py-0.5 rounded bg-foreground/10 hover:bg-foreground/20 transition-colors cursor-pointer"
+                      title="Copy UPI ID"
+                    >
+                      {copiedUpi ? "Copied!" : "Copy"}
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-2 font-mono text-[11px] text-foreground font-bold">
+                    <span>Payee: VESTRA Atelier</span>
+                    <span>·</span>
+                    <span className="font-bold">{formatTime(countdown)}</span>
+                  </div>
                 </div>
               </div>
             )}
@@ -840,9 +860,9 @@ export function CheckoutClient() {
                   {isMobile && intent.upiLink && (
                     <a
                       href={intent.upiLink}
-                      className="rounded-full border border-foreground/30 py-3 px-5 font-mono text-xs font-bold text-foreground uppercase tracking-wider hover:bg-foreground/5 transition-all"
+                      className="rounded-full bg-foreground text-background py-3.5 px-6 font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-md text-center"
                     >
-                      Re-open UPI App
+                      Pay via UPI App (GPay / PhonePe / Paytm)
                     </a>
                   )}
 
@@ -850,7 +870,7 @@ export function CheckoutClient() {
                     type="button"
                     onClick={handleVerifyPayment}
                     disabled={verifying}
-                    className="rounded-full bg-foreground py-3.5 px-6 font-mono text-xs font-bold text-background uppercase tracking-wider hover:opacity-90 transition-all shadow-md cursor-pointer"
+                    className="rounded-full border border-foreground/30 py-3.5 px-6 font-mono text-xs font-bold text-foreground uppercase tracking-wider hover:bg-foreground/5 transition-all shadow-sm cursor-pointer disabled:opacity-50"
                   >
                     {verifying ? "Verifying Transaction..." : "I Have Completed UPI Payment"}
                   </button>
