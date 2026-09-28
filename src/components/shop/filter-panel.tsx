@@ -33,32 +33,32 @@ function Section({
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <div className="border-b border-foreground/15 dark:border-white/15 py-3.5 text-left transition-colors">
+    <div className="border-b border-white/25 dark:border-white/15 py-2.5 text-left transition-colors">
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between text-left py-1 group cursor-pointer"
+        className="w-full flex items-center justify-between text-left py-2 px-2 rounded-xl group cursor-pointer hover:bg-white/20 dark:hover:bg-white/10 transition-colors"
         aria-expanded={open}
       >
         <div className="flex items-center gap-2">
-          <span className="text-xs sm:text-[13px] tracking-[0.18em] font-bold text-foreground uppercase transition-colors">
+          <span className="font-mono text-xs sm:text-[13px] tracking-wider font-black text-zinc-950 dark:text-white uppercase">
             {title}
           </span>
           {count > 0 && (
-            <span className="rounded-full bg-accent px-1.5 py-0.2 font-mono text-[11px] font-bold text-white">
+            <span className="rounded-full bg-accent px-2 py-0.2 font-mono text-[10px] font-bold text-white shadow-xs">
               {count}
             </span>
           )}
         </div>
         <div className="flex items-center gap-2">
           {hint && (
-            <span className="font-mono text-[11px] uppercase tracking-wider text-foreground/70 hidden sm:inline font-medium">
+            <span className="font-mono text-[11px] uppercase tracking-wider text-zinc-800 dark:text-zinc-200 font-bold hidden sm:inline">
               {hint}
             </span>
           )}
           <span
             className={cn(
-              "font-mono text-xs text-foreground font-bold transition-transform duration-300 transform",
+              "font-mono text-xs font-black text-zinc-950 dark:text-white transition-transform duration-300 transform",
               open ? "rotate-180" : "rotate-0"
             )}
             aria-hidden="true"
@@ -68,7 +68,7 @@ function Section({
         </div>
       </button>
 
-      {open && <div className="mt-2.5 pt-1 animate-fade-in text-left">{children}</div>}
+      {open && <div className="mt-2 pt-1 animate-fade-in text-left px-1">{children}</div>}
     </div>
   );
 }
@@ -88,10 +88,10 @@ function Chip({
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "rounded-2xl px-3 py-1.5 font-mono text-[11px] sm:text-[12px] uppercase tracking-wider transition-all duration-200 text-left border cursor-pointer select-none",
+        "rounded-2xl px-3.5 py-1.5 font-mono text-xs uppercase tracking-wider transition-all duration-200 text-left border cursor-pointer select-none",
         active
-          ? "border-foreground bg-foreground text-background font-bold shadow-md scale-[1.02]"
-          : "border-foreground/20 dark:border-white/20 bg-foreground/5 dark:bg-white/10 hover:bg-foreground/10 dark:hover:bg-white/20 text-foreground font-semibold shadow-xs"
+          ? "border-zinc-950 bg-zinc-950 text-white dark:border-white dark:bg-white dark:text-zinc-950 font-black shadow-md scale-[1.02]"
+          : "border-white/40 dark:border-white/20 bg-white/50 dark:bg-white/[0.12] hover:bg-white/80 dark:hover:bg-white/[0.22] text-zinc-950 dark:text-white font-extrabold shadow-xs"
       )}
     >
       {children}
@@ -132,10 +132,10 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
               <IconImage type="filter" size={14} className="opacity-90 grayscale" />
             </div>
             <div>
-              <h3 className="label-ui text-sm uppercase tracking-[0.2em] font-bold text-foreground text-left">
+              <h3 className="font-mono text-sm uppercase tracking-[0.2em] font-black text-zinc-950 dark:text-white text-left">
                 Specification Filter
               </h3>
-              <span className="font-mono text-[11px] uppercase tracking-widest text-foreground/50 block">
+              <span className="font-mono text-[11px] uppercase tracking-widest text-zinc-800 dark:text-zinc-200 font-bold block">
                 {active > 0 ? `${active} active criteria` : "Full Archive"}
               </span>
             </div>
@@ -145,7 +145,7 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
               <button
                 type="button"
                 onClick={reset}
-                className="rounded-full border border-white/30 bg-white/30 dark:bg-white/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-foreground font-bold hover:bg-foreground hover:text-background transition-all text-left cursor-pointer"
+                className="rounded-full border border-white/40 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider font-black hover:opacity-90 transition-all text-left cursor-pointer shadow-xs"
               >
                 Reset ({active})
               </button>
@@ -155,7 +155,7 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
                 type="button"
                 onClick={onClose}
                 aria-label="Close filter panel"
-                className="rounded-full p-2 hover:bg-white/20 text-foreground transition-colors cursor-pointer"
+                className="rounded-full p-2 hover:bg-white/20 text-zinc-950 dark:text-white transition-colors cursor-pointer"
               >
                 <IconImage type="close" size={16} className="opacity-90" />
               </button>
@@ -231,10 +231,10 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
                     type="button"
                     onClick={() => onChange({ ...filters, minPrice: p.min, maxPrice: p.max })}
                     className={cn(
-                      "py-2 px-2 rounded-xl font-mono text-[11px] uppercase font-bold tracking-wider border transition-all cursor-pointer text-center",
+                      "py-2 px-2 rounded-xl font-mono text-[11px] uppercase font-black tracking-wider border transition-all cursor-pointer text-center",
                       isSelected
-                        ? "bg-foreground text-background border-foreground font-bold shadow-xs"
-                        : "bg-white/30 dark:bg-white/[0.06] hover:bg-white/60 border-white/20 text-foreground/80"
+                        ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 border-zinc-950 dark:border-white shadow-xs"
+                        : "bg-white/50 dark:bg-white/[0.12] hover:bg-white/80 dark:hover:bg-white/[0.22] border-white/40 dark:border-white/20 text-zinc-950 dark:text-white"
                     )}
                   >
                     {p.label}
@@ -244,7 +244,7 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
             </div>
 
             <div className="space-y-1.5">
-              <div className="flex justify-between font-mono text-[12px] text-foreground/80 font-bold">
+              <div className="flex justify-between font-mono text-xs text-zinc-950 dark:text-white font-black">
                 <span>MIN: {formatINR(filters.minPrice)}</span>
                 <span>MAX: {formatINR(filters.maxPrice)}</span>
               </div>
@@ -261,7 +261,7 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
                   })
                 }
                 aria-label="Filter maximum price ceiling"
-                className="w-full accent-foreground cursor-pointer h-1.5 bg-foreground/20 rounded-lg appearance-none"
+                className="w-full accent-zinc-950 dark:accent-white cursor-pointer h-2 bg-zinc-950/20 dark:bg-white/25 rounded-lg appearance-none"
               />
             </div>
           </div>
