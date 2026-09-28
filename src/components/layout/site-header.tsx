@@ -66,12 +66,28 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [isAppInstalled, setIsAppInstalled] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const t = localStorage.getItem("vestra_theme");
     const d = window.matchMedia("(prefers-color-scheme: dark)").matches;
     setTheme((t === "dark" || (!t && d)) ? "dark" : "light");
+
+    const checkAppInstalled = () => {
+      if (typeof window !== "undefined") {
+        const ua = window.navigator.userAgent || "";
+        const isStandalone =
+          /VESTRA_Android_App/i.test(ua) ||
+          window.matchMedia("(display-mode: standalone)").matches ||
+          (window.navigator as unknown as { standalone?: boolean }).standalone === true ||
+          localStorage.getItem("vestra_app_downloaded") === "true";
+        setIsAppInstalled(Boolean(isStandalone));
+      }
+    };
+    checkAppInstalled();
+    window.addEventListener("vestra_app_status_changed", checkAppInstalled);
+    return () => window.removeEventListener("vestra_app_status_changed", checkAppInstalled);
   }, []);
 
   const toggleTheme = () => {
@@ -206,17 +222,19 @@ export function SiteHeader() {
             <span className="sm:hidden">Shop</span>
             <span className="hidden sm:inline">Collections</span>
           </Link>
-          <button
-            type="button"
-            onClick={() => {
-              if (typeof window !== "undefined") {
-                window.dispatchEvent(new CustomEvent("vestra_open_install_modal"));
-              }
-            }}
-            className="hidden md:flex items-center rounded-full px-3.5 py-1.5 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-xs sm:text-sm font-black text-zinc-950 dark:text-white tracking-[0.15em] uppercase transition-all duration-300 shadow-xs cursor-pointer"
-          >
-            <span>Download App</span>
-          </button>
+          {!isAppInstalled && (
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.dispatchEvent(new CustomEvent("vestra_open_install_modal"));
+                }
+              }}
+              className="hidden md:flex items-center rounded-full px-3.5 py-1.5 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-xs sm:text-sm font-black text-zinc-950 dark:text-white tracking-[0.15em] uppercase transition-all duration-300 shadow-xs cursor-pointer"
+            >
+              <span>Download App</span>
+            </button>
+          )}
         </nav>
 
         {/* ── Right Actions: Search (Top) + Bag (Desktop Only) ── */}
@@ -293,7 +311,9 @@ export function SiteHeader() {
                   </h3>
                 </div>
                 <ul className="space-y-2 text-left">
-                  {col.items.map((item) => (
+                  {col.items
+                    .filter((item) => !("isDownload" in item && item.isDownload && isAppInstalled))
+                    .map((item) => (
                     <li key={item.label} className="text-left">
                       {"isDownload" in item && item.isDownload ? (
                         <button
@@ -351,18 +371,20 @@ export function SiteHeader() {
             </button>
 
             <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setMenuOpen(false);
-                  if (typeof window !== "undefined") {
-                    window.dispatchEvent(new CustomEvent("vestra_open_install_modal"));
-                  }
-                }}
-                className="flex items-center gap-1.5 rounded-full px-3.5 py-2 bg-white text-zinc-950 dark:bg-white dark:text-zinc-950 font-mono text-xs font-black uppercase tracking-wider hover:opacity-90 transition-opacity cursor-pointer shadow-xs"
-              >
-                <span>Download App</span>
-              </button>
+              {!isAppInstalled && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      window.dispatchEvent(new CustomEvent("vestra_open_install_modal"));
+                    }
+                  }}
+                  className="flex items-center gap-1.5 rounded-full px-3.5 py-2 bg-white text-zinc-950 dark:bg-white dark:text-zinc-950 font-mono text-xs font-black uppercase tracking-wider hover:opacity-90 transition-opacity cursor-pointer shadow-xs"
+                >
+                  <span>Download App</span>
+                </button>
+              )}
 
               <Link
                 href="/account"

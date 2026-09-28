@@ -382,3 +382,16 @@
   }
   .text-balance { text-wrap: balance; }
 }
+
+/* Hide Next.js development badges and overlay indicators */
+[data-nextjs-toast],
+nextjs-portal,
+#nextjs-dev-tools,
+[data-nextjs-dev-tools-button],
+div[data-next-badge],
+div[data-nextjs-indicator],
+[data-next-badge-root] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

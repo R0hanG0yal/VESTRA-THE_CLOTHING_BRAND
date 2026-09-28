@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   // Never leak the framework version.
   poweredByHeader: false,
   reactStrictMode: true,
+  devIndicators: false,
 
   // Image optimization and compression
   images: {

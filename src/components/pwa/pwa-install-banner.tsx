@@ -28,19 +28,32 @@ export function PwaInstallBanner() {
       });
     }
 
-    // 2. Check if already installed / running in standalone mode
+    // 2. Check if already installed / running in standalone mode / inside Android app
     if (typeof window !== "undefined") {
+      const ua = window.navigator.userAgent || "";
+      const isAndroidApp = /VESTRA_Android_App/i.test(ua);
+      const isDownloaded =
+        localStorage.getItem("vestra_app_downloaded") === "true" ||
+        localStorage.getItem("vestra_pwa_dismissed") === "true";
       const isStandaloneMode =
+        isAndroidApp ||
+        isDownloaded ||
         window.matchMedia("(display-mode: standalone)").matches ||
         (window.navigator as unknown as { standalone?: boolean }).standalone === true;
+
       setIsStandalone(Boolean(isStandaloneMode));
 
+      if (isStandaloneMode) {
+        setBannerVisible(false);
+        return;
+      }
+
       // Detect OS
-      const ua = window.navigator.userAgent.toLowerCase();
-      if (/iphone|ipad|ipod/.test(ua)) {
+      const uaLower = ua.toLowerCase();
+      if (/iphone|ipad|ipod/.test(uaLower)) {
         setPlatform("ios");
         setActiveTab("ios");
-      } else if (/android/.test(ua)) {
+      } else if (/android/.test(uaLower)) {
         setPlatform("android");
         setActiveTab("android");
       } else {
@@ -48,9 +61,12 @@ export function PwaInstallBanner() {
         setActiveTab("desktop");
       }
 
-      // Check dismiss preference; if not dismissed and not standalone, show banner after 2.5s
-      const isDismissed = sessionStorage.getItem("vestra_pwa_dismissed");
-      if (!isDismissed && !isStandaloneMode) {
+      // Check persistent dismiss preference
+      const isDismissed =
+        localStorage.getItem("vestra_pwa_dismissed") === "true" ||
+        sessionStorage.getItem("vestra_pwa_dismissed") === "true";
+
+      if (!isDismissed) {
         const timer = setTimeout(() => {
           setBannerVisible(true);
         }, 2500);
@@ -83,9 +99,15 @@ export function PwaInstallBanner() {
       await deferredPrompt.prompt();
       const choice = await deferredPrompt.userChoice;
       if (choice.outcome === "accepted") {
+        if (typeof window !== "undefined") {
+          localStorage.setItem("vestra_app_downloaded", "true");
+          localStorage.setItem("vestra_pwa_dismissed", "true");
+          window.dispatchEvent(new CustomEvent("vestra_app_status_changed"));
+        }
         setDeferredPrompt(null);
         setBannerVisible(false);
         setModalOpen(false);
+        setIsStandalone(true);
       }
     } else {
       // Open the comprehensive download modal if native prompt is not available
@@ -95,7 +117,20 @@ export function PwaInstallBanner() {
 
   const handleDismissBanner = () => {
     setBannerVisible(false);
-    sessionStorage.setItem("vestra_pwa_dismissed", "true");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("vestra_pwa_dismissed", "true");
+    }
+  };
+
+  const handleApkDownloaded = () => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("vestra_app_downloaded", "true");
+      localStorage.setItem("vestra_pwa_dismissed", "true");
+      window.dispatchEvent(new CustomEvent("vestra_app_status_changed"));
+    }
+    setBannerVisible(false);
+    setModalOpen(false);
+    setIsStandalone(true);
   };
 
   return (
@@ -276,6 +311,7 @@ export function PwaInstallBanner() {
                   <a
                     href="/downloads/vestra-atelier.apk"
                     download="vestra-atelier.apk"
+                    onClick={handleApkDownloaded}
                     className="mt-3.5 flex items-center justify-center gap-2 w-full rounded-full bg-white text-zinc-950 py-2.5 font-mono text-xs font-black uppercase tracking-wider hover:bg-white/90 transition-all text-center cursor-pointer shadow-md"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
