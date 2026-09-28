@@ -1,26 +1,384 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* ═══════════════════════════════════════════════════════════════════
+     FONT STACK
+     Cormorant Garamond → All headings, hero, display text
+     DM Sans → Body, buttons, navigation, UI labels
+     ═══════════════════════════════════════════════════════════════════ */
+  --font-sans: var(--font-body), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), "Cormorant Garamond", Georgia, serif;
+  --font-brand: var(--font-display), "Cormorant Garamond", Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Apple & luxury editorial motion physics */
+  --ease-spring: cubic-bezier(0.34, 1.3, 0.5, 1);
+  --ease-spring-soft: cubic-bezier(0.3, 1.06, 0.4, 1);
+  --ease-out-apple: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-apple: cubic-bezier(0.6, 0.05, 0.28, 0.95);
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.2s linear infinite;
+  --animate-marquee: marquee 28s linear infinite;
+  --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-fade-up: fadeUp 0.5s var(--ease-out-apple) both;
+  --animate-sheen: sheen 5.5s var(--ease-in-out-apple) infinite;
+  --animate-breathe: breathe 7s ease-in-out infinite;
+  --animate-glow-pulse: glowPulse 4s ease-in-out infinite;
+  --animate-slide-right: slideRight 0.35s var(--ease-out-apple) both;
+  --animate-fade-in: fadeIn 0.25s ease-out both;
+
+  --radius-4xl: 0px;
+}
+
+@keyframes slideRight {
+  0% { transform: translateX(-100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes pop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes fadeUp {
+  0% { transform: translateY(16px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes sheen {
+  0%, 55%, 100% { transform: translateX(-130%) skewX(-16deg); }
+  75%, 88% { transform: translateX(130%) skewX(-16deg); }
+}
+@keyframes breathe {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.06); }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIGHT MODE — #F3F2EE warm editorial base
+   ═══════════════════════════════════════════════════════════════════ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-base: #F3F2EE;
+  --text-primary: #2C302E;
+  --text-subtle: #858986;
+  --accent: #627264;
+
+  /* Derived semantic tokens mapped from the master palette */
+  --background: var(--bg-base);
+  --foreground: var(--text-primary);
+  --surface: #FAF9F6;
+  --surface-muted: #ECEAE4;
+  --border: rgba(44, 48, 46, 0.11);
+  --accent-sage: var(--accent);
+  --accent-clay: #8e523f;
+  --accent-navy: #3d5470;
+
+  /* Glass-specific tokens */
+  --glass-bg: rgba(243, 242, 238, 0.72);
+  --glass-bg-hover: rgba(243, 242, 238, 0.88);
+  --glass-border: rgba(44, 48, 46, 0.07);
+  --glass-border-luminous: rgba(255, 255, 255, 0.45);
+  --glass-shadow: 0 1px 3px rgba(44, 48, 46, 0.05),
+                  0 8px 32px rgba(44, 48, 46, 0.04);
+  --glass-shadow-elevated: 0 4px 16px rgba(44, 48, 46, 0.07),
+                            0 16px 48px rgba(44, 48, 46, 0.05);
+
+  /* Decorative watermark */
+  --watermark-color: rgba(44, 48, 46, 0.035);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   DARK MODE — Deep atmospheric midnight slate
+   ═══════════════════════════════════════════════════════════════════ */
+.dark {
+  --bg-base: #0B0E14;
+  --text-primary: #EDECE8;
+  --text-subtle: #8A92A0;
+  --accent: #8FA697;
+
+  --background: var(--bg-base);
+  --foreground: var(--text-primary);
+  --surface: #11151F;
+  --surface-muted: #171C28;
+  --border: rgba(237, 236, 232, 0.08);
+  --accent-sage: var(--accent);
+  --accent-clay: #b36e59;
+  --accent-navy: #5a7094;
+
+  --glass-bg: rgba(15, 19, 28, 0.55);
+  --glass-bg-hover: rgba(20, 26, 38, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-border-luminous: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.35),
+                  0 1px 2px rgba(255, 255, 255, 0.05) inset;
+  --glass-shadow-elevated: 0 12px 48px rgba(0, 0, 0, 0.5),
+                            0 1px 3px rgba(255, 255, 255, 0.08) inset;
+
+  --watermark-color: rgba(237, 236, 232, 0.02);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-line: var(--border);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ═══════════════════════════════════════════════════════════════════
+   BASE LAYER — Editorial typography rules
+   ═══════════════════════════════════════════════════════════════════ */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    font-size: 14px;
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (min-width: 1024px) {
+    html {
+      font-size: 14.5px;
+    }
+  }
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    overscroll-behavior-y: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--bg-base);
+  }
+
+  /* ── HEADING TYPOGRAPHY — Cormorant Garamond (Refined Editorial Scale) ── */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--text-primary);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 6.5vw, 6rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.05;
+  }
+  h2 {
+    font-size: clamp(1.5rem, 3.5vw, 3rem);
+    font-weight: 400;
+    font-style: italic;
+  }
+  h3 {
+    font-size: clamp(1.15rem, 2.2vw, 1.75rem);
+    font-weight: 400;
+  }
+
+  /* Accessible high-contrast focus rings for keyboard navigation */
+  :focus-visible {
+    outline: 2px solid var(--text-primary) !important;
+    outline-offset: 3px !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ═══════════════════════════════════════════════════════════════════
+   UTILITY LAYER — Glass, buttons, labels, decorative watermark
+   ═══════════════════════════════════════════════════════════════════ */
+@layer utilities {
+
+  /* ── UI LABEL TYPOGRAPHY — DM Sans all-caps micro labels ── */
+  .label-ui {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-subtle);
+  }
+
+  /* ── SUBTLE BODY TEXT ── */
+  .text-subtle {
+    color: var(--text-subtle);
+  }
+
+  /* ── ACCENT COLOR ── */
+  .text-accent {
+    color: var(--accent);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     DECORATIVE WATERMARK / BACKGROUND TEXT
+     Large brand text behind glass navbar with mix-blend-mode: overlay
+     ═══════════════════════════════════════════════════════════════════ */
+  .watermark-text {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--watermark-color);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     LIQUID GLASSMORPHISM SYSTEM
+     Frosted translucent layers with luminous edge borders.
+     Zero rounded corners.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  /* Navigation-grade glass — maximum clarity, subtle frost */
+  .glass-nav {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+  .glass-nav-scrolled {
+    background: var(--glass-bg-hover);
+    backdrop-filter: blur(28px) saturate(1.6);
+    -webkit-backdrop-filter: blur(28px) saturate(1.6);
+    border-bottom: 1px solid var(--glass-border-luminous);
+    box-shadow: var(--glass-shadow-elevated);
+  }
+
+  /* Panel-grade glass — for overlays, drawers, modals */
+  .glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px) saturate(1.3);
+    -webkit-backdrop-filter: blur(24px) saturate(1.3);
+    border: 1px solid var(--glass-border-luminous);
+    box-shadow: var(--glass-shadow);
+  }
+
+  /* Frost chip — for small interactive elements */
+  .glass-chip {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    border: 1px solid var(--glass-border);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .glass-chip:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-luminous);
+    box-shadow: var(--glass-shadow);
+  }
+
+  /* Sage-tinted glass — brand-colored translucent surface */
+  .glass-sage {
+    background: color-mix(in oklab, var(--accent) 6%, transparent);
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    border: 1px solid color-mix(in oklab, var(--accent) 12%, transparent);
+  }
+
+  /* Architectural unboxed surface styling */
+  .editorial-plane {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .hairline-b { border-bottom: 1px solid var(--border); }
+  .hairline-r { border-right: 1px solid var(--border); }
+  .hairline-l { border-left: 1px solid var(--border); }
+  .hairline-t { border-top: 1px solid var(--border); }
+
+  /* iOS & Apple press physics with sharp geometry */
+  .pressable {
+    transition:
+      transform 0.4s var(--ease-spring-soft),
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .pressable:active {
+    transform: scale(0.98);
+  }
+
+  /* Cormorant wordmark */
+  .wordmark {
+    font-family: var(--font-brand);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Accent CTA button */
+  .btn-accent {
+    background: var(--accent);
+    color: var(--bg-base);
+    border: 1px solid var(--accent);
+    transition: background 0.3s ease, transform 0.4s var(--ease-spring-soft), opacity 0.3s ease;
+  }
+  .btn-accent:hover {
+    opacity: 0.88;
+  }
+  .btn-accent:active {
+    transform: scale(0.98);
+  }
+
+  /* Pearl outline button */
+  .btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.4s var(--ease-spring-soft);
+  }
+  .btn-outline:hover {
+    background: var(--surface);
+    border-color: var(--text-subtle);
+  }
+  .btn-outline:active {
+    transform: scale(0.98);
+  }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--surface-muted) 25%,
+      color-mix(in oklab, var(--surface-muted) 70%, white) 37%,
+      var(--surface-muted) 63%
+    );
+    background-size: 400% 100%;
+    animation: var(--animate-shimmer);
+  }
+  .text-balance { text-wrap: balance; }
 }
