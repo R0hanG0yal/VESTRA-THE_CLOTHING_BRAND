@@ -33,7 +33,7 @@ function Section({
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <div className="border-b border-white/20 dark:border-white/10 py-3.5 text-left transition-colors">
+    <div className="border-b border-foreground/15 dark:border-white/15 py-3.5 text-left transition-colors">
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -41,7 +41,7 @@ function Section({
         aria-expanded={open}
       >
         <div className="flex items-center gap-2">
-          <span className="label-ui text-[12px] tracking-[0.2em] font-bold text-foreground uppercase transition-opacity group-hover:opacity-80">
+          <span className="text-xs sm:text-[13px] tracking-[0.18em] font-bold text-foreground uppercase transition-colors">
             {title}
           </span>
           {count > 0 && (
@@ -52,13 +52,13 @@ function Section({
         </div>
         <div className="flex items-center gap-2">
           {hint && (
-            <span className="font-mono text-[11px] uppercase tracking-wider text-foreground/50 hidden sm:inline">
+            <span className="font-mono text-[11px] uppercase tracking-wider text-foreground/70 hidden sm:inline font-medium">
               {hint}
             </span>
           )}
           <span
             className={cn(
-              "font-mono text-[12px] text-foreground/60 transition-transform duration-300 transform",
+              "font-mono text-xs text-foreground font-bold transition-transform duration-300 transform",
               open ? "rotate-180" : "rotate-0"
             )}
             aria-hidden="true"
@@ -88,10 +88,10 @@ function Chip({
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "rounded-2xl px-3 py-1.5 font-mono text-[12px] uppercase tracking-wider transition-all duration-200 text-left border cursor-pointer select-none",
+        "rounded-2xl px-3 py-1.5 font-mono text-[11px] sm:text-[12px] uppercase tracking-wider transition-all duration-200 text-left border cursor-pointer select-none",
         active
           ? "border-foreground bg-foreground text-background font-bold shadow-md scale-[1.02]"
-          : "border-white/35 dark:border-white/15 bg-white/40 dark:bg-white/[0.06] hover:bg-white/70 dark:hover:bg-white/[0.14] hover:border-white/50 text-foreground font-semibold shadow-xs"
+          : "border-foreground/20 dark:border-white/20 bg-foreground/5 dark:bg-white/10 hover:bg-foreground/10 dark:hover:bg-white/20 text-foreground font-semibold shadow-xs"
       )}
     >
       {children}

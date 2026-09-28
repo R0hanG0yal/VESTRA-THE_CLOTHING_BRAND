@@ -618,18 +618,18 @@ export function ShopWorkspace({
         ref={bottomBarRef}
         className="fixed bottom-4 sm:bottom-6 inset-x-0 z-40 flex flex-col items-center px-3 sm:px-6 pointer-events-none transition-all duration-300 lg:hidden"
       >
-        {/* ── EXPANDING FILTERS SECTION (Transparent Liquid Glass Blur) ── */}
+        {/* ── EXPANDING FILTERS SECTION (Solid High-Contrast Surface) ── */}
         {filtersOpen && (
-          <div className="pointer-events-auto mb-2.5 w-full max-w-md rounded-3xl p-4 sm:p-6 bg-white/40 dark:bg-white/[0.1] backdrop-blur-2xl border border-white/40 dark:border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.35)] animate-fade-up text-left overflow-hidden transition-all duration-300 max-h-[72vh] flex flex-col">
+          <div className="pointer-events-auto mb-2.5 w-full max-w-md rounded-3xl p-4 sm:p-6 bg-surface/98 dark:bg-[#121620]/98 backdrop-blur-3xl border border-foreground/20 dark:border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)] animate-fade-up text-left overflow-hidden transition-all duration-300 max-h-[72vh] flex flex-col text-foreground">
             {/* Header row inside expanding filter */}
-            <div className="flex items-center justify-between border-b border-white/25 dark:border-white/15 pb-3 mb-2 text-left">
+            <div className="flex items-center justify-between border-b border-foreground/15 dark:border-white/15 pb-3 mb-2 text-left">
               <div className="flex items-center gap-2 text-left">
-                <IconImage type="filter" size={13} className="opacity-90 grayscale" />
-                <span className="label-ui text-[11px] tracking-[0.2em] font-bold text-foreground text-left">
+                <IconImage type="filter" size={14} className="opacity-90 grayscale" />
+                <span className="text-xs sm:text-[13px] tracking-[0.2em] font-bold text-foreground text-left">
                   Archive Filters
                 </span>
                 {activeCount > 0 && (
-                  <span className="rounded-full bg-accent px-2 py-0.5 font-mono text-[9px] font-bold text-white">
+                  <span className="rounded-full bg-accent px-2 py-0.5 font-mono text-[10px] font-bold text-white">
                     {activeCount}
                   </span>
                 )}
@@ -637,24 +637,24 @@ export function ShopWorkspace({
               <button
                 type="button"
                 onClick={() => setFiltersOpen(false)}
-                className="label-ui text-[10px] text-foreground font-bold hover:underline transition-colors cursor-pointer text-left whitespace-nowrap"
+                className="text-xs text-foreground font-bold hover:underline transition-colors cursor-pointer text-left whitespace-nowrap"
               >
                 [ Close Filters ]
               </button>
             </div>
 
             {/* Filter Panel Content */}
-            <div className="flex-1 overflow-y-auto pr-1 no-scrollbar">
+            <div className="flex-1 overflow-y-auto pr-1 no-scrollbar text-foreground">
               <FilterPanel filters={filters} onChange={update} hideHeader={true} />
             </div>
 
             {/* Bottom Actions Row */}
-            <div className="pt-3 mt-2 border-t border-white/20 dark:border-white/10 flex items-center justify-between gap-3 text-left">
+            <div className="pt-3 mt-2 border-t border-foreground/15 dark:border-white/15 flex items-center justify-between gap-3 text-left">
               {activeCount > 0 && (
                 <button
                   type="button"
                   onClick={resetFilters}
-                  className="label-ui text-[10px] text-foreground font-bold underline cursor-pointer whitespace-nowrap"
+                  className="text-xs text-foreground font-bold underline cursor-pointer whitespace-nowrap"
                 >
                   [ Reset ]
                 </button>
@@ -662,7 +662,7 @@ export function ShopWorkspace({
               <button
                 type="button"
                 onClick={() => setFiltersOpen(false)}
-                className="flex-1 rounded-full bg-foreground py-2.5 px-4 text-center label-ui text-xs tracking-widest text-background font-bold hover:opacity-90 transition-all cursor-pointer shadow-md"
+                className="flex-1 rounded-full bg-foreground py-2.5 px-4 text-center text-xs tracking-widest text-background font-bold hover:opacity-90 transition-all cursor-pointer shadow-md uppercase"
               >
                 Show {total} Silhouettes
               </button>
@@ -670,18 +670,18 @@ export function ShopWorkspace({
           </div>
         )}
 
-        {/* ── EXPANDING SORT SECTION (Transparent Liquid Glass Blur) ── */}
+        {/* ── EXPANDING SORT SECTION (Solid High-Contrast Surface) ── */}
         {sortOpen && (
-          <div className="pointer-events-auto mb-2.5 w-full max-w-sm rounded-3xl p-4 sm:p-5 bg-white/40 dark:bg-white/[0.1] backdrop-blur-2xl border border-white/40 dark:border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.35)] animate-fade-up text-left overflow-hidden transition-all duration-300">
+          <div className="pointer-events-auto mb-2.5 w-full max-w-sm rounded-3xl p-4 sm:p-5 bg-surface/98 dark:bg-[#121620]/98 backdrop-blur-3xl border border-foreground/20 dark:border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)] animate-fade-up text-left overflow-hidden transition-all duration-300 text-foreground">
             {/* Header row inside expanding sort */}
-            <div className="flex items-center justify-between border-b border-white/25 dark:border-white/15 pb-2.5 mb-2.5 text-left">
-              <span className="label-ui text-[11px] tracking-[0.2em] text-foreground font-bold text-left whitespace-nowrap">
+            <div className="flex items-center justify-between border-b border-foreground/15 dark:border-white/15 pb-2.5 mb-2.5 text-left">
+              <span className="text-xs sm:text-[13px] tracking-[0.2em] font-bold text-foreground text-left whitespace-nowrap">
                 Sort Archive Silhouettes
               </span>
               <button
                 type="button"
                 onClick={() => setSortOpen(false)}
-                className="label-ui text-[10px] text-foreground font-bold hover:underline transition-colors cursor-pointer text-left whitespace-nowrap"
+                className="text-xs text-foreground font-bold hover:underline transition-colors cursor-pointer text-left whitespace-nowrap"
               >
                 [ Close ]
               </button>
@@ -703,7 +703,7 @@ export function ShopWorkspace({
                       "w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl transition-all text-left text-xs font-mono tracking-wider cursor-pointer border",
                       isSelected
                         ? "bg-foreground text-background border-foreground font-bold shadow-sm"
-                        : "bg-white/30 dark:bg-white/[0.08] hover:bg-white/50 dark:hover:bg-white/[0.15] border-white/25 text-foreground font-semibold"
+                        : "bg-foreground/5 dark:bg-white/10 hover:bg-foreground/10 dark:hover:bg-white/15 border-foreground/15 dark:border-white/15 text-foreground font-semibold"
                     )}
                   >
                     <span>{s.label}</span>
@@ -721,9 +721,9 @@ export function ShopWorkspace({
         <div
           className={cn(
             "pointer-events-auto flex w-full max-w-sm items-center justify-between gap-2 rounded-full px-4 py-2 sm:py-2.5 transition-all duration-500",
-            "bg-white/25 dark:bg-white/[0.1] backdrop-blur-2xl border border-white/35 dark:border-white/18",
-            "shadow-[0_12px_40px_rgba(0,0,0,0.25)]",
-            (filtersOpen || sortOpen) && "border-white/50 shadow-[0_16px_48px_rgba(0,0,0,0.35)]"
+            "bg-surface/95 dark:bg-[#121620]/95 backdrop-blur-2xl border border-foreground/20 dark:border-white/20 text-foreground",
+            "shadow-[0_12px_40px_rgba(0,0,0,0.35)]",
+            (filtersOpen || sortOpen) && "border-foreground/40 dark:border-white/40 shadow-[0_16px_48px_rgba(0,0,0,0.45)]"
           )}
         >
           {/* Filter Toggle Trigger */}
@@ -736,10 +736,10 @@ export function ShopWorkspace({
             aria-label={filtersOpen ? "Close filters" : "Open archive filters"}
             aria-expanded={filtersOpen}
             className={cn(
-              "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 transition-all duration-300 label-ui text-[11px] font-bold cursor-pointer border text-left",
+              "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 transition-all duration-300 text-xs font-bold cursor-pointer border text-left",
               filtersOpen
                 ? "bg-foreground text-background border-foreground font-bold shadow-sm"
-                : "bg-white/25 hover:bg-white/40 dark:bg-white/[0.08] dark:hover:bg-white/[0.16] border-white/30 dark:border-white/20 text-foreground font-semibold"
+                : "bg-foreground/10 hover:bg-foreground/15 dark:bg-white/10 dark:hover:bg-white/15 border-foreground/20 dark:border-white/20 text-foreground font-bold"
             )}
           >
             <IconImage type="filter" size={13} className="grayscale opacity-90" />
@@ -752,7 +752,7 @@ export function ShopWorkspace({
           </button>
 
           {/* Piece Counter */}
-          <span className="font-mono text-[11px] text-foreground font-bold tracking-wider text-center">
+          <span className="font-mono text-xs text-foreground font-bold tracking-wider text-center">
             {total} Pieces
           </span>
 
@@ -763,18 +763,24 @@ export function ShopWorkspace({
               setSortOpen((v) => !v);
               setFiltersOpen(false);
             }}
-            aria-label={sortOpen ? "Close sort menu" : "Open sort options"}
+            aria-label={sortOpen ? "Close sort options" : "Open sort options"}
             aria-expanded={sortOpen}
             className={cn(
-              "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 transition-all duration-300 font-mono text-[10px] uppercase tracking-wider cursor-pointer border text-left",
+              "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 transition-all duration-300 text-xs font-bold cursor-pointer border text-left uppercase tracking-wider",
               sortOpen
                 ? "bg-foreground text-background border-foreground font-bold shadow-sm"
-                : "bg-white/25 hover:bg-white/40 dark:bg-white/[0.08] dark:hover:bg-white/[0.16] border-white/30 dark:border-white/20 text-foreground font-semibold"
+                : "bg-foreground/10 hover:bg-foreground/15 dark:bg-white/10 dark:hover:bg-white/15 border-foreground/20 dark:border-white/20 text-foreground font-bold"
             )}
           >
-            <span className="max-w-[85px] truncate">{currentSortLabel}</span>
-            <span className="text-[8px] text-foreground font-bold" aria-hidden="true">
-              {sortOpen ? "▲" : "▼"}
+            <span>{currentSortLabel}</span>
+            <span
+              className={cn(
+                "text-[10px] font-mono transition-transform duration-300 transform",
+                sortOpen ? "rotate-180" : "rotate-0"
+              )}
+              aria-hidden="true"
+            >
+              ▼
             </span>
           </button>
         </div>
