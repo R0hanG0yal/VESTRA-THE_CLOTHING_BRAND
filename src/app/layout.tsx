@@ -97,9 +97,8 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: dark)", color: "#1A1D24" },
   ],
   width: "device-width",
-  initialScale: 0.67,
-  maximumScale: 0.67,
-  userScalable: false,
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 const themeScript = `(function(){try{var t=localStorage.getItem('vestra_theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(!t&&d)){document.documentElement.classList.add('dark')}}catch(e){}})();`;

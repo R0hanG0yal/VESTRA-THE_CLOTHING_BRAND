@@ -129,27 +129,27 @@ export function SiteHeader() {
       {/* ═══ FLOATING PILL-SHAPED LIQUID GLASS NAVBAR ═══ */}
       <div
         className={cn(
-          "pointer-events-auto flex w-full max-w-4xl items-center justify-between rounded-full px-3 sm:px-7 py-2 sm:py-3 transition-all duration-500",
+          "pointer-events-auto flex w-full max-w-4xl items-center justify-between rounded-full px-4 sm:px-7 py-3 transition-all duration-500",
           "bg-white/20 dark:bg-white/[0.08] backdrop-blur-2xl border border-white/35 dark:border-white/18",
           "shadow-[0_10px_35px_rgba(0,0,0,0.2)]",
           (scrolled || menuOpen) && "bg-white/30 dark:bg-white/[0.12] shadow-[0_16px_45px_rgba(0,0,0,0.28)] border-white/45 dark:border-white/25",
         )}
       >
         {/* ── Left: Expanding Menu Trigger + Minimalist Logo ── */}
-        <div className="flex items-center gap-2 sm:gap-4 text-left">
+        <div className="flex items-center gap-3 sm:gap-4 text-left">
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Close menu" : "Open expanded navigation menu"}
             aria-expanded={menuOpen}
             className={cn(
-              "flex items-center gap-1.5 sm:gap-2 rounded-full px-2.5 sm:px-3.5 py-1.5 transition-all duration-300 text-left cursor-pointer border",
+              "flex items-center gap-2 rounded-full px-3 sm:px-4 py-2 transition-all duration-300 text-left cursor-pointer border",
               menuOpen
                 ? "bg-foreground text-background border-foreground font-bold shadow-sm"
                 : "bg-white/25 hover:bg-white/40 dark:bg-white/[0.1] dark:hover:bg-white/[0.18] border-white/30 dark:border-white/20 text-foreground font-semibold",
             )}
           >
-            <span className="flex flex-col gap-1 w-3.5" aria-hidden="true">
+            <span className="flex flex-col gap-1 w-4" aria-hidden="true">
               <span
                 className={cn(
                   "h-[1.5px] w-full bg-current block transition-transform duration-300",
@@ -169,7 +169,7 @@ export function SiteHeader() {
                 )}
               />
             </span>
-            <span className="label-ui text-[10px] sm:text-[11px] tracking-[0.15em] text-left">
+            <span className="label-ui text-xs sm:text-[13px] tracking-[0.15em] text-left font-bold">
               {menuOpen ? "Close" : "Menu"}
             </span>
           </button>
@@ -177,31 +177,32 @@ export function SiteHeader() {
           <Link
             href="/"
             onClick={() => setMenuOpen(false)}
-            className="group flex items-center text-left"
+            className="group flex items-center text-left ml-1"
             aria-label={`${BRAND_NAME} Home`}
           >
             {/* The mix-blend modes and invert automatically remove the white background in both light and dark modes! */}
             <img
               src="/logo.jpg"
               alt="VESTRA Atelier"
-              className="h-7 sm:h-9 w-auto object-contain transition-opacity group-hover:opacity-75 mix-blend-multiply dark:invert dark:mix-blend-screen"
+              className="h-10 sm:h-12 w-auto object-contain transition-opacity group-hover:opacity-75 mix-blend-multiply dark:invert dark:mix-blend-screen"
             />
           </Link>
         </div>
 
         {/* ── Center: Collections Link ── */}
-        <nav className="hidden sm:flex items-center text-left">
+        <nav className="flex items-center text-left">
           <Link
             href="/shop"
             onClick={() => setMenuOpen(false)}
-            className="label-ui text-[11px] sm:text-xs tracking-[0.2em] text-foreground hover:text-accent font-bold transition-colors px-3 py-1 text-left"
+            className="label-ui text-[13px] sm:text-[14px] tracking-[0.15em] text-foreground hover:text-accent font-bold transition-colors px-2 py-1 text-left hidden min-[400px]:block"
           >
-            Collections
+            <span className="sm:hidden">Shop</span>
+            <span className="hidden sm:inline">Collections</span>
           </Link>
         </nav>
 
         {/* ── Right Actions: Search + Bag ── */}
-        <div className="flex items-center gap-1.5 sm:gap-3.5 text-left">
+        <div className="flex items-center gap-2 sm:gap-4 text-left">
           {/* Expanding Minimalist Search Bar */}
           <form onSubmit={submit} role="search" className="relative flex items-center text-left">
             <input
@@ -211,7 +212,7 @@ export function SiteHeader() {
               placeholder="Search..."
               aria-label="Search garments"
               maxLength={60}
-              className="w-14 sm:w-28 focus:w-24 sm:focus:w-44 transition-all duration-300 rounded-full bg-white/25 dark:bg-white/[0.08] border border-white/35 dark:border-white/20 px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs text-foreground font-semibold placeholder:text-foreground/60 outline-none focus:border-white/60 dark:focus:border-white/50 text-left"
+              className="w-20 sm:w-32 focus:w-32 sm:focus:w-48 transition-all duration-300 rounded-full bg-white/25 dark:bg-white/[0.08] border border-white/35 dark:border-white/20 px-3 sm:px-4 py-1.5 text-xs sm:text-sm text-foreground font-semibold placeholder:text-foreground/60 outline-none focus:border-white/60 dark:focus:border-white/50 text-left"
               style={{ fontFamily: "var(--font-sans)" }}
             />
           </form>
@@ -221,11 +222,11 @@ export function SiteHeader() {
             href="/cart"
             onClick={() => setMenuOpen(false)}
             aria-label={`Shopping bag with ${count} items`}
-            className="flex items-center gap-1 sm:gap-2 rounded-full px-2.5 sm:px-3.5 py-1.5 bg-white/25 hover:bg-white/40 dark:bg-white/[0.1] dark:hover:bg-white/[0.18] border border-white/30 dark:border-white/20 text-foreground font-semibold transition-all duration-300 text-left"
+            className="flex items-center gap-1.5 sm:gap-2 rounded-full px-3 sm:px-4 py-2 bg-white/25 hover:bg-white/40 dark:bg-white/[0.1] dark:hover:bg-white/[0.18] border border-white/30 dark:border-white/20 text-foreground font-semibold transition-all duration-300 text-left"
           >
-            <IconImage type="order" size={13} className="border-none grayscale opacity-90" />
-            <span className="label-ui text-[10px] sm:text-[11px] tracking-[0.15em] text-left">Bag</span>
-            <span className="font-mono text-[10px] text-foreground font-bold text-left">
+            <IconImage type="order" size={15} className="border-none grayscale opacity-90" />
+            <span className="label-ui text-xs sm:text-[13px] tracking-[0.15em] text-left hidden min-[360px]:inline">Bag</span>
+            <span className="font-mono text-xs sm:text-[13px] text-foreground font-bold text-left">
               ({count})
             </span>
           </Link>

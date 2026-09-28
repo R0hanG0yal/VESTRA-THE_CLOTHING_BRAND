@@ -96,8 +96,8 @@ export function ProductDetail({ product }: { product: Product }) {
     <div className="grid gap-10 text-left lg:grid-cols-2 lg:gap-16">
       {/* Editorial Flat Photographic Plate - NO CARD */}
       <div className="text-left lg:sticky lg:top-24 lg:self-start">
-        <div className="relative overflow-hidden bg-surface-muted border border-foreground/20 text-left">
-          <div className="aspect-[3/4] w-full">
+        <div className="relative overflow-hidden rounded-2xl bg-surface-muted border border-foreground/15 text-left shadow-md">
+          <div className="aspect-[4/5] sm:aspect-[3/4] w-full max-h-[58vh] sm:max-h-none">
             <ProductImage
               kind={product.kind}
               color={color.hex}
@@ -116,7 +116,7 @@ export function ProductDetail({ product }: { product: Product }) {
               push({ title: saved ? "Removed from private archive" : "Saved to private archive", variant: "info" });
             }}
             aria-label="Save to archive"
-            className="absolute right-3 top-3 flex items-center gap-1.5 border border-foreground/20 bg-background/90 px-2.5 py-1 text-left font-mono text-[9px] uppercase tracking-wider text-foreground transition hover:bg-background"
+            className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full border border-foreground/20 bg-background/90 backdrop-blur-md px-3 py-1.5 text-left font-mono text-xs uppercase tracking-wider text-foreground transition hover:bg-background shadow-xs"
           >
             <IconImage type={saved ? "wishlist-active" : "wishlist"} size={14} className="border-none" />
             <span>{saved ? "ARCHIVED" : "SAVE"}</span>
@@ -127,10 +127,10 @@ export function ProductDetail({ product }: { product: Product }) {
             <div className="absolute bottom-3 left-3 text-left">
               <Link
                 href={`/try-on?product=${product.id}`}
-                className="flex items-center gap-2 border border-foreground bg-foreground px-4 py-2 font-mono text-xs uppercase tracking-widest text-background transition hover:opacity-90 text-left"
+                className="flex items-center gap-2 rounded-xl border border-foreground bg-foreground/95 backdrop-blur-md px-3.5 py-2 font-mono text-xs uppercase tracking-wider text-background transition hover:opacity-90 text-left shadow-lg"
               >
                 <IconImage type="tryon" size={14} className="border-none invert dark:invert-0" />
-                <span className="text-left font-bold">ACTIVATE 3D VIRTUAL FITTING</span>
+                <span className="text-left font-bold">3D VIRTUAL FITTING</span>
               </Link>
             </div>
           )}
@@ -167,8 +167,8 @@ export function ProductDetail({ product }: { product: Product }) {
 
       {/* Editorial Specification & Buy Column - Strict Left Alignment */}
       <div className="flex flex-col text-left">
-        <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-foreground/50 text-left">
-          ATELIER REGISTRATION: {product.brand} · EDITION {product.id.toUpperCase()}
+        <span className="font-mono text-xs uppercase tracking-[0.2em] text-foreground/60 text-left font-semibold">
+          {product.brand} · EDITION {product.id.toUpperCase()}
         </span>
         <h1 className="mt-2 font-serif text-3xl font-normal leading-tight tracking-tight text-foreground text-left sm:text-4xl lg:text-5xl">
           {product.name}
@@ -176,26 +176,28 @@ export function ProductDetail({ product }: { product: Product }) {
 
         <div className="mt-3 flex items-center gap-4 text-left">
           <Rating value={product.rating} count={product.ratingCount} />
-          <span className="font-mono text-xs text-foreground/50 text-left">
+          <span className="font-mono text-xs text-foreground/60 text-left font-medium">
             VIBE: {product.vibes.join(" / ").toUpperCase()}
           </span>
         </div>
 
         {/* Valuation Block */}
-        <div className="mt-6 flex flex-wrap items-baseline gap-3 text-left border-y border-foreground/15 py-4">
-          <span className="font-mono text-3xl font-semibold text-foreground text-left">
+        <div className="mt-5 flex flex-wrap items-baseline gap-3 text-left border-y border-foreground/15 py-4">
+          <span className="font-mono text-3xl font-bold text-foreground text-left">
             {formatINR(product.price)}
           </span>
-          <span className="font-mono text-sm text-foreground/40 line-through text-left">
-            {formatINR(product.mrp)}
-          </span>
-          {off > 0 && (
-            <span className="font-mono text-xs uppercase tracking-wider text-foreground text-left">
-              [{off}% REDUCTION]
-            </span>
+          {product.mrp > product.price && (
+            <>
+              <span className="font-mono text-base text-foreground/45 line-through text-left">
+                {formatINR(product.mrp)}
+              </span>
+              <span className="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider text-left bg-emerald-500/10 px-2 py-0.5 rounded-md">
+                {off}% OFF
+              </span>
+            </>
           )}
         </div>
-        <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-foreground/50 text-left">
+        <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-foreground/50 text-left">
           ALL DUTIES & RECONCILIATION TAXES INCLUDED IN NET VALUATION
         </p>
 

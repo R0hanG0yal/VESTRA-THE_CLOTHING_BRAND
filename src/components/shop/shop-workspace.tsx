@@ -515,10 +515,10 @@ export function ShopWorkspace({
           {loading ? (
             <div
               className={cn(
-                "grid grid-cols-1 sm:grid-cols-2 text-left",
-                gridDensity === 2 && "lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12",
-                gridDensity === 3 && "lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-10",
-                gridDensity === 4 && "lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-8"
+                "grid grid-cols-2 gap-3 sm:gap-6 text-left",
+                gridDensity === 2 && "lg:grid-cols-2 lg:gap-10",
+                gridDensity === 3 && "lg:grid-cols-3 lg:gap-8",
+                gridDensity === 4 && "lg:grid-cols-4 lg:gap-6"
               )}
             >
               <GridSkeleton count={gridDensity * 2} />
@@ -554,10 +554,10 @@ export function ShopWorkspace({
           ) : (
             <div
               className={cn(
-                "grid grid-cols-1 sm:grid-cols-2 text-left transition-all duration-300",
-                gridDensity === 2 && "lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12",
-                gridDensity === 3 && "lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-10",
-                gridDensity === 4 && "lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-8"
+                "grid grid-cols-2 gap-3 sm:gap-6 text-left transition-all duration-300",
+                gridDensity === 2 && "lg:grid-cols-2 lg:gap-10",
+                gridDensity === 3 && "lg:grid-cols-3 lg:gap-8",
+                gridDensity === 4 && "lg:grid-cols-4 lg:gap-6"
               )}
             >
               {items.map((p, i) => (

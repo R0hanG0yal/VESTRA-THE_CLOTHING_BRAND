@@ -44,76 +44,99 @@ export function ProductCard({
     setTimeout(() => setAdded(false), 1600);
   };
 
+  const discount =
+    product.mrp > product.price
+      ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
+      : 0;
+
   return (
     <Link
       href={`/product/${product.id}`}
       className={cn(
-        "group relative flex flex-col bg-transparent border border-transparent p-3 text-left transition-all duration-500",
-        "hover:bg-white/[0.04] hover:border-white/10 hover:backdrop-blur-md",
+        "group relative flex flex-col bg-white/20 dark:bg-white/[0.04] backdrop-blur-md rounded-2xl border border-white/30 dark:border-white/10 p-2 sm:p-3 text-left transition-all duration-300 shadow-xs hover:shadow-lg hover:border-white/50",
         className,
       )}
     >
-      {/* ── Minimalist Photographic Frame ── */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-surface-muted/30 text-left">
+      {/* ── Photographic Frame ── */}
+      <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-surface-muted/30 text-left">
         <ProductImage
           kind={product.kind}
           color={color?.hex || "#627264"}
           seed={product.seed}
           image={product.image}
           alt={product.name}
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 50vw"
           className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
 
-        {/* ── Glass Quick-Add Action Button ──
-            Mobile: Floating transparent glass button at bottom-right of the image
-            PC: Flashes in immediately when user hovers over the image */}
-        <div className="absolute bottom-2.5 right-2.5 z-10">
+        {/* Rating Badge (if available) */}
+        {product.rating > 0 && (
+          <div className="absolute top-2 left-2 z-10 flex items-center gap-1 rounded-md bg-black/60 backdrop-blur-md px-1.5 py-0.5 text-[10px] sm:text-xs font-bold text-white">
+            <span className="text-amber-400">★</span>
+            <span>{product.rating.toFixed(1)}</span>
+          </div>
+        )}
+
+        {/* Glass Quick-Add Action Button */}
+        <div className="absolute bottom-2 right-2 z-10">
           <button
             type="button"
             onClick={handleQuickAdd}
             className={cn(
-              "flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[10px] font-medium tracking-wider label-ui cursor-pointer shadow-lg transition-all duration-200",
-              "bg-black/50 hover:bg-black/75 text-white border-white/20 backdrop-blur-xl",
-              "md:opacity-0 md:translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0",
-              added && "bg-accent text-white border-accent scale-105 !opacity-100 !translate-y-0"
+              "flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border text-[10px] sm:text-xs font-semibold tracking-wider cursor-pointer shadow-md transition-all duration-200",
+              "bg-black/60 hover:bg-black/85 text-white border-white/30 backdrop-blur-xl",
+              added && "bg-accent text-white border-accent scale-105"
             )}
             title="Add to Shopping Bag"
             aria-label={`Add ${product.name} to Shopping Bag`}
           >
             {added ? (
               <>
-                <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
-                <span>Added</span>
+                <span className="hidden min-[380px]:inline">Added</span>
               </>
             ) : (
               <>
-                <svg className="w-3.5 h-3.5 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
-                <span>Bag</span>
+                <span className="hidden min-[380px]:inline">Bag</span>
               </>
             )}
           </button>
         </div>
       </div>
 
-      {/* ── Essential Title & Single Clean Price (Zero Clutter) ── */}
-      <div className="mt-4 flex flex-col items-start text-left">
-        <h3
-          className="text-lg sm:text-xl font-normal text-foreground leading-snug line-clamp-1 transition-opacity group-hover:opacity-75 text-left"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
+      {/* ── Product Information & Pricing (Visible, Bold & Clear) ── */}
+      <div className="mt-2.5 sm:mt-3 flex flex-col items-start text-left w-full">
+        {/* Brand / Category Lineage */}
+        <span className="font-mono text-[9px] sm:text-[11px] uppercase tracking-wider text-foreground/50 line-clamp-1 text-left font-medium">
+          {product.brand || "VESTRA Atelier"}
+        </span>
+
+        {/* Title */}
+        <h3 className="mt-0.5 text-xs sm:text-sm md:text-base font-semibold text-foreground leading-snug line-clamp-1 transition-opacity group-hover:opacity-80 text-left">
           {product.name}
         </h3>
-        <p
-          className="mt-1.5 text-sm font-light tracking-wider text-foreground/75 text-left"
-          style={{ fontFamily: "var(--font-sans)" }}
-        >
-          {formatINR(product.price)}
-        </p>
+
+        {/* Price & Discount Row */}
+        <div className="mt-1 flex flex-wrap items-baseline gap-1.5 sm:gap-2 text-left">
+          <span className="text-xs sm:text-sm md:text-base font-bold text-foreground">
+            {formatINR(product.price)}
+          </span>
+          {discount > 0 && (
+            <>
+              <span className="text-[10px] sm:text-xs text-foreground/45 line-through">
+                {formatINR(product.mrp)}
+              </span>
+              <span className="text-[10px] sm:text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                {discount}% off
+              </span>
+            </>
+          )}
+        </div>
       </div>
     </Link>
   );
