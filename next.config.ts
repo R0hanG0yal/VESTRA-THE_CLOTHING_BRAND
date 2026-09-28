@@ -66,4 +66,9 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withSerwist(nextConfig);
+// If we are deploying to Vercel, do NOT wrap with Serwist.
+// Vercel strongly forces Turbopack on Next 16, which crashes the Serwist Webpack plugin.
+// Bypassing Serwist ensures the build perfectly succeeds.
+const isVercel = process.env.VERCEL === "1";
+
+export default isVercel ? nextConfig : withSerwist(nextConfig);
