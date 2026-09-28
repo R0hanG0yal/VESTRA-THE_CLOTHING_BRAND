@@ -8,6 +8,9 @@ const withSerwist = withSerwistInit({
 });
 
 const nextConfig: NextConfig = {
+  // Silence Turbopack warnings when using Serwist
+  turbopack: {},
+  
   // Never leak the framework version.
   poweredByHeader: false,
   reactStrictMode: true,
