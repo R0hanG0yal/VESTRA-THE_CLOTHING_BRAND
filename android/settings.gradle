@@ -1,0 +1,2 @@
+rootProject.name = "VESTRA Atelier"
+include ':app'

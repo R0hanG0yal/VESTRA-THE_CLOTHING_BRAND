@@ -148,6 +148,19 @@ export function SiteFooter() {
                   </Link>
                 </li>
                 <li className="text-left">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (typeof window !== "undefined") {
+                        window.dispatchEvent(new CustomEvent("vestra_open_install_modal"));
+                      }
+                    }}
+                    className="font-sans text-[10px] sm:text-[12px] text-accent font-bold hover:underline hover:translate-x-0.5 transition-all text-left block truncate cursor-pointer"
+                  >
+                    Download App
+                  </button>
+                </li>
+                <li className="text-left">
                   <Link href="/refer" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
                     Refer & Earn (₹250)
                   </Link>

@@ -1,0 +1,12 @@
+<resources>
+    <style name="Theme.VESTRAAtelier" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:statusBarColor">#0B0E14</item>
+        <item name="android:navigationBarColor">#0B0E14</item>
+    </style>
+    <style name="Theme.VESTRAAtelier.Fullscreen" parent="Theme.VESTRAAtelier">
+        <item name="android:windowFullscreen">false</item>
+    </style>
+</resources>

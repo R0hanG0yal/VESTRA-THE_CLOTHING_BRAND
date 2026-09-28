@@ -46,11 +46,12 @@ const MENU_COLUMNS = [
     title: "Atelier Suite & Support",
     code: "04",
     items: [
-      { label: "3D Virtual Fit Studio", href: "/try-on", icon: "tryon" as const },
-      { label: "Chromatic Style Advisor", href: "/style-advisor", icon: "palette" as const },
-      { label: "Atelier Privilege Reserve", href: "/membership", icon: "authentic" as const },
-      { label: "Refer & Earn (₹250 Credit)", href: "/refer", icon: "gift" as const },
-      { label: "Track Order & Returns", href: "/refund-policy", icon: "return" as const },
+      { label: "3D Virtual Fit Studio", href: "/try-on" },
+      { label: "Chromatic Style Advisor", href: "/style-advisor" },
+      { label: "Atelier Privilege Reserve", href: "/membership" },
+      { label: "Download App (Android & Desktop)", href: "#download-app", isDownload: true },
+      { label: "Refer & Earn (₹250 Credit)", href: "/refer" },
+      { label: "Track Order & Returns", href: "/refund-policy" },
     ],
   },
 ];
@@ -195,8 +196,8 @@ export function SiteHeader() {
           </Link>
         </div>
 
-        {/* ── Center: Collections Link Pill ── */}
-        <nav className="flex items-center text-left">
+        {/* ── Center: Collections & Download App Pills ── */}
+        <nav className="flex items-center gap-2 text-left">
           <Link
             href="/shop"
             onClick={() => setMenuOpen(false)}
@@ -205,6 +206,17 @@ export function SiteHeader() {
             <span className="sm:hidden">Shop</span>
             <span className="hidden sm:inline">Collections</span>
           </Link>
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("vestra_open_install_modal"));
+              }
+            }}
+            className="hidden md:flex items-center rounded-full px-3.5 py-1.5 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-xs sm:text-sm font-black text-zinc-950 dark:text-white tracking-[0.15em] uppercase transition-all duration-300 shadow-xs cursor-pointer"
+          >
+            <span>Download App</span>
+          </button>
         </nav>
 
         {/* ── Right Actions: Search (Top) + Bag (Desktop Only) ── */}
@@ -283,14 +295,30 @@ export function SiteHeader() {
                 <ul className="space-y-2 text-left">
                   {col.items.map((item) => (
                     <li key={item.label} className="text-left">
-                      <Link
-                        href={item.href}
-                        onClick={() => setMenuOpen(false)}
-                        className="group flex items-center gap-2 text-[13px] text-foreground font-semibold hover:text-accent hover:translate-x-1 transition-all text-left"
-                        style={{ fontFamily: "var(--font-sans)" }}
-                      >
-                        <span className="group-hover:underline underline-offset-4">{item.label}</span>
-                      </Link>
+                      {"isDownload" in item && item.isDownload ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setMenuOpen(false);
+                            if (typeof window !== "undefined") {
+                              window.dispatchEvent(new CustomEvent("vestra_open_install_modal"));
+                            }
+                          }}
+                          className="group flex items-center gap-2 text-[13px] text-accent font-bold hover:underline transition-all text-left cursor-pointer"
+                          style={{ fontFamily: "var(--font-sans)" }}
+                        >
+                          <span className="underline-offset-4">{item.label}</span>
+                        </button>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          onClick={() => setMenuOpen(false)}
+                          className="group flex items-center gap-2 text-[13px] text-foreground font-semibold hover:text-accent hover:translate-x-1 transition-all text-left"
+                          style={{ fontFamily: "var(--font-sans)" }}
+                        >
+                          <span className="group-hover:underline underline-offset-4">{item.label}</span>
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -322,13 +350,28 @@ export function SiteHeader() {
               )}
             </button>
 
-            <Link
-              href="/account"
-              onClick={() => setMenuOpen(false)}
-              className="flex items-center gap-2 rounded-full px-4 py-2 bg-white/30 hover:bg-white/45 dark:bg-white/15 dark:hover:bg-white/25 border border-white/35 dark:border-white/25 text-xs text-foreground font-bold label-ui tracking-wider transition-all text-left"
-            >
-              <span>{user ? "Client Suite" : "Client Sign In"}</span>
-            </Link>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  if (typeof window !== "undefined") {
+                    window.dispatchEvent(new CustomEvent("vestra_open_install_modal"));
+                  }
+                }}
+                className="flex items-center gap-1.5 rounded-full px-3.5 py-2 bg-white text-zinc-950 dark:bg-white dark:text-zinc-950 font-mono text-xs font-black uppercase tracking-wider hover:opacity-90 transition-opacity cursor-pointer shadow-xs"
+              >
+                <span>Download App</span>
+              </button>
+
+              <Link
+                href="/account"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 rounded-full px-4 py-2 bg-white/30 hover:bg-white/45 dark:bg-white/15 dark:hover:bg-white/25 border border-white/35 dark:border-white/25 text-xs text-foreground font-bold label-ui tracking-wider transition-all text-left"
+              >
+                <span>{user ? "Client Suite" : "Client Sign In"}</span>
+              </Link>
+            </div>
           </div>
         </div>
       )}
