@@ -1,16 +1,6 @@
 import type { NextConfig } from "next";
-import withSerwistInit from "@serwist/next";
-
-const withSerwist = withSerwistInit({
-  swSrc: "src/app/sw.ts",
-  swDest: "public/sw.js",
-  disable: process.env.NODE_ENV === "development",
-});
 
 const nextConfig: NextConfig = {
-  // Silence Turbopack warnings when using Serwist
-  turbopack: {},
-  
   // Never leak the framework version.
   poweredByHeader: false,
   reactStrictMode: true,
@@ -66,9 +56,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-// If we are deploying to Vercel, do NOT wrap with Serwist.
-// Vercel strongly forces Turbopack on Next 16, which crashes the Serwist Webpack plugin.
-// Bypassing Serwist ensures the build perfectly succeeds.
-const isVercel = process.env.VERCEL === "1";
-
-export default isVercel ? nextConfig : withSerwist(nextConfig);
+export default nextConfig;
