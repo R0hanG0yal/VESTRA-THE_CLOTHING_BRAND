@@ -36,21 +36,21 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="mt-24 sm:mt-32 border-t border-white/15 bg-white/[0.02] dark:bg-white/[0.01] backdrop-blur-xl text-left">
+    <footer className="mt-10 sm:mt-16 border-t border-white/15 bg-white/[0.02] dark:bg-white/[0.01] backdrop-blur-xl text-left">
       {/* ═══ TRUST & REASSURANCE STRIP ═══ */}
-      <section className="mx-auto max-w-7xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8 text-left border-b border-white/10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6 text-left">
+      <section className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-3.5 sm:py-6 text-left border-b border-white/10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 text-left">
           {TRUST.map((t) => (
             <div
               key={t.title}
-              className="rounded-2xl p-4 sm:p-5 bg-white/[0.03] dark:bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all text-left flex flex-col justify-between"
+              className="rounded-xl p-2.5 sm:p-3.5 bg-white/[0.03] dark:bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all text-left flex flex-col justify-between"
             >
               <div>
-                <IconImage type={t.iconType} size={20} className="grayscale opacity-75 mb-3" />
-                <p className="label-ui text-[10px] sm:text-[11px] font-semibold tracking-wider text-foreground text-left">
+                <IconImage type={t.iconType} size={15} className="grayscale opacity-75 mb-1.5" />
+                <p className="label-ui text-[9px] sm:text-[10px] font-bold tracking-wider text-foreground text-left uppercase">
                   {t.title}
                 </p>
-                <p className="mt-1.5 text-left text-[11px] sm:text-xs text-foreground/65 leading-relaxed font-sans">
+                <p className="mt-0.5 text-left text-[9px] sm:text-[11px] text-foreground/65 leading-snug font-sans">
                   {t.detail}
                 </p>
               </div>
@@ -60,60 +60,60 @@ export function SiteFooter() {
       </section>
 
       {/* ═══ MAIN EDITORIAL FOOTER COLUMNS ═══ */}
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:py-16 sm:px-6 lg:px-8 text-left">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 text-left">
+      <section className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-5 sm:py-10 text-left">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 text-left">
           
           {/* Brand & Provenance Card */}
           <div className="text-left lg:col-span-5">
             <Link href="/" className="inline-block text-left group">
               <span
-                className="font-serif italic text-2xl sm:text-3xl uppercase tracking-[0.16em] text-foreground font-normal transition-opacity group-hover:opacity-75 text-left"
+                className="font-serif italic text-xl sm:text-2xl uppercase tracking-[0.16em] text-foreground font-normal transition-opacity group-hover:opacity-75 text-left"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 {BRAND_NAME}
               </span>
             </Link>
             
-            <p className="mt-1 label-ui text-[9px] tracking-[0.25em] text-foreground/45 text-left uppercase">
+            <p className="mt-0.5 label-ui text-[8px] sm:text-[9px] tracking-[0.2em] text-foreground/45 text-left uppercase">
               Haute Édition · Studio Archive
             </p>
             
-            <p className="mt-4 max-w-md text-left text-xs sm:text-sm leading-relaxed text-foreground/75 font-serif italic">
+            <p className="mt-2 max-w-md text-left text-[11px] sm:text-xs leading-relaxed text-foreground/75 font-serif italic">
               {BRAND_TAGLINE}. Architectural silhouettes, responsive digital fitting calibration, and calibrated pigment palettes designed for human form.
             </p>
 
-            <div className="mt-6 rounded-2xl p-4 sm:p-5 bg-white/[0.03] dark:bg-white/[0.02] border border-white/10 text-left max-w-md">
-              <p className="label-ui text-[10px] tracking-wider text-foreground/60 text-left font-semibold">
+            <div className="mt-3 rounded-xl p-2.5 sm:p-3.5 bg-white/[0.03] dark:bg-white/[0.02] border border-white/10 text-left max-w-md">
+              <p className="label-ui text-[8px] sm:text-[9px] tracking-wider text-foreground/60 text-left font-semibold">
                 Established in Jaipur · Owned by Rohan Goyal
               </p>
-              <p className="font-sans text-[12px] font-medium text-foreground text-left mt-1">
+              <p className="font-sans text-[10px] sm:text-[11px] font-medium text-foreground text-left mt-0.5">
                 Digital Direction by DAGEROZ digital agency
               </p>
-              <p className="mt-1.5 font-mono text-[10px] text-foreground/60 text-left">
+              <p className="mt-1 font-mono text-[9px] text-foreground/60 text-left">
                 Contact: <a href="mailto:dageroz@gmail.com" className="underline hover:text-foreground">dageroz@gmail.com</a>
               </p>
-              <p className="mt-1 font-mono text-[10px] text-foreground/50 leading-relaxed text-left">
+              <p className="mt-0.5 font-mono text-[8px] sm:text-[9px] text-foreground/50 leading-tight text-left">
                 CIN: {CORPORATE_DETAILS.cin} · GSTIN: {CORPORATE_DETAILS.gstin}
               </p>
-              <p className="mt-1 font-mono text-[10px] text-foreground/45 leading-relaxed text-left">
+              <p className="mt-0.5 font-mono text-[8px] sm:text-[9px] text-foreground/45 leading-tight text-left">
                 {CORPORATE_DETAILS.registeredOffice}
               </p>
             </div>
           </div>
 
           {/* Responsive 3-Column Links Directory */}
-          <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-left">
+          <div className="lg:col-span-7 grid grid-cols-3 gap-2 sm:gap-6 text-left">
             {/* 01 // COLLECTIONS */}
             <div className="text-left">
-              <h3 className="label-ui text-[10px] tracking-[0.25em] text-foreground/50 text-left mb-4">
+              <h3 className="label-ui text-[8px] sm:text-[9px] tracking-[0.15em] sm:tracking-[0.25em] text-foreground/50 text-left mb-2 sm:mb-3 uppercase font-bold">
                 01 // Collections
               </h3>
-              <ul className="space-y-2.5 text-left text-xs">
+              <ul className="space-y-1 sm:space-y-1.5 text-left">
                 {CATEGORIES.slice(0, 7).map((c) => (
                   <li key={c.slug} className="text-left">
                     <Link
                       href={`/category/${c.slug}`}
-                      className="font-sans text-[13px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block"
+                      className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate"
                     >
                       {c.name}
                     </Link>
@@ -124,37 +124,37 @@ export function SiteFooter() {
 
             {/* 02 // ATELIER SUITE */}
             <div className="text-left">
-              <h3 className="label-ui text-[10px] tracking-[0.25em] text-foreground/50 text-left mb-4">
-                02 // Atelier Suite
+              <h3 className="label-ui text-[8px] sm:text-[9px] tracking-[0.15em] sm:tracking-[0.25em] text-foreground/50 text-left mb-2 sm:mb-3 uppercase font-bold">
+                02 // Suite
               </h3>
-              <ul className="space-y-2.5 text-left text-xs">
+              <ul className="space-y-1 sm:space-y-1.5 text-left">
                 <li className="text-left">
-                  <Link href="/try-on" className="font-sans text-[13px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block">
+                  <Link href="/try-on" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
                     3D Fit Studio
                   </Link>
                 </li>
                 <li className="text-left">
-                  <Link href="/style-advisor" className="font-sans text-[13px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block">
+                  <Link href="/style-advisor" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
                     Style Advisor
                   </Link>
                 </li>
                 <li className="text-left">
-                  <Link href="/shop?sort=trending" className="font-sans text-[13px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block">
+                  <Link href="/shop?sort=trending" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
                     Lookbook Index
                   </Link>
                 </li>
                 <li className="text-left">
-                  <Link href="/membership" className="font-sans text-[13px] text-accent font-medium hover:underline hover:translate-x-0.5 transition-all text-left block">
-                    Patron Pass (₹201/yr)
+                  <Link href="/membership" className="font-sans text-[10px] sm:text-[12px] text-accent font-medium hover:underline hover:translate-x-0.5 transition-all text-left block truncate">
+                    Patron Pass (₹201)
                   </Link>
                 </li>
                 <li className="text-left">
-                  <Link href="/refer" className="font-sans text-[13px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block">
+                  <Link href="/refer" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
                     Refer & Earn (₹250)
                   </Link>
                 </li>
                 <li className="text-left">
-                  <Link href="/account" className="font-sans text-[13px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block">
+                  <Link href="/account" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
                     Order Ledger
                   </Link>
                 </li>
@@ -162,33 +162,33 @@ export function SiteFooter() {
             </div>
 
             {/* 03 // STATUTORY & LEGAL */}
-            <div className="text-left col-span-2 sm:col-span-1">
-              <h3 className="label-ui text-[10px] tracking-[0.25em] text-foreground/50 text-left mb-4">
+            <div className="text-left">
+              <h3 className="label-ui text-[8px] sm:text-[9px] tracking-[0.15em] sm:tracking-[0.25em] text-foreground/50 text-left mb-2 sm:mb-3 uppercase font-bold">
                 03 // Statutory
               </h3>
-              <ul className="space-y-2.5 text-left text-xs">
+              <ul className="space-y-1 sm:space-y-1.5 text-left">
                 <li className="text-left">
-                  <Link href="/privacy" className="font-sans text-[13px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block">
-                    Privacy Policy [DPDP]
+                  <Link href="/privacy" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
+                    Privacy [DPDP]
                   </Link>
                 </li>
                 <li className="text-left">
-                  <Link href="/terms" className="font-sans text-[13px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block">
-                    Terms & Conditions
+                  <Link href="/terms" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
+                    Terms
                   </Link>
                 </li>
                 <li className="text-left">
-                  <Link href="/refund-policy" className="font-sans text-[13px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block">
-                    Refund & Exchange
+                  <Link href="/refund-policy" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
+                    Refunds
                   </Link>
                 </li>
                 <li className="text-left">
-                  <Link href="/cookies" className="font-sans text-[13px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block">
-                    Cookie Storage Audit
+                  <Link href="/cookies" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
+                    Cookie Audit
                   </Link>
                 </li>
                 <li className="text-left">
-                  <Link href="/credits" className="font-sans text-[13px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block">
+                  <Link href="/credits" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
                     Textile Credits
                   </Link>
                 </li>
@@ -196,10 +196,10 @@ export function SiteFooter() {
                   <button
                     type="button"
                     onClick={handleOpenCookieSettings}
-                    className="font-sans text-[13px] text-left text-foreground/75 hover:text-foreground hover:underline cursor-pointer block"
+                    className="font-sans text-[10px] sm:text-[12px] text-left text-foreground/75 hover:text-foreground hover:underline cursor-pointer block truncate"
                     aria-label="Manage cookie consent and tracking preferences"
                   >
-                    Cookie Preferences
+                    Cookies
                   </button>
                 </li>
               </ul>
@@ -211,39 +211,39 @@ export function SiteFooter() {
       </section>
 
       {/* ═══ SUB-FOOTER BAR ═══ */}
-      <div className="border-t border-white/10 px-4 py-6 text-left sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 text-left md:flex-row md:items-center">
+      <div className="border-t border-white/10 px-3 py-3 sm:px-6 sm:py-4 text-left">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 text-left md:flex-row md:items-center">
           <div className="text-left">
-            <p className="font-mono text-[10px] uppercase tracking-wider text-foreground/50 text-left">
+            <p className="font-mono text-[8px] sm:text-[9px] uppercase tracking-wider text-foreground/50 text-left">
               © {new Date().getFullYear()} {BRAND_LEGAL_NAME}. ALL TRADEMARKS REGISTERED.
             </p>
-            <p className="font-mono text-[9px] text-foreground/40 mt-0.5 text-left">
-              Jaipur, India · Governed by the Information Technology Act, 2000 & Digital Personal Data Protection Act, 2023.
+            <p className="font-mono text-[8px] text-foreground/40 mt-0.5 text-left">
+              Jaipur, India · Governed by the IT Act, 2000 & DPDP Act, 2023.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-5 text-left">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-5 text-left">
             <Link
               href="/privacy"
-              className="label-ui text-[10px] tracking-wider text-foreground/60 hover:text-foreground text-left"
+              className="label-ui text-[9px] tracking-wider text-foreground/60 hover:text-foreground text-left"
             >
               DPDP Notice
             </Link>
             <Link
               href="/refund-policy"
-              className="label-ui text-[10px] tracking-wider text-foreground/60 hover:text-foreground text-left"
+              className="label-ui text-[9px] tracking-wider text-foreground/60 hover:text-foreground text-left"
             >
               Returns
             </Link>
             <Link
               href="/credits"
-              className="label-ui text-[10px] tracking-wider text-foreground/60 hover:text-foreground text-left"
+              className="label-ui text-[9px] tracking-wider text-foreground/60 hover:text-foreground text-left"
             >
               Attribution
             </Link>
             <Link
               href="/admin"
-              className="label-ui text-[10px] tracking-wider text-foreground/60 hover:text-foreground text-left"
+              className="label-ui text-[9px] tracking-wider text-foreground/60 hover:text-foreground text-left"
             >
               Console
             </Link>

@@ -741,11 +741,10 @@ export function ShopWorkspace({
             className={cn(
               "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 transition-all duration-300 font-mono text-xs font-black cursor-pointer border text-left",
               filtersOpen
-                ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 border-transparent shadow-sm"
+                ? "bg-white/70 hover:bg-white/80 dark:bg-white/25 dark:hover:bg-white/35 border-white/60 dark:border-white/35 text-zinc-950 dark:text-white shadow-sm"
                 : "bg-white/35 hover:bg-white/55 dark:bg-white/[0.12] dark:hover:bg-white/[0.2] border-white/40 dark:border-white/25 text-zinc-950 dark:text-white"
             )}
           >
-            <IconImage type="filter" size={13} className="grayscale opacity-90" />
             <span>{filtersOpen ? "Close" : "Filters"}</span>
             {activeCount > 0 && (
               <span className="rounded-full bg-accent px-1.5 py-0.2 font-mono text-[9px] font-bold text-white">
@@ -771,7 +770,7 @@ export function ShopWorkspace({
             className={cn(
               "flex items-center gap-1.5 rounded-full px-3 py-1.5 transition-all duration-300 font-mono text-xs font-black uppercase tracking-wider cursor-pointer border text-left",
               sortOpen
-                ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 border-transparent shadow-sm"
+                ? "bg-white/70 hover:bg-white/80 dark:bg-white/25 dark:hover:bg-white/35 border-white/60 dark:border-white/35 text-zinc-950 dark:text-white shadow-sm"
                 : "bg-white/35 hover:bg-white/55 dark:bg-white/[0.12] dark:hover:bg-white/[0.2] border-white/40 dark:border-white/25 text-zinc-950 dark:text-white"
             )}
           >

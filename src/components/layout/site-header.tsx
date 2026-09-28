@@ -147,7 +147,7 @@ export function SiteHeader() {
             className={cn(
               "flex items-center gap-2 rounded-full p-2.5 sm:px-4 sm:py-2 transition-all duration-300 text-left cursor-pointer border",
               menuOpen
-                ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 border-transparent shadow-sm"
+                ? "bg-white/70 hover:bg-white/80 dark:bg-white/25 dark:hover:bg-white/35 border-white/60 dark:border-white/35 text-zinc-950 dark:text-white shadow-sm"
                 : "bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border-white/40 dark:border-white/25 text-zinc-950 dark:text-white font-black",
             )}
           >
