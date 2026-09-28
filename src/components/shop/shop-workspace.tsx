@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useCart } from "@/providers/cart-provider";
 import { ProductCard } from "@/components/product/product-card";
 import { LookCard } from "@/components/product/look-card";
 import { FilterPanel } from "@/components/shop/filter-panel";
@@ -48,6 +50,7 @@ export function ShopWorkspace({
   syncUrl?: boolean;
 }) {
   const pathname = usePathname();
+  const { count: cartCount } = useCart();
   const [filters, setFilters] = useState<ShopFilters>(initialFilters);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
@@ -752,7 +755,7 @@ export function ShopWorkspace({
           </button>
 
           {/* Piece Counter */}
-          <span className="font-mono text-xs text-zinc-950 dark:text-white font-black tracking-wider text-center">
+          <span className="font-mono text-xs text-zinc-950 dark:text-white font-black tracking-wider text-center hidden min-[360px]:inline">
             {total} Pieces
           </span>
 
@@ -766,15 +769,25 @@ export function ShopWorkspace({
             aria-label={sortOpen ? "Close sort menu" : "Open sort options"}
             aria-expanded={sortOpen}
             className={cn(
-              "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 transition-all duration-300 font-mono text-xs font-black uppercase tracking-wider cursor-pointer border text-left",
+              "flex items-center gap-1.5 rounded-full px-3 py-1.5 transition-all duration-300 font-mono text-xs font-black uppercase tracking-wider cursor-pointer border text-left",
               sortOpen
                 ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 border-transparent shadow-sm"
                 : "bg-white/35 hover:bg-white/55 dark:bg-white/[0.12] dark:hover:bg-white/[0.2] border-white/40 dark:border-white/25 text-zinc-950 dark:text-white"
             )}
           >
-            <span className="max-w-[85px] truncate">{currentSortLabel}</span>
+            <span className="max-w-[70px] truncate">{currentSortLabel}</span>
             <span className="text-[10px]">▼</span>
           </button>
+
+          {/* Mobile Bag Trigger */}
+          <Link
+            href="/cart"
+            aria-label={`Shopping bag with ${cartCount} items`}
+            className="flex items-center gap-1 rounded-full px-2.5 sm:px-3 py-1.5 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 text-xs font-black transition-all shadow-sm shrink-0"
+          >
+            <IconImage type="order" size={13} className="border-none invert dark:invert-0" />
+            <span className="font-mono text-xs">({cartCount})</span>
+          </Link>
         </div>
       </div>
     </div>

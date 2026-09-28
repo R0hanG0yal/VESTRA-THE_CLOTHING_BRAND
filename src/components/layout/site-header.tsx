@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useCart } from "@/providers/cart-provider";
 import { useAuth } from "@/providers/auth-provider";
@@ -57,6 +57,8 @@ const MENU_COLUMNS = [
 
 export function SiteHeader() {
   const router = useRouter();
+  const pathname = usePathname();
+  const isShopPage = pathname === "/shop" || pathname?.startsWith("/shop");
   const { count } = useCart();
   const { user } = useAuth();
   const [query, setQuery] = useState("");
@@ -135,15 +137,15 @@ export function SiteHeader() {
           (scrolled || menuOpen) && "bg-white/30 dark:bg-white/[0.12] shadow-[0_16px_45px_rgba(0,0,0,0.28)] border-white/45 dark:border-white/25",
         )}
       >
-        {/* ── Left: Expanding Menu Trigger + Minimalist Logo ── */}
-        <div className="flex items-center gap-3 sm:gap-4 text-left">
+        {/* ── Left: Expanding Menu Trigger (3 lines only on mobile) + Wordmark ── */}
+        <div className="flex items-center gap-2 sm:gap-4 text-left">
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Close menu" : "Open expanded navigation menu"}
             aria-expanded={menuOpen}
             className={cn(
-              "flex items-center gap-2 rounded-full px-3.5 sm:px-4 py-2 transition-all duration-300 text-left cursor-pointer border",
+              "flex items-center gap-2 rounded-full p-2.5 sm:px-4 sm:py-2 transition-all duration-300 text-left cursor-pointer border",
               menuOpen
                 ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 border-transparent shadow-sm"
                 : "bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border-white/40 dark:border-white/25 text-zinc-950 dark:text-white font-black",
@@ -169,23 +171,27 @@ export function SiteHeader() {
                 )}
               />
             </span>
-            <span className="font-mono text-xs sm:text-[13px] tracking-[0.15em] text-left font-black text-zinc-950 dark:text-white uppercase">
+            <span className="hidden sm:inline font-mono text-xs sm:text-[13px] tracking-[0.15em] text-left font-black text-zinc-950 dark:text-white uppercase">
               {menuOpen ? "Close" : "Menu"}
             </span>
           </button>
 
+          {/* Brand Name Text (Like Previous) */}
           <Link
             href="/"
             onClick={() => setMenuOpen(false)}
-            className="group flex items-center text-left ml-1"
+            className="group flex items-baseline gap-1 sm:gap-1.5 text-left ml-0.5"
             aria-label={`${BRAND_NAME} Home`}
           >
-            {/* The mix-blend modes and invert automatically remove the white background in both light and dark modes! */}
-            <img
-              src="/logo.jpg"
-              alt="VESTRA Atelier"
-              className="h-10 sm:h-12 w-auto object-contain transition-opacity group-hover:opacity-75 mix-blend-multiply dark:invert dark:mix-blend-screen"
-            />
+            <span
+              className="font-serif italic text-base sm:text-2xl uppercase tracking-[0.12em] text-zinc-950 dark:text-white font-semibold transition-opacity group-hover:opacity-75 text-left whitespace-nowrap"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              VESTRA
+            </span>
+            <span className="font-mono text-[9px] sm:text-[11px] tracking-[0.2em] text-zinc-800 dark:text-zinc-300 uppercase font-bold">
+              Atelier
+            </span>
           </Link>
         </div>
 
@@ -194,14 +200,14 @@ export function SiteHeader() {
           <Link
             href="/shop"
             onClick={() => setMenuOpen(false)}
-            className="flex items-center rounded-full px-3.5 py-1.5 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-xs sm:text-sm font-black text-zinc-950 dark:text-white tracking-[0.15em] uppercase transition-all duration-300 shadow-xs"
+            className="flex items-center rounded-full px-3 sm:px-3.5 py-1.5 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-xs sm:text-sm font-black text-zinc-950 dark:text-white tracking-[0.15em] uppercase transition-all duration-300 shadow-xs"
           >
             <span className="sm:hidden">Shop</span>
             <span className="hidden sm:inline">Collections</span>
           </Link>
         </nav>
 
-        {/* ── Right Actions: Search + Bag ── */}
+        {/* ── Right Actions: Search (Top) + Bag (Desktop Only) ── */}
         <div className="flex items-center gap-2 sm:gap-4 text-left">
           {/* Expanding Minimalist Search Bar */}
           <form onSubmit={submit} role="search" className="relative flex items-center text-left">
@@ -217,15 +223,15 @@ export function SiteHeader() {
             />
           </form>
 
-          {/* Simple Bag with Count */}
+          {/* Bag with Count — Hidden on mobile, shown on laptop & tablet */}
           <Link
             href="/cart"
             onClick={() => setMenuOpen(false)}
             aria-label={`Shopping bag with ${count} items`}
-            className="flex items-center gap-1.5 sm:gap-2 rounded-full px-3 sm:px-4 py-2 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-zinc-950 dark:text-white font-black transition-all duration-300 text-left shadow-xs"
+            className="hidden sm:flex items-center gap-1.5 sm:gap-2 rounded-full px-3 sm:px-4 py-2 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-zinc-950 dark:text-white font-black transition-all duration-300 text-left shadow-xs"
           >
             <IconImage type="order" size={15} className="border-none grayscale opacity-95" />
-            <span className="font-mono text-xs sm:text-[13px] tracking-[0.15em] text-left hidden min-[360px]:inline text-zinc-950 dark:text-white uppercase">
+            <span className="font-mono text-xs sm:text-[13px] tracking-[0.15em] text-left uppercase">
               Bag
             </span>
             <span className="font-mono text-xs sm:text-[13px] text-zinc-950 dark:text-white font-black text-left">
@@ -234,6 +240,19 @@ export function SiteHeader() {
           </Link>
         </div>
       </div>
+
+      {/* ── Mobile Floating Bag Button (for non-shop pages) ── */}
+      {!isShopPage && (
+        <Link
+          href="/cart"
+          onClick={() => setMenuOpen(false)}
+          aria-label={`Shopping bag with ${count} items`}
+          className="fixed bottom-5 right-4 z-40 sm:hidden pointer-events-auto flex items-center gap-1.5 rounded-full px-4 py-2.5 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-[0_12px_36px_rgba(0,0,0,0.4)] border border-white/30 active:scale-95 transition-all font-mono text-xs font-black"
+        >
+          <IconImage type="order" size={15} className="border-none invert dark:invert-0" />
+          <span>Bag ({count})</span>
+        </Link>
+      )}
 
       {/* ═══ EXPANDING LIQUID GLASS MENU SECTION ═══ */}
       {menuOpen && (
