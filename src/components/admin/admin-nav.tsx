@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils";
 import { IconImage } from "@/components/ui/icon-image";
 
 const LINKS = [
-  { href: "/admin", label: "Overview Ledger", iconName: "sparkles" as const },
-  { href: "/admin/products", label: "Garment Catalog", iconName: "bag" as const },
-  { href: "/admin/coupons", label: "Voucher Codes", iconName: "gift" as const },
-  { href: "/admin/orders", label: "Fulfillment Queue", iconName: "delivery" as const },
+  { href: "/admin", label: "Overview", iconName: "sparkles" as const },
+  { href: "/admin/products", label: "Products", iconName: "bag" as const },
+  { href: "/admin/coupons", label: "Coupons", iconName: "gift" as const },
+  { href: "/admin/orders", label: "Orders", iconName: "delivery" as const },
 ];
 
 export function AdminNav() {
@@ -65,7 +65,7 @@ export function AdminNav() {
           className="inline-flex items-center gap-3 px-4 py-3 font-mono text-xs uppercase tracking-wider text-rose-600 hover:bg-rose-500/5 transition-colors disabled:opacity-50 text-left"
         >
           <IconImage name="close" alt="Sign out" className="h-4 w-4 object-cover grayscale" />
-          <span>{loggingOut ? "Concluding..." : "Log Out"}</span>
+          <span>{loggingOut ? "Logging Out..." : "Log Out"}</span>
         </button>
       </div>
     </nav>

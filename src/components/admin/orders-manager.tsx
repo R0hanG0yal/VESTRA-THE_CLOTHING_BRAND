@@ -201,7 +201,7 @@ export function OrdersManager() {
                               key={`${i.productId}-${idx}`}
                               className="flex items-center gap-3 py-3 text-left"
                             >
-                              <div className="h-12 w-10 shrink-0 overflow-hidden border border-line bg-ink-900/5">
+                              <div className="relative h-12 w-10 shrink-0 overflow-hidden border border-line bg-ink-900/5">
                                 <ProductImage
                                   kind={i.kind}
                                   color={i.colorHex || "#627264"}

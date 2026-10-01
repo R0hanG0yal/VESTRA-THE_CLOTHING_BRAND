@@ -48,23 +48,23 @@ export function ScrollZoomShowcase() {
   const hero = getProduct("p0008") ?? PRODUCTS[0];
 
   const features = [
-    { iconName: "tryon" as const, title: "Volumetric Draping", copy: "3D virtual fitting simulations with real-time drape kinematics." },
-    { iconName: "palette" as const, title: "Colorimetric Harmonies", copy: "Scientific undertone matching calibrated to daylight optics." },
-    { iconName: "delivery" as const, title: "48-Hour Courier Dispatch", copy: "Complimentary direct atelier courier on orders exceeding ₹1,499." },
-    { iconName: "authentic" as const, title: "Cryptographic Attestation", copy: "Cryptographically signed payment intents and guaranteed garment provenance." },
+    { iconName: "tryon" as const, title: "3D Virtual Try-On", copy: "Try on clothes virtually in 3D on your phone before ordering." },
+    { iconName: "palette" as const, title: "Colour Matching", copy: "Find the best outfits and shades that match your skin tone." },
+    { iconName: "delivery" as const, title: "Fast Express Delivery", copy: "Free express delivery across India on orders above ₹1,499." },
+    { iconName: "authentic" as const, title: "100% Genuine Quality", copy: "Authentic premium fabrics with secure UPI payments and easy returns." },
   ];
 
   return (
     <section ref={sectionRef} className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 text-left">
       <div className="mb-12 border-l-2 border-foreground pl-6 text-left">
         <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/45">
-          Section // 04 — Technological Atelier
+          Why Shop With Us
         </span>
-        <h2 className="mt-2 font-serif text-4xl font-light tracking-tight text-foreground sm:text-5xl text-left">
-          Cinematic Presentation. Zero Fitting Compromise.
+        <h2 className="mt-2 font-serif text-3xl font-light tracking-tight text-foreground sm:text-4xl text-left">
+          Modern Style. Perfect Fit Guaranteed.
         </h2>
         <p className="mt-2 text-sm text-foreground/60 max-w-xl text-left font-sans">
-          Engineered garments documented at ultra-high fidelity, merging computational fitment with Savile Row precision.
+          Premium tailored clothing designed for everyday comfort, office wear, and special occasions.
         </p>
       </div>
 

@@ -17,18 +17,18 @@ export default function RefundPolicyPage() {
         className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-foreground/50 hover:text-foreground transition-colors"
       >
         <IconImage type="arrow" alt="Return" className="h-4 w-4 object-cover grayscale" />
-        <span>Broadside Index // Return</span>
+        <span>← Back to Home</span>
       </Link>
 
       <header className="mt-8 border-l-2 border-foreground pl-6 text-left">
         <div className="flex items-center gap-2">
           <IconImage type="return" alt="Exchange" className="h-5 w-5 object-cover grayscale" />
           <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
-            Consumer Rights // Requisition Satisfaction
+            Customer Support // Returns & Exchanges
           </span>
         </div>
         <h1 className="mt-4 font-serif text-4xl font-light tracking-tight text-foreground sm:text-5xl text-left">
-          Refund, Return & Exchange Protocol
+          Refund & Return Policy
         </h1>
         <p className="mt-3 font-mono text-xs uppercase tracking-wider text-foreground/60 text-left">
           {BRAND_LEGAL_NAME} · Consumer Protection (E-Commerce) Rules, 2020 Compliance

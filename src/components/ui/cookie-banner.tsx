@@ -81,35 +81,35 @@ export function CookieBanner() {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 text-left">
           <div className="max-w-3xl text-left">
             <div className="flex items-center gap-2 mb-2 text-left">
-              <IconImage type="shield" alt="Consent" className="h-4 w-4 object-cover grayscale" />
+              <IconImage type="shield" alt="Privacy" className="h-4 w-4 object-cover grayscale" />
               <span className="font-mono text-[9px] uppercase tracking-widest text-foreground/50">
-                Statutory Notice // DPDP Act 2023 Consent Protocol
+                Privacy & Cookies
               </span>
             </div>
 
             <h2 className="font-serif text-xl sm:text-2xl font-light text-foreground text-left">
-              Patron Telemetry & Storage Preferences
+              Your Privacy & Cookie Choices
             </h2>
 
             <p className="mt-2 font-sans text-xs text-foreground/70 leading-relaxed max-w-2xl text-left">
-              VESTRA deploys strictly necessary storage tokens to maintain your bag and secure UPI sessions. Optional analytical telemetry helps calibrate catalog performance. Review our{" "}
-              <Link href="/cookies" className="underline text-foreground">Cookie Protocol</Link> and{" "}
-              <Link href="/privacy" className="underline text-foreground">Privacy Charter</Link>.
+              We use cookies to save your shopping bag and process secure payments. Read our{" "}
+              <Link href="/cookies" className="underline text-foreground">Cookie Policy</Link> and{" "}
+              <Link href="/privacy" className="underline text-foreground">Privacy Policy</Link>.
             </p>
 
             {customize && (
               <div className="mt-6 border-t border-line pt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs text-left">
                 <div className="border border-line bg-surface-muted/30 p-4 text-left">
                   <div className="flex items-center justify-between text-left">
-                    <span className="font-semibold text-foreground uppercase tracking-wider">Strictly Necessary</span>
+                    <span className="font-semibold text-foreground uppercase tracking-wider">Required</span>
                     <span className="text-[10px] text-foreground/50 border border-foreground/30 px-1 py-0.5">[MANDATORY]</span>
                   </div>
-                  <p className="font-sans text-[11px] text-foreground/60 mt-1">Required for authentication, security nonces, and checkout.</p>
+                  <p className="font-sans text-[11px] text-foreground/60 mt-1">Needed for shopping bag, checkout, and security.</p>
                 </div>
 
                 <label className="border border-line bg-surface-muted/30 p-4 text-left cursor-pointer hover:border-foreground">
                   <div className="flex items-center justify-between text-left">
-                    <span className="font-semibold text-foreground uppercase tracking-wider">Functional Modes</span>
+                    <span className="font-semibold text-foreground uppercase tracking-wider">Preferences</span>
                     <input
                       type="checkbox"
                       checked={functional}
@@ -117,12 +117,12 @@ export function CookieBanner() {
                       className="h-4 w-4"
                     />
                   </div>
-                  <p className="font-sans text-[11px] text-foreground/60 mt-1">Preserves midnight/daylight spectral palette preferences.</p>
+                  <p className="font-sans text-[11px] text-foreground/60 mt-1">Saves your Dark or Light theme choice.</p>
                 </label>
 
                 <label className="border border-line bg-surface-muted/30 p-4 text-left cursor-pointer hover:border-foreground">
                   <div className="flex items-center justify-between text-left">
-                    <span className="font-semibold text-foreground uppercase tracking-wider">Anonymized Telemetry</span>
+                    <span className="font-semibold text-foreground uppercase tracking-wider">Analytics</span>
                     <input
                       type="checkbox"
                       checked={analytics}
@@ -130,7 +130,7 @@ export function CookieBanner() {
                       className="h-4 w-4"
                     />
                   </div>
-                  <p className="font-sans text-[11px] text-foreground/60 mt-1">Anonymous catalog drop engagement (zero ad cookies).</p>
+                  <p className="font-sans text-[11px] text-foreground/60 mt-1">Helps us improve our website and products.</p>
                 </label>
               </div>
             )}
@@ -142,7 +142,7 @@ export function CookieBanner() {
                 onClick={handleSaveCustom}
                 className="border border-foreground bg-foreground px-6 py-3 font-mono text-xs uppercase tracking-widest text-background hover:bg-foreground/90 transition-colors"
               >
-                [Save Configured Preferences]
+                [Save Choices]
               </button>
             ) : (
               <>
@@ -150,7 +150,7 @@ export function CookieBanner() {
                   onClick={() => setCustomize(true)}
                   className="border border-line bg-transparent px-5 py-3 font-mono text-xs uppercase tracking-widest text-foreground hover:border-foreground transition-colors"
                 >
-                  Configure
+                  Manage Options
                 </button>
                 <button
                   onClick={handleNecessaryOnly}

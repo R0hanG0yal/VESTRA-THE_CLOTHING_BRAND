@@ -130,10 +130,10 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
           <div className="flex items-center gap-2 text-left">
             <div>
               <h3 className="font-mono text-sm uppercase tracking-[0.2em] font-black text-zinc-950 dark:text-white text-left">
-                Specification Filter
+                Filters
               </h3>
               <span className="font-mono text-[11px] uppercase tracking-widest text-zinc-800 dark:text-zinc-200 font-bold block">
-                {active > 0 ? `${active} active criteria` : "Full Archive"}
+                {active > 0 ? `${active} applied` : "All Products"}
               </span>
             </div>
           </div>
@@ -144,7 +144,7 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
                 onClick={reset}
                 className="rounded-full border border-white/40 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider font-black hover:opacity-90 transition-all text-left cursor-pointer shadow-xs"
               >
-                Reset ({active})
+                Clear All ({active})
               </button>
             )}
             {onClose && (
@@ -162,17 +162,17 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
       )}
 
       <div className="min-h-0 flex-1 overflow-y-auto pr-1 text-left space-y-0.5 custom-scrollbar">
-        {/* 01 Target Demographic */}
+        {/* 01 Category */}
         <Section
-          title="01 // Demographic"
+          title="01 // Category"
           count={filters.gender !== "all" ? 1 : 0}
           defaultOpen={true}
         >
           <div className="flex flex-wrap gap-1.5 text-left">
             {[
-              { value: "all", label: "ALL CLIENTS" },
-              { value: "women", label: "FEMME" },
-              { value: "men", label: "HOMME" },
+              { value: "all", label: "ALL" },
+              { value: "women", label: "WOMEN" },
+              { value: "men", label: "MEN" },
               { value: "unisex", label: "UNISEX" },
             ].map((g) => (
               <Chip
@@ -186,10 +186,10 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
           </div>
         </Section>
 
-        {/* 02 Sartorial Vibe */}
+        {/* 02 Style & Vibe */}
         <Section
-          title="02 // Aesthetic Vibe"
-          hint="Registers"
+          title="02 // Style & Vibe"
+          hint="Style"
           count={filters.vibes.length}
           defaultOpen={true}
         >
@@ -206,7 +206,7 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
           </div>
         </Section>
 
-        {/* 03 Valuation Price Range */}
+        {/* 03 Price Range */}
         <Section
           title="03 // Price Range"
           hint={`${formatINR(filters.minPrice)} – ${formatINR(filters.maxPrice)}`}
@@ -264,10 +264,10 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
           </div>
         </Section>
 
-        {/* 04 Chromatic Swatches */}
+        {/* 04 Colors */}
         <Section
-          title="04 // Color Palette"
-          hint="Tactile Swatches"
+          title="04 // Color"
+          hint="Colors"
           count={filters.colors.length}
           defaultOpen={true}
         >
@@ -306,7 +306,7 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
 
         {/* 05 Cut & Fit */}
         <Section
-          title="05 // Silhouette & Fit"
+          title="05 // Fit & Cut"
           count={filters.fits.length}
           defaultOpen={false}
         >
@@ -325,7 +325,7 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
 
         {/* 06 Sizing */}
         <Section
-          title="06 // Sizing Specification"
+          title="06 // Size"
           count={filters.sizes.length}
           defaultOpen={false}
         >
@@ -344,7 +344,7 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
 
         {/* 07 Occasion Context */}
         <Section
-          title="07 // Occasion Context"
+          title="07 // Occasion"
           count={filters.occasions.length}
           defaultOpen={false}
         >
@@ -363,9 +363,9 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
           </div>
         </Section>
 
-        {/* 08 Archive Reduction Discount */}
+        {/* 08 Discount */}
         <Section
-          title="08 // Discount Rebate"
+          title="08 // Discounts & Offers"
           count={filters.minDiscount > 0 ? 1 : 0}
           defaultOpen={false}
         >
@@ -386,7 +386,7 @@ export function FilterPanel({ filters, onChange, onClose, hideHeader = false }: 
 
         {/* 09 Rating Score */}
         <Section
-          title="09 // Patron Quality Score"
+          title="09 // Customer Rating"
           count={filters.minRating > 0 ? 1 : 0}
           defaultOpen={false}
         >

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { DM_Sans, Cinzel } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { Providers } from "@/providers";
@@ -13,7 +13,7 @@ import {
   SITE_URL,
 } from "@/lib/env-public";
 
-/* DM Sans — Body text, buttons, navigation, UI labels */
+/* DM Sans — Unified across all headings, body, buttons, navigation, UI labels */
 const bodyFont = DM_Sans({
   variable: "--font-body",
   subsets: ["latin"],
@@ -21,12 +21,13 @@ const bodyFont = DM_Sans({
   display: "swap",
 });
 
-/* Cormorant Garamond — All headings, hero text, brand wordmark */
-const displayFont = Cormorant_Garamond({
-  variable: "--font-display",
+/* Cinzel — The world's most prestigious Roman luxury typeface.
+   Chiseled classical proportions inspired by 1st century Roman inscriptions.
+   Used by premier luxury Maisons, haute horlogerie, and fine jewelry houses. */
+const brandFont = Cinzel({
+  variable: "--font-brand-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+  weight: ["600", "700", "800", "900"],
   display: "swap",
 });
 
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
     template: `%s · ${BRAND_NAME} Atelier`,
   },
   description:
-    "Haute tailoring, computational 3D drape kinematics, and calibrated skin-tone harmonic collections. Handcrafted sartorial architecture by VESTRA Atelier.",
+    "Premium fashion brand with 3D virtual try-on, colour advice, and great discounts. Shop jackets, shirts, dresses, jeans, and more.",
   applicationName: BRAND_NAME,
   authors: [{ name: BRAND_LEGAL_NAME, url: SITE_URL }],
   creator: BRAND_LEGAL_NAME,
@@ -70,13 +71,13 @@ export const metadata: Metadata = {
     siteName: `${BRAND_NAME} Atelier`,
     title: `${BRAND_NAME} — Haute Édition & Modern Silhouette`,
     description:
-      "Engineered business tailoring and tactile garments. Spatial fitting calibration and skin-tone spectral harmonic advisement.",
+      "Premium clothing brand with virtual try-on and personalised style advice. Shop online and get fast delivery across India.",
   },
   twitter: {
     card: "summary_large_image",
     title: `${BRAND_NAME} — Haute Édition & Modern Silhouette`,
     description:
-      "Engineered business tailoring and tactile garments. Spatial fitting calibration and skin-tone spectral harmonic advisement.",
+      "Premium clothing brand with virtual try-on and personalised style advice. Shop online and get fast delivery across India.",
   },
   robots: {
     index: true,
@@ -113,7 +114,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bodyFont.variable} ${displayFont.variable} h-full antialiased`}
+      className={`${bodyFont.variable} ${brandFont.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -123,47 +124,8 @@ export default async function RootLayout({
         suppressHydrationWarning
         className="relative flex min-h-full flex-col bg-background text-foreground text-left selection:bg-foreground selection:text-background overflow-x-hidden"
       >
-        {/* ═══ ATMOSPHERIC LIQUID GLASS LIGHTING (Radial glowing corner gradients) ═══ */}
-        <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
-          {/* Top-Right Glowing Radial Gradient (Frosted Sage & Luminous Azure) */}
-          <div
-            className="absolute -top-[20%] -right-[15%] h-[750px] w-[750px] rounded-full opacity-65 dark:opacity-40 animate-glow-pulse"
-            style={{
-              background: "radial-gradient(circle, rgba(143, 166, 151, 0.45) 0%, rgba(90, 112, 148, 0.25) 40%, transparent 70%)",
-              filter: "blur(120px)",
-              transform: "translate3d(0, 0, 0)",
-            }}
-          />
-          {/* Bottom-Left Glowing Radial Gradient (Deep Midnight Indigo & Warm Amber Slub) */}
-          <div
-            className="absolute -bottom-[20%] -left-[15%] h-[850px] w-[850px] rounded-full opacity-60 dark:opacity-35 animate-glow-pulse"
-            style={{
-              background: "radial-gradient(circle, rgba(90, 112, 148, 0.4) 0%, rgba(179, 110, 89, 0.18) 45%, transparent 70%)",
-              filter: "blur(140px)",
-              animationDelay: "-3s",
-              transform: "translate3d(0, 0, 0)",
-            }}
-          />
-          {/* Center-Mid Ambient Refraction Sheen */}
-          <div
-            className="absolute top-[40%] left-[30%] h-[600px] w-[600px] rounded-full opacity-35 dark:opacity-20"
-            style={{
-              background: "radial-gradient(circle, rgba(143, 166, 151, 0.25) 0%, transparent 65%)",
-              filter: "blur(150px)",
-            }}
-          />
-        </div>
-
-        {/* Accessible Skip Landmark */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[300] focus:border focus:border-foreground focus:bg-foreground focus:px-4 focus:py-2.5 focus:font-mono focus:text-xs focus:text-background"
-        >
-          Skip to main editorial content
-        </a>
-
         <Providers>
-          <div className="relative z-10 flex min-h-screen flex-col">
+          <div className="relative z-10 flex min-h-screen flex-col bg-background">
             <SiteHeader />
             <main id="main-content" className="flex-1 pt-24 sm:pt-28 outline-none" tabIndex={-1}>
               {children}

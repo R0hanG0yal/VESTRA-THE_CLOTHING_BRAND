@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Product } from "@/lib/types";
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 24;
 
 export interface FeedState {
   items: Product[];
@@ -18,7 +18,7 @@ export interface FeedState {
 
 /**
  * Loads a paginated product feed and appends the next page whenever the
- * sentinel element scrolls into view. Also exposes a manual retry.
+ * sentinel element scrolls into view.
  */
 export function useInfiniteProducts(query: string): FeedState {
   const [items, setItems] = useState<Product[]>([]);
@@ -31,39 +31,54 @@ export function useInfiniteProducts(query: string): FeedState {
   const [nonce, setNonce] = useState(0);
   const [node, setNode] = useState<HTMLDivElement | null>(null);
 
-  // Monotonic request id + abort controller so a slow response for a previous
-  // query can never append stale items, and rapid filter changes don't drop the
-  // reset fetch.
   const reqId = useRef(0);
   const abortRef = useRef<AbortController | null>(null);
+  const loadingRef = useRef(false);
+  const hasMoreRef = useRef(true);
+  const pageRef = useRef(1);
+
+  loadingRef.current = loading || loadingMore;
+  hasMoreRef.current = hasMore;
+  pageRef.current = page;
 
   const fetchPage = useCallback(
     async (p: number, replace: boolean) => {
+      if (!replace && (loadingRef.current || !hasMoreRef.current)) return;
+
       const id = ++reqId.current;
       abortRef.current?.abort();
       const controller = new AbortController();
       abortRef.current = controller;
 
-      if (replace) setLoading(true);
-      else setLoadingMore(true);
+      if (replace) {
+        setLoading(true);
+      } else {
+        setLoadingMore(true);
+      }
       setError(null);
+
       try {
         const res = await fetch(
           `/api/products?${query}&page=${p}&limit=${PAGE_SIZE}`,
-          { cache: "no-store", signal: controller.signal },
+          { signal: controller.signal },
         );
         if (!res.ok) throw new Error("Could not load products");
         const data = await res.json();
-        if (id !== reqId.current) return; // stale response — ignore
+        if (id !== reqId.current) return;
+
         setItems((prev) => (replace ? data.items : [...prev, ...data.items]));
-        setHasMore(Boolean(data.hasMore));
+        const more = Boolean(data.hasMore);
+        setHasMore(more);
+        hasMoreRef.current = more;
         setTotal(data.total ?? 0);
         setPage(p);
+        pageRef.current = p;
       } catch (err) {
         if (err instanceof DOMException && err.name === "AbortError") return;
         if (id !== reqId.current) return;
         setError("Something went wrong while loading the feed.");
         setHasMore(false);
+        hasMoreRef.current = false;
       } finally {
         if (id === reqId.current) {
           setLoading(false);
@@ -78,23 +93,29 @@ export function useInfiniteProducts(query: string): FeedState {
   useEffect(() => {
     setItems([]);
     setPage(1);
+    pageRef.current = 1;
     setHasMore(true);
+    hasMoreRef.current = true;
     fetchPage(1, true);
     return () => abortRef.current?.abort();
   }, [fetchPage, nonce]);
 
-  // Single observer that pulls the next page when the sentinel is near.
+  // Observer that pulls the next page when the sentinel is near.
   useEffect(() => {
-    if (!node || !hasMore || loading || loadingMore) return;
+    if (!node) return;
+
     const io = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting) fetchPage(page + 1, false);
+        if (entries[0]?.isIntersecting && !loadingRef.current && hasMoreRef.current) {
+          fetchPage(pageRef.current + 1, false);
+        }
       },
-      { rootMargin: "600px 0px" },
+      { rootMargin: "400px 0px" },
     );
+
     io.observe(node);
     return () => io.disconnect();
-  }, [node, page, hasMore, loading, loadingMore, fetchPage]);
+  }, [node, fetchPage]);
 
   const sentinelRef = useCallback((n: HTMLDivElement | null) => setNode(n), []);
   const retry = useCallback(() => setNonce((n) => n + 1), []);

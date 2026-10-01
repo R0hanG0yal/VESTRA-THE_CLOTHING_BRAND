@@ -42,3 +42,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# android build
+android/.gradle/
+android/build/
+
+# ide & agent caches
+.gemini/
+.agent/
+.gsd/

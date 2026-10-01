@@ -8,7 +8,7 @@ export default function AdminProductsPage() {
       <header className="mb-5">
         <h2 className="font-display text-xl font-extrabold">Products</h2>
         <p className="text-sm text-foreground/60">
-          Create, edit, publish and delete — straight to the storefront catalogue.
+          Add, edit, show or hide products on the website.
         </p>
       </header>
       <ProductsManager />

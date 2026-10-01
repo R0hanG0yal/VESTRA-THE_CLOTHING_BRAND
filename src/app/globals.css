@@ -4,14 +4,13 @@
 
 @theme {
   /* ═══════════════════════════════════════════════════════════════════
-     FONT STACK
-     Cormorant Garamond → All headings, hero, display text
-     DM Sans → Body, buttons, navigation, UI labels
+     FONT STACK — DM Sans unified across entire site
      ═══════════════════════════════════════════════════════════════════ */
   --font-sans: var(--font-body), "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-display), "Cormorant Garamond", Georgia, serif;
-  --font-brand: var(--font-display), "Cormorant Garamond", Georgia, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-serif: var(--font-body), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-body), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-brand: var(--font-brand-display), "Bodoni Moda", "Didot", "Bodoni MT", "GFS Didot", "Times New Roman", serif;
+  --font-mono: var(--font-body), "DM Sans", ui-sans-serif, system-ui, sans-serif;
 
   /* Apple & luxury editorial motion physics */
   --ease-spring: cubic-bezier(0.34, 1.3, 0.5, 1);
@@ -155,7 +154,6 @@
   }
   html {
     font-size: 14px;
-    scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
   }
   @media (min-width: 1024px) {
@@ -163,10 +161,53 @@
       font-size: 14.5px;
     }
   }
+:root {
+  --font-sans: var(--font-body), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-body), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-body), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-brand: var(--font-body), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-body), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+body,
+button,
+input,
+select,
+textarea,
+.font-sans,
+.font-serif,
+.font-display,
+.font-mono {
+  font-family: var(--font-sans) !important;
+}
+
+/* ═══ WORLD-CLASS HAUTE COUTURE LUXURY WORDMARK ═══ */
+.brand-wordmark,
+.font-brand {
+  font-family: var(--font-brand-display), "Cinzel", "Bodoni Moda", "Didot", "Bodoni MT", serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  font-style: normal !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after,
+body,
+h1, h2, h3, h4, h5, h6,
+p, span, a, button, input, select, textarea,
+i, em, cite,
+.italic {
+  font-style: normal !important;
+}
+
   body {
     background: var(--bg-base);
     color: var(--text-primary);
-    font-family: var(--font-sans);
+    font-family: var(--font-sans) !important;
     overscroll-behavior-y: none;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -176,27 +217,27 @@
     color: var(--bg-base);
   }
 
-  /* ── HEADING TYPOGRAPHY — Cormorant Garamond (Refined Editorial Scale) ── */
+  /* ── HEADING TYPOGRAPHY — DM Sans (Clean Modern Scale) ── */
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     color: var(--text-primary);
-    line-height: 1.1;
-    letter-spacing: -0.015em;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
   }
   h1 {
-    font-size: clamp(2.5rem, 6.5vw, 6rem);
-    font-weight: 400;
-    font-style: italic;
-    line-height: 1.05;
+    font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1.1;
   }
   h2 {
-    font-size: clamp(1.5rem, 3.5vw, 3rem);
-    font-weight: 400;
-    font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 2.5rem);
+    font-weight: 600;
+    font-style: normal;
   }
   h3 {
-    font-size: clamp(1.15rem, 2.2vw, 1.75rem);
-    font-weight: 400;
+    font-size: clamp(1.1rem, 2vw, 1.6rem);
+    font-weight: 600;
   }
 
   /* Accessible high-contrast focus rings for keyboard navigation */
@@ -330,12 +371,12 @@
     transform: scale(0.98);
   }
 
-  /* Cormorant wordmark */
+  /* Brand wordmark */
   .wordmark {
-    font-family: var(--font-brand);
-    font-weight: 400;
-    font-style: italic;
-    letter-spacing: 0.12em;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
   }
 
@@ -395,3 +436,4 @@ div[data-nextjs-indicator],
   visibility: hidden !important;
   pointer-events: none !important;
 }
+

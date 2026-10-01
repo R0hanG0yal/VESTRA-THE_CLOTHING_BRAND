@@ -73,7 +73,7 @@ export function middleware(request: NextRequest) {
     if (!request.cookies.has("vestra_admin")) {
       const url = request.nextUrl.clone();
       url.pathname = "/admin/login";
-      url.search = "";
+      url.searchParams.set("from", path);
       const redirect = NextResponse.redirect(url);
       redirect.headers.set("Content-Security-Policy", csp);
       return redirect;

@@ -39,8 +39,8 @@ export function StyleAdvisor({ initialToneId }: { initialToneId?: string }) {
           setTone(guess);
           setDetecting(false);
           push({
-            title: `Detected Undertone: ${guess.label}`,
-            description: `${guess.undertone} chromatic category`,
+            title: `Detected Skin Tone: ${guess.label}`,
+            description: `${guess.undertone} undertone match`,
             variant: "success",
           });
         }, 1400);
@@ -57,13 +57,13 @@ export function StyleAdvisor({ initialToneId }: { initialToneId?: string }) {
         <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-foreground/15 pb-6 text-left">
           <div className="text-left">
             <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-foreground/50 text-left block">
-              CHROMATIC SPECIFICATION
+              SKIN TONE & COLOR GUIDE
             </span>
             <h2 className="mt-1 font-serif text-3xl text-foreground text-left sm:text-4xl">
-              Anatomical Skin Undertone Register
+              Find Colors That Suit You Best
             </h2>
             <p className="mt-2 font-serif text-sm italic text-foreground/65 text-left">
-              Select your closest dermal classification or permit on-device optical analysis from a portrait file.
+              Choose your skin tone below or upload a photo to get personalized color and outfit recommendations.
             </p>
           </div>
           <button
@@ -72,7 +72,7 @@ export function StyleAdvisor({ initialToneId }: { initialToneId?: string }) {
             className="flex items-center gap-2 border border-foreground bg-foreground px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-background transition hover:opacity-90 disabled:opacity-50 text-left"
           >
             <IconImage type="scan" size={14} className="border-none invert dark:invert-0" />
-            <span>{detecting ? "ANALYZING CHROMATIC HARMONICS…" : "SCAN PORTRAIT SPECIMEN"}</span>
+            <span>{detecting ? "ANALYZING PHOTO…" : "UPLOAD PHOTO TO DETECT"}</span>
           </button>
           <input
             ref={inputRef}
@@ -119,10 +119,10 @@ export function StyleAdvisor({ initialToneId }: { initialToneId?: string }) {
           <div className="grid gap-6 text-left lg:grid-cols-2">
             <div className="border border-foreground/20 bg-surface p-6 text-left">
               <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-foreground/50 text-left block">
-                CLASSIFICATION: COMPLIMENTARY PIGMENTS
+                RECOMMENDED COLORS
               </span>
               <h3 className="mt-1 font-serif text-2xl text-foreground text-left">
-                Harmonic Color Palette
+                Colors That Look Great On You
               </h3>
               <div className="mt-6 grid grid-cols-5 gap-3 text-left">
                 {tone.best.map((c, i) => (
@@ -135,7 +135,7 @@ export function StyleAdvisor({ initialToneId }: { initialToneId?: string }) {
                       {c.name}
                     </p>
                     <span className="font-mono text-[8px] text-foreground/40 text-left">
-                      SW-0{i + 1}
+                      SHADE {i + 1}
                     </span>
                   </div>
                 ))}
@@ -144,10 +144,10 @@ export function StyleAdvisor({ initialToneId }: { initialToneId?: string }) {
 
             <div className="border border-foreground/20 bg-surface p-6 text-left">
               <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-foreground/50 text-left block">
-                CLASSIFICATION: DISSONANT SPECTRUM
+                LESS FLATTERING SHADES
               </span>
               <h3 className="mt-1 font-serif text-2xl text-foreground text-left">
-                Shades to Deselect
+                Colors to Avoid
               </h3>
               <div className="mt-6 grid grid-cols-5 gap-3 text-left">
                 {tone.avoid.map((c) => (
@@ -170,17 +170,17 @@ export function StyleAdvisor({ initialToneId }: { initialToneId?: string }) {
           <div className="flex flex-wrap items-center justify-between gap-4 border border-foreground bg-foreground p-6 text-background text-left">
             <div className="text-left">
               <p className="font-mono text-xs uppercase tracking-wider text-background/80 text-left">
-                CATALOGUE ACTIVE FILTER // UNDERTONE: {tone.label.toUpperCase()}
+                SELECTED SKIN TONE: {tone.label.toUpperCase()}
               </p>
               <p className="font-serif text-lg text-background text-left mt-0.5">
-                Displaying pieces calibrated to your harmonic dermal register.
+                Showing clothing and outfits that best match your skin tone.
               </p>
             </div>
             <Link
               href={`/shop?${colorQuery}`}
               className="flex items-center gap-2 border border-background bg-background px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-foreground text-left transition hover:bg-transparent hover:text-background"
             >
-              <span>INSPECT IN FULL CATALOGUE</span>
+              <span>VIEW MATCHING PRODUCTS</span>
               <IconImage type="arrow" size={12} className="border-none" />
             </Link>
           </div>
@@ -188,7 +188,7 @@ export function StyleAdvisor({ initialToneId }: { initialToneId?: string }) {
           {/* Palette-specific Silhouettes Grid */}
           <div className="text-left">
             <h3 className="font-serif text-2xl text-foreground text-left mb-6 border-b border-foreground/15 pb-3">
-              Flattering Runway Pieces for {tone.label} Undertones
+              Recommended Clothes for {tone.label} Skin Tone
             </h3>
             {loading ? (
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-10 text-left">
@@ -216,10 +216,10 @@ export function StyleAdvisor({ initialToneId }: { initialToneId?: string }) {
         <div className="border border-foreground/20 bg-surface p-12 text-left">
           <IconImage type="palette" size={28} className="mb-4" />
           <h3 className="font-serif text-2xl text-foreground text-left">
-            Select an undertone classification to unlock spectral catalogue
+            Select your skin tone above to see recommended outfits
           </h3>
           <p className="mt-2 font-serif text-sm italic text-foreground/60 text-left">
-            Our chromatic index automatically reconfigures garments to present shades that heighten your natural luminance.
+            We will show you clothing colors and styles that naturally suit your appearance.
           </p>
         </div>
       )}

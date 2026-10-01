@@ -59,7 +59,7 @@ export default async function ProductPage({
         <span className="truncate text-foreground">{product.name}</span>
       </nav>
 
-      <div className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 text-left">
+      <div className="mx-auto max-w-7xl px-4 pb-32 sm:pb-36 lg:px-8 text-left">
         <ProductDetail product={product} />
 
         {/* Complete the look */}

@@ -8,23 +8,23 @@ import { BRAND_LEGAL_NAME, CORPORATE_DETAILS } from "@/lib/env-public";
 const TRUST = [
   {
     iconType: "shield" as const,
-    title: "ENCRYPTED SETTLEMENT",
-    detail: "PCI-DSS compliant 256-bit encrypted UPI intent and card settlement rails.",
+    title: "SECURE PAYMENT",
+    detail: "Safe online payments via UPI, cards, and wallets.",
   },
   {
     iconType: "return" as const,
-    title: "7-DAY ATELIER RETURNS",
-    detail: "Doorstep courier collection with full refunds to source payment within 2–4 banking days.",
+    title: "7-DAY EASY RETURNS",
+    detail: "We pick up from your door. Full refund in 2 to 4 days.",
   },
   {
     iconType: "delivery" as const,
-    title: "METRO 48H DISPATCH",
-    detail: "Express insured transit across Indian tier 1 & 2 cities with live tracking ledger.",
+    title: "FAST DELIVERY",
+    detail: "Quick delivery across India with live order tracking.",
   },
   {
     iconType: "authentic" as const,
-    title: "PROVENANCE VERIFIED",
-    detail: "Traceable textiles sourced from certified artisanal mills with zero synthetic dilution.",
+    title: "GENUINE PRODUCTS",
+    detail: "All products sourced from trusted and verified manufacturers.",
   },
 ];
 
@@ -66,19 +66,18 @@ export function SiteFooter() {
           <div className="text-left lg:col-span-5">
             <Link href="/" className="inline-block text-left group">
               <span
-                className="font-serif italic text-xl sm:text-2xl uppercase tracking-[0.16em] text-foreground font-normal transition-opacity group-hover:opacity-75 text-left"
-                style={{ fontFamily: "var(--font-display)" }}
+                className="brand-wordmark text-2xl sm:text-3xl text-foreground font-bold transition-opacity group-hover:opacity-85 text-left"
               >
                 {BRAND_NAME}
               </span>
             </Link>
             
             <p className="mt-0.5 label-ui text-[8px] sm:text-[9px] tracking-[0.2em] text-foreground/45 text-left uppercase">
-              Haute Édition · Studio Archive
+              Premium Clothing Store
             </p>
             
             <p className="mt-2 max-w-md text-left text-[11px] sm:text-xs leading-relaxed text-foreground/75 font-serif italic">
-              {BRAND_TAGLINE}. Architectural silhouettes, responsive digital fitting calibration, and calibrated pigment palettes designed for human form.
+              {BRAND_TAGLINE}. Stylish clothes for every occasion. Try them on virtually and get the perfect fit.
             </p>
 
             <div className="mt-3 rounded-xl p-2.5 sm:p-3.5 bg-white/[0.03] dark:bg-white/[0.02] border border-white/10 text-left max-w-md">
@@ -139,7 +138,7 @@ export function SiteFooter() {
                 </li>
                 <li className="text-left">
                   <Link href="/shop?sort=trending" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
-                    Lookbook Index
+                    Lookbooks
                   </Link>
                 </li>
                 <li className="text-left">
@@ -155,7 +154,7 @@ export function SiteFooter() {
                 </li>
                 <li className="text-left">
                   <Link href="/account" className="font-sans text-[10px] sm:text-[12px] text-foreground/75 hover:text-foreground hover:translate-x-0.5 transition-all text-left block truncate">
-                    Order Ledger
+                    My Orders
                   </Link>
                 </li>
               </ul>

@@ -17,18 +17,18 @@ export default function CookiesPage() {
         className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-foreground/50 hover:text-foreground transition-colors"
       >
         <IconImage type="arrow" alt="Return" className="h-4 w-4 object-cover grayscale" />
-        <span>Broadside Index // Return</span>
+        <span>← Back to Home</span>
       </Link>
 
       <header className="mt-8 border-l-2 border-foreground pl-6 text-left">
         <div className="flex items-center gap-2">
           <IconImage type="palette" alt="Cookies" className="h-5 w-5 object-cover grayscale" />
           <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
-            Storage Governance // Technical Telemetry
+            Cookie Preferences & Data Transparency
           </span>
         </div>
         <h1 className="mt-4 font-serif text-4xl font-light tracking-tight text-foreground sm:text-5xl text-left">
-          Cookie Policy & Ephemeral Storage
+          Cookie Policy
         </h1>
         <p className="mt-3 font-mono text-xs uppercase tracking-wider text-foreground/60 text-left">
           {BRAND_LEGAL_NAME} · Updated: January 1, 2026
@@ -38,16 +38,16 @@ export default function CookiesPage() {
       <div className="mt-12 space-y-10 divide-y divide-line text-left">
         <article className="pt-8 text-left">
           <h2 className="font-serif text-2xl font-light text-foreground text-left">
-            Philosophy of Minimalist Storage
+            Our Approach to Cookies & Privacy
           </h2>
           <p className="mt-3 font-sans text-sm text-foreground/70 leading-relaxed text-left">
-            VESTRA rejects cross-site behavioral tracking, ad-retargeting pixels, and invasive fingerprinting scripts. We deploy only small, encrypted storage keys required to render your cart, maintain security nonces, and preserve colorway preferences.
+            VESTRA does not use intrusive advertising trackers or sell your browsing history. We only store essential data required to maintain your shopping bag, secure your login, and remember your display preferences.
           </p>
         </article>
 
         <article className="pt-8 text-left">
           <h2 className="font-serif text-2xl font-light text-foreground text-left">
-            Comprehensive Cookie & Storage Audit
+            Cookies & Local Storage Used
           </h2>
           <div className="mt-6 border border-line bg-surface overflow-x-auto text-left">
             <table className="w-full min-w-[650px] text-left text-xs font-mono">
@@ -55,7 +55,7 @@ export default function CookiesPage() {
                 <tr>
                   <th className="px-5 py-3 text-left">Storage Key</th>
                   <th className="px-5 py-3 text-left">Classification</th>
-                  <th className="px-5 py-3 text-left">Operational Purpose</th>
+                  <th className="px-5 py-3 text-left">Purpose</th>
                   <th className="px-5 py-3 text-left">Duration</th>
                 </tr>
               </thead>
@@ -63,31 +63,31 @@ export default function CookiesPage() {
                 <tr>
                   <td className="px-5 py-3.5 font-semibold text-foreground">vestra_session</td>
                   <td className="px-5 py-3.5 text-foreground/70">Strictly Necessary</td>
-                  <td className="px-5 py-3.5 text-foreground/60 font-sans">Maintains patron session authentication</td>
+                  <td className="px-5 py-3.5 text-foreground/60 font-sans">Keeps you signed into your account</td>
                   <td className="px-5 py-3.5 text-foreground/60">30 Days</td>
                 </tr>
                 <tr>
                   <td className="px-5 py-3.5 font-semibold text-foreground">vestra_bag_v1</td>
                   <td className="px-5 py-3.5 text-foreground/70">Strictly Necessary</td>
-                  <td className="px-5 py-3.5 text-foreground/60 font-sans">Stores requisition bag selections locally</td>
+                  <td className="px-5 py-3.5 text-foreground/60 font-sans">Saves items in your shopping bag</td>
                   <td className="px-5 py-3.5 text-foreground/60">Persistent</td>
                 </tr>
                 <tr>
                   <td className="px-5 py-3.5 font-semibold text-foreground">vestra_cookie_consent_v1</td>
                   <td className="px-5 py-3.5 text-foreground/70">Strictly Necessary</td>
-                  <td className="px-5 py-3.5 text-foreground/60 font-sans">Records statutory DPDP consent selection</td>
+                  <td className="px-5 py-3.5 text-foreground/60 font-sans">Remembers your cookie consent choice</td>
                   <td className="px-5 py-3.5 text-foreground/60">365 Days</td>
                 </tr>
                 <tr>
                   <td className="px-5 py-3.5 font-semibold text-foreground">vestra_theme</td>
                   <td className="px-5 py-3.5 text-foreground/70">Functional</td>
-                  <td className="px-5 py-3.5 text-foreground/60 font-sans">Preserves daylight or midnight spectral mode</td>
+                  <td className="px-5 py-3.5 text-foreground/60 font-sans">Saves light or dark theme mode preference</td>
                   <td className="px-5 py-3.5 text-foreground/60">Persistent</td>
                 </tr>
                 <tr>
                   <td className="px-5 py-3.5 font-semibold text-foreground">x-nonce</td>
-                  <td className="px-5 py-3.5 text-foreground/70">Security Protocol</td>
-                  <td className="px-5 py-3.5 text-foreground/60 font-sans">CSP dynamic script injection protection</td>
+                  <td className="px-5 py-3.5 text-foreground/70">Security</td>
+                  <td className="px-5 py-3.5 text-foreground/60 font-sans">Protects against unauthorized script injection</td>
                   <td className="px-5 py-3.5 text-foreground/60">Per Request</td>
                 </tr>
               </tbody>

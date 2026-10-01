@@ -19,6 +19,7 @@ export function CartClient() {
   const [code, setCode] = useState("");
   const [applied, setApplied] = useState<{ code: string; discount: number } | null>(null);
   const [checking, setChecking] = useState(false);
+  const [showCoupons, setShowCoupons] = useState(false);
 
   const memberSubtotal = items.reduce(
     (s, i) => s + memberPriceFor(i.price) * i.qty,
@@ -193,51 +194,80 @@ export function CartClient() {
           ))}
         </div>
 
-        {/* Coupons Panel - Sharp Editorial Box */}
-        <div className="mt-8 border border-foreground/20 bg-surface p-6 text-left">
-          <div className="flex items-center gap-2 text-left mb-3">
-            <IconImage type="gift" size={16} />
+        {/* Coupons Panel - Expandable Editorial Box */}
+        <div className="mt-8 border border-foreground/20 bg-surface text-left">
+          <button
+            type="button"
+            onClick={() => setShowCoupons((v) => !v)}
+            className="flex w-full items-center justify-between p-5 cursor-pointer text-left group transition-colors hover:bg-foreground/[0.03]"
+          >
             <h3 className="font-mono text-xs uppercase tracking-widest font-semibold text-foreground text-left">
               ATELIER CONCESSION CODES
             </h3>
-          </div>
-          <div className="flex gap-2 text-left">
-            <input
-              value={code}
-              onChange={(e) => setCode(e.target.value.toUpperCase())}
-              placeholder="ENTER VOUCHER CODE (E.G. VESTRA20)"
-              maxLength={20}
-              className="flex-1 border border-foreground/20 bg-background px-3.5 py-2 font-mono text-xs uppercase tracking-wider outline-none text-left"
-            />
-            <button
-              onClick={() => applyCoupon()}
-              disabled={checking}
-              className="border border-foreground bg-foreground px-5 py-2 font-mono text-xs uppercase tracking-widest text-background transition hover:opacity-90 disabled:opacity-40 text-left"
+            <svg
+              className={cn(
+                "h-3.5 w-3.5 text-foreground/50 transition-transform duration-300",
+                showCoupons && "rotate-180",
+              )}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              {checking ? "VERIFYING…" : "VALIDATE"}
-            </button>
-          </div>
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
 
-          <div className="mt-4 space-y-2 text-left">
-            {COUPONS.slice(0, 3).map((c) => (
-              <button
-                key={c.code}
-                onClick={() => applyCoupon(c.code)}
-                className="flex w-full items-center justify-between border border-foreground/15 p-2.5 text-left transition hover:bg-foreground/5"
-              >
-                <div className="text-left">
-                  <span className="font-mono text-xs font-semibold text-foreground text-left block">
-                    [{c.code}] · {c.label}
-                  </span>
-                  <span className="font-serif text-xs italic text-foreground/60 text-left block">
-                    {c.description}
-                  </span>
+          <div
+            className={cn(
+              "grid transition-all duration-300 ease-in-out",
+              showCoupons ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+            )}
+          >
+            <div className="overflow-hidden">
+              <div className="px-5 pb-5 space-y-4">
+                <div className="flex gap-2 text-left">
+                  <input
+                    value={code}
+                    onChange={(e) => setCode(e.target.value.toUpperCase())}
+                    placeholder="ENTER VOUCHER CODE (E.G. VESTRA20)"
+                    maxLength={20}
+                    className="flex-1 border border-foreground/20 bg-background px-3.5 py-2 font-mono text-xs uppercase tracking-wider outline-none text-left"
+                  />
+                  <button
+                    onClick={() => applyCoupon()}
+                    disabled={checking}
+                    className="border border-foreground bg-foreground px-5 py-2 font-mono text-xs uppercase tracking-widest text-background transition hover:opacity-90 disabled:opacity-40 text-left"
+                  >
+                    {checking ? "VERIFYING…" : "VALIDATE"}
+                  </button>
                 </div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-foreground underline text-right">
-                  [APPLY]
-                </span>
-              </button>
-            ))}
+
+                <div className="space-y-2 text-left">
+                  {COUPONS.slice(0, 3).map((c) => (
+                    <button
+                      key={c.code}
+                      onClick={() => applyCoupon(c.code)}
+                      className="flex w-full items-center justify-between border border-foreground/15 p-2.5 text-left transition hover:bg-foreground/5"
+                    >
+                      <div className="text-left">
+                        <span className="font-mono text-xs font-semibold text-foreground text-left block">
+                          [{c.code}] · {c.label}
+                        </span>
+                        <span className="font-serif text-xs italic text-foreground/60 text-left block">
+                          {c.description}
+                        </span>
+                      </div>
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-foreground underline text-right">
+                        [APPLY]
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

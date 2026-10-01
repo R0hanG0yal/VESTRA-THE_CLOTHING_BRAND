@@ -33,7 +33,11 @@ export function ProductImage({
   const safeColor = color || "#627264";
 
   if (!image) {
-    return <GarmentArt kind={kind} color={safeColor} seed={seed} className={className} label={alt} />;
+    return (
+      <div className={cn("relative h-full w-full overflow-hidden", className)}>
+        <GarmentArt kind={kind} color={safeColor} seed={seed} label={alt} />
+      </div>
+    );
   }
 
   // Admins may paste an absolute URL; next/image only optimises configured
@@ -46,6 +50,7 @@ export function ProductImage({
           src={image}
           alt={alt}
           loading={priority ? "eager" : "lazy"}
+          decoding="async"
           className="h-full w-full object-cover"
         />
       </div>

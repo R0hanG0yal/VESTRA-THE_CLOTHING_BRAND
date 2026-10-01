@@ -21,11 +21,11 @@ export default async function AdminOverviewPage() {
   const recent = orders.slice(0, 6).map(publicOrder);
 
   const kpis = [
-    { label: "Settled Gross", value: formatINR(revenue), iconName: "wallet" as const },
-    { label: "Manifest Volume", value: String(orders.length), iconName: "delivery" as const },
-    { label: "Mean Order Value", value: formatINR(aov), iconName: "sparkles" as const },
+    { label: "Total Sales", value: formatINR(revenue), iconName: "wallet" as const },
+    { label: "Total Orders", value: String(orders.length), iconName: "delivery" as const },
+    { label: "Avg Order Value", value: formatINR(aov), iconName: "sparkles" as const },
     {
-      label: "Active Garment SKUs",
+      label: "Active Products",
       value: `${products.filter((p) => p.active).length} / ${products.length}`,
       iconName: "bag" as const,
     },
@@ -54,24 +54,24 @@ export default async function AdminOverviewPage() {
           <div className="flex items-center justify-between border-b border-line pb-4 text-left">
             <div>
               <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/45 block">
-                Queue
+                Recent
               </span>
               <h2 className="mt-1 font-serif text-2xl font-light text-foreground text-left">
-                Recent Requisitions
+                Recent Orders
               </h2>
             </div>
             <Link
               href="/admin/orders"
               className="font-mono text-[10px] uppercase tracking-widest text-foreground underline underline-offset-4"
             >
-              Inspect Queue →
+              See All Orders →
             </Link>
           </div>
 
           {recent.length === 0 ? (
             <div className="mt-6 border-l-2 border-line pl-6 py-6 text-left">
               <p className="font-mono text-xs uppercase tracking-wider text-foreground/55 text-left">
-                No requisitions recorded in active ledger.
+                No orders yet.
               </p>
             </div>
           ) : (
@@ -88,7 +88,7 @@ export default async function AdminOverviewPage() {
                       </span>
                     </div>
                     <p className="font-sans text-xs text-foreground/55 truncate mt-1 text-left">
-                      {o.items.length} units · {o.address?.city ?? "Direct"} · {timeAgo(o.createdAt)}
+                      {o.items.length} items · {o.address?.city ?? "Direct"} · {timeAgo(o.createdAt)}
                     </p>
                   </div>
                   <span className="font-mono text-sm text-foreground text-left">{formatINR(o.totals.total)}</span>
@@ -103,16 +103,16 @@ export default async function AdminOverviewPage() {
           <section className="border border-line bg-surface p-6 sm:p-8 text-left">
             <div className="border-b border-line pb-4 text-left">
               <span className="font-mono text-[10px] uppercase tracking-widest text-rose-600 dark:text-rose-400 block">
-                Depletion Alert
+                Stock Alert
               </span>
               <h2 className="mt-1 font-serif text-2xl font-light text-foreground text-left">
-                Low Inventory Units
+                Low Stock Products
               </h2>
             </div>
 
             {lowStock.length === 0 ? (
               <p className="mt-6 font-mono text-xs uppercase tracking-wider text-foreground/55 text-left">
-                Inventory equilibrium satisfied across all pieces.
+                All products are well stocked.
               </p>
             ) : (
               <ul className="mt-6 divide-y divide-line border-y border-line text-left">
@@ -130,27 +130,27 @@ export default async function AdminOverviewPage() {
               href="/admin/products"
               className="mt-6 block border border-line bg-transparent py-3 px-4 font-mono text-[10px] uppercase tracking-widest text-foreground hover:border-foreground text-left"
             >
-              [Catalog Stock Manager]
+              [Manage Products]
             </Link>
           </section>
 
           <section className="border border-line bg-surface p-6 sm:p-8 text-left">
             <div className="border-b border-line pb-4 text-left">
               <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/45 block">
-                Privilege Codes
+                Discounts
               </span>
               <h2 className="mt-1 font-serif text-2xl font-light text-foreground text-left">
-                Promotional Tokens
+                Coupon Codes
               </h2>
             </div>
             <p className="mt-4 font-mono text-xs uppercase tracking-wider text-foreground/60 text-left">
-              {coupons.filter((c) => c.active ?? true).length} active privileges registered of {coupons.length} total.
+              {coupons.filter((c) => c.active ?? true).length} active coupons out of {coupons.length} total.
             </p>
             <Link
               href="/admin/coupons"
               className="mt-6 block border border-line bg-transparent py-3 px-4 font-mono text-[10px] uppercase tracking-widest text-foreground hover:border-foreground text-left"
             >
-              [Configure Vouchers]
+              [Manage Coupons]
             </Link>
           </section>
         </div>

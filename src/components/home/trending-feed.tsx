@@ -83,7 +83,7 @@ export function TrendingFeed() {
         </div>
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-10 text-left">
-          {chunks.map((chunk) =>
+          {chunks.map((chunk, chunkIndex) =>
             chunk.type === "look" ? (
               <LookCard
                 key={chunk.key}
@@ -94,6 +94,7 @@ export function TrendingFeed() {
               <ProductCard
                 key={chunk.key}
                 product={chunk.products[0]}
+                priority={chunkIndex < 4}
               />
             ),
           )}

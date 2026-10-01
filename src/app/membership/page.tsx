@@ -11,8 +11,8 @@ import { MEMBERSHIP_PRICE, memberPriceFor } from "@/lib/member-pricing";
 import { IconImage } from "@/components/ui/icon-image";
 
 export const metadata: Metadata = {
-  title: `Atelier Patron Membership — ${BRAND_NAME}`,
-  description: `Annual patron privilege pass. ${formatINR(MEMBERSHIP_PRICE)}/year for ~30% off all archive editions, priority drops, complimentary carriage, and double wallet credit.`,
+  title: `VIP Member Club — ${BRAND_NAME}`,
+  description: `Annual member pass for ${formatINR(MEMBERSHIP_PRICE)}/year: ~30% off all products, early access to new arrivals, free express delivery, and 2x reward points.`,
 };
 
 const EXAMPLE_IDS = ["p0002", "p0010", "p0028", "p0046"];
@@ -20,39 +20,39 @@ const EXAMPLE_IDS = ["p0002", "p0010", "p0028", "p0046"];
 const PERKS = [
   {
     iconName: "sparkles" as const,
-    code: "ART. 01",
-    title: "~30% Preferential Valuation",
-    detail: "Direct patron rates automatically unlocked across all 168+ sartorial editions in the archive.",
+    code: "01",
+    title: "~30% Off Every Order",
+    detail: "Save roughly 30% on every single product across our entire catalog automatically.",
   },
   {
-    code: "ART. 02",
+    code: "02",
     iconName: "delivery" as const,
-    title: "Complimentary Direct Courier",
-    detail: "Zero minimum threshold. Every acquisition ships direct with white-glove insured packaging.",
+    title: "Free Express Delivery",
+    detail: "No minimum order value required. Fast insured delivery right to your doorstep.",
   },
   {
-    code: "ART. 03",
+    code: "03",
     iconName: "wishlist" as const,
-    title: "48-Hour Priority Drop Access",
-    detail: "Inspect and reserve new seasonal batch releases 48 hours prior to open broadside release.",
+    title: "48-Hour Early Access",
+    detail: "Shop new arrivals and limited-edition collections 48 hours before anyone else.",
   },
   {
-    code: "ART. 04",
+    code: "04",
     iconName: "wallet" as const,
-    title: "Double Continuous Patron Credit",
-    detail: "Compounded credit ledger rebates directly accrued on each finalized dispatch.",
+    title: "2X Store Credit & Rewards",
+    detail: "Earn double cashback and store credit on every purchase to use on future orders.",
   },
   {
-    code: "ART. 05",
+    code: "05",
     iconName: "tryon" as const,
-    title: "Volumetric Studio Simulation",
-    detail: "Unrestricted spatial drape analysis, fitting calibrations, and daylight spectral advisor passes.",
+    title: "Unlimited 3D Virtual Try-On",
+    detail: "Try on any outfit virtually in 3D and get personal colour matching recommendations.",
   },
   {
-    code: "ART. 06",
+    code: "06",
     iconName: "authentic" as const,
-    title: "Extended 30-Day Evaluation",
-    detail: "Atelier guarantee with prepaid return carrier collection upon request.",
+    title: "30-Day Easy Returns",
+    detail: "Hassle-free 30-day returns with free doorstep pickup across India.",
   },
 ];
 
@@ -63,10 +63,6 @@ export default function MembershipPage() {
 
   return (
     <div className="relative pb-24 text-left overflow-hidden">
-      {/* ═══ AMBIENT ATMOSPHERIC GLOWS ═══ */}
-      <div className="pointer-events-none absolute -top-40 left-1/4 h-[550px] w-[550px] rounded-full bg-accent/15 blur-[140px]" />
-      <div className="pointer-events-none absolute top-1/3 -right-40 h-[600px] w-[600px] rounded-full bg-surface-muted/20 blur-[160px]" />
-
       {/* ═══ MONUMENTAL EDITORIAL HERO SECTION ═══ */}
       <section className="mx-auto max-w-7xl px-4 pt-4 pb-12 sm:px-6 lg:px-8 text-left">
         <div className="relative overflow-hidden rounded-3xl bg-white/10 dark:bg-white/[0.06] backdrop-blur-2xl border border-white/20 dark:border-white/12 p-8 sm:p-12 lg:p-16 shadow-[0_24px_70px_rgba(0,0,0,0.25)] text-left">
@@ -78,7 +74,7 @@ export default function MembershipPage() {
                 <div className="flex items-center gap-2.5 mb-3 text-left">
                   <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
                   <span className="label-ui text-[10px] tracking-[0.25em] uppercase text-left" style={{ color: "var(--accent)" }}>
-                    Guild Roll // Atelier Patron Membership Pass
+                    VIP Member Club Pass
                   </span>
                 </div>
 
@@ -86,30 +82,30 @@ export default function MembershipPage() {
                   className="font-serif text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight leading-[1.06] text-left"
                   style={{ color: "var(--text-primary)" }}
                 >
-                  One Privilege. <br />
-                  <span className="italic font-normal">Complete Atelier Access.</span>
+                  Join the Club. <br />
+                  <span className="italic font-normal">Save on Every Purchase.</span>
                 </h1>
 
                 <p
                   className="mt-5 text-base sm:text-lg leading-relaxed text-left max-w-xl"
                   style={{ fontFamily: "var(--font-sans)", color: "var(--text-subtle)" }}
                 >
-                  The house guild membership: <span className="font-semibold text-foreground">{formatINR(MEMBERSHIP_PRICE)} annually</span>. Preferential ~30% valuation on every edition, complimentary courier carriage, and 48-hour priority salon reservations.
+                  Get VIP benefits for just <span className="font-semibold text-foreground">{formatINR(MEMBERSHIP_PRICE)}/year</span>: flat ~30% discount on every product, free express delivery, and 48-hour early access to new collections.
                 </p>
               </Reveal>
 
               <Reveal delay={120}>
                 <div className="mt-8 flex flex-wrap items-center gap-4 text-left">
-                  <JoinButton label={`ADD MEMBERSHIP TO BAG — ${formatINR(MEMBERSHIP_PRICE)}/YR`} />
+                  <JoinButton label={`JOIN VIP CLUB — ${formatINR(MEMBERSHIP_PRICE)}/YEAR`} />
                   <Link
                     href="/shop"
                     className="rounded-full px-6 py-4 bg-white/10 hover:bg-white/20 dark:bg-white/[0.08] dark:hover:bg-white/[0.14] border border-white/20 text-foreground transition-all label-ui text-xs tracking-[0.15em] text-left"
                   >
-                    Inspect Collection First
+                    Browse Clothes First
                   </Link>
                 </div>
                 <p className="mt-4 text-[11px] text-left font-mono" style={{ color: "var(--text-subtle)" }}>
-                  Instant digital activation · Applies 30% discount to existing bag immediately · Zero cancellation fee
+                  Instant digital activation · 30% discount applies to your bag right away · No hidden fees
                 </p>
               </Reveal>
             </div>

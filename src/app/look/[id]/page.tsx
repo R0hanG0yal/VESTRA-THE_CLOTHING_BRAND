@@ -69,7 +69,7 @@ export default async function LookPage({ params }: { params: Promise<{ id: strin
           <div className="flex items-center gap-2 border-b border-line pb-3">
             <IconImage name="sparkles" alt="Ensemble" className="h-4 w-4 object-cover grayscale" />
             <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
-              Curated Silhouette // {items.length}-Piece Ensemble
+              Curated Look // {items.length}-Piece Outfit
             </span>
           </div>
 
@@ -78,16 +78,16 @@ export default async function LookPage({ params }: { params: Promise<{ id: strin
           </h1>
 
           <p className="mt-2 text-sm text-foreground/60 text-left font-sans">
-            {look.vibe} — curated head-to-toe sartorial execution by the Atelier Studio.
+            {look.vibe} — complete head-to-toe outfit curated by VESTRA stylists.
           </p>
 
           <div className="mt-6 flex items-baseline gap-4 border-t border-line pt-6 text-left">
             <span className="font-serif text-3xl font-light tracking-tight text-foreground">{formatINR(look.bundlePrice)}</span>
             <span className="font-mono text-sm text-foreground/40 line-through">{formatINR(look.mrp)}</span>
-            {off > 0 && <span className="font-mono text-xs uppercase tracking-wider text-foreground/80 border border-foreground/30 px-2 py-0.5">[{off}% SAVING]</span>}
+            {off > 0 && <span className="font-mono text-xs uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-600/30 px-2 py-0.5">[{off}% OFF]</span>}
           </div>
           <p className="mt-2 font-mono text-[11px] text-foreground/60 text-left">
-            Ensemble privilege saves {formatINR(look.mrp - look.bundlePrice)} vs unbundled requisition
+            Combo discount: saves {formatINR(look.mrp - look.bundlePrice)} compared to buying items individually
           </p>
 
           <div className="mt-8">
@@ -96,12 +96,12 @@ export default async function LookPage({ params }: { params: Promise<{ id: strin
 
           <div className="mt-10 border-t border-line pt-6">
             <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/50 block mb-3">
-              Included Specifications
+              Included Items in this Outfit
             </span>
             <ul className="divide-y divide-line">
               {items.map((p) => (
                 <li key={p!.id} className="flex items-center gap-4 py-3 text-left">
-                  <div className="h-14 w-14 shrink-0 overflow-hidden border border-line bg-ink-900/5">
+                  <div className="relative h-14 w-14 shrink-0 overflow-hidden border border-line bg-ink-900/5">
                     <ProductImage
                       kind={p!.kind}
                       color={p!.colors[0].hex}

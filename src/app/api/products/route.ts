@@ -7,7 +7,7 @@ import type { Product } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
-const MAX_LIMIT = 24;
+const MAX_LIMIT = 48;
 
 function csv(value: string | null): string[] {
   if (!value) return [];
@@ -108,7 +108,7 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url);
   const page = Math.max(1, Number(searchParams.get("page") ?? 1));
-  const limit = Math.min(MAX_LIMIT, Math.max(1, Number(searchParams.get("limit") ?? 12)));
+  const limit = Math.min(MAX_LIMIT, Math.max(1, Number(searchParams.get("limit") ?? 24)));
   const sort = searchParams.get("sort");
 
   let items = (await listProducts()).filter((p) => matches(p, searchParams));
@@ -128,6 +128,6 @@ export async function GET(request: Request) {
       nextPage: hasMore ? page + 1 : null,
       categories: CATEGORIES.length,
     },
-    { headers: { "Cache-Control": "no-store" } },
+    { headers: { "Cache-Control": "public, max-age=60, stale-while-revalidate=300" } },
   );
 }

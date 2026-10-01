@@ -19,6 +19,7 @@ import {
 import { LOOKS } from "@/lib/data/catalog";
 import { cn } from "@/lib/utils";
 
+
 function GridSkeleton({ count = 8 }: { count?: number }) {
   return (
     <>
@@ -130,6 +131,7 @@ export function ShopWorkspace({
 
   const update = useCallback((next: ShopFilters) => setFilters(next), []);
   const featuredLooks = useMemo(() => LOOKS.slice(0, 4), []);
+
 
   const resetFilters = useCallback(() => {
     update({
@@ -564,9 +566,7 @@ export function ShopWorkspace({
               )}
             >
               {items.map((p, i) => (
-                <div key={`${p.id}-${i}`} className="animate-fade-up text-left">
-                  <ProductCard product={p} />
-                </div>
+                <ProductCard key={p.id} product={p} priority={i < 4} />
               ))}
             </div>
           )}

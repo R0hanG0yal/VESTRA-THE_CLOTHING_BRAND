@@ -14,9 +14,9 @@ const MENU_COLUMNS = [
     title: "Highlights",
     code: "01",
     items: [
-      { label: "Shop All Archive", href: "/shop" },
-      { label: "New Release Drops", href: "/shop?sort=new" },
-      { label: "Restocked Silhouettes", href: "/shop?sort=trending" },
+      { label: "Shop All", href: "/shop" },
+      { label: "New Arrivals", href: "/shop?sort=new" },
+      { label: "Back in Stock", href: "/shop?sort=trending" },
       { label: "Shop The Lookbook", href: "/look/look-01" },
     ],
   },
@@ -24,31 +24,31 @@ const MENU_COLUMNS = [
     title: "Topwear & Tailoring",
     code: "02",
     items: [
-      { label: "Sculptural Jackets & Coats", href: "/category/jackets" },
-      { label: "Tailored Shirts", href: "/category/shirts" },
-      { label: "Atelier Hoodies", href: "/category/hoodies" },
-      { label: "Fine Knitwear & Tops", href: "/category/tops" },
-      { label: "Sculpted Dresses", href: "/category/dresses" },
+      { label: "Jackets & Coats", href: "/category/jackets" },
+      { label: "Shirts", href: "/category/shirts" },
+      { label: "Hoodies", href: "/category/hoodies" },
+      { label: "Tops & Knitwear", href: "/category/tops" },
+      { label: "Dresses", href: "/category/dresses" },
     ],
   },
   {
-    title: "Bottoms & Leather Goods",
+    title: "Bottoms & Bags",
     code: "03",
     items: [
-      { label: "Pleated Trousers", href: "/category/trousers" },
-      { label: "Raw Selvedge Denim", href: "/category/jeans" },
-      { label: "Skirts & Tailored Shorts", href: "/category/skirts" },
-      { label: "Calfskin Leather Bags", href: "/category/bags" },
-      { label: "Timepieces & Horology", href: "/category/watches" },
+      { label: "Trousers", href: "/category/trousers" },
+      { label: "Denim Jeans", href: "/category/jeans" },
+      { label: "Skirts & Shorts", href: "/category/skirts" },
+      { label: "Leather Bags", href: "/category/bags" },
+      { label: "Watches", href: "/category/watches" },
     ],
   },
   {
-    title: "Atelier Suite & Support",
+    title: "Services & Help",
     code: "04",
     items: [
-      { label: "3D Virtual Fit Studio", href: "/try-on" },
-      { label: "Chromatic Style Advisor", href: "/style-advisor" },
-      { label: "Atelier Privilege Reserve", href: "/membership" },
+      { label: "3D Try-On Studio", href: "/try-on" },
+      { label: "Style Advisor", href: "/style-advisor" },
+      { label: "Membership (₹201/yr)", href: "/membership" },
       { label: "Download App (Android & Desktop)", href: "#download-app", isDownload: true },
       { label: "Refer & Earn (₹250 Credit)", href: "/refer" },
       { label: "Track Order & Returns", href: "/refund-policy" },
@@ -60,6 +60,8 @@ export function SiteHeader() {
   const router = useRouter();
   const pathname = usePathname();
   const isShopPage = pathname === "/shop" || pathname?.startsWith("/shop");
+  const isProductPage = pathname === "/product" || pathname?.startsWith("/product");
+  const isCartOrCheckout = pathname === "/cart" || pathname?.startsWith("/checkout");
   const { count } = useCart();
   const { user } = useAuth();
   const [query, setQuery] = useState("");
@@ -201,12 +203,11 @@ export function SiteHeader() {
             aria-label={`${BRAND_NAME} Home`}
           >
             <span
-              className="font-serif italic text-base sm:text-2xl uppercase tracking-[0.12em] text-zinc-950 dark:text-white font-semibold transition-opacity group-hover:opacity-75 text-left whitespace-nowrap"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="brand-wordmark text-lg sm:text-2xl text-zinc-950 dark:text-white font-bold transition-opacity group-hover:opacity-85 text-left whitespace-nowrap"
             >
               VESTRA
             </span>
-            <span className="font-mono text-[9px] sm:text-[11px] tracking-[0.2em] text-zinc-800 dark:text-zinc-300 uppercase font-bold">
+            <span className="text-[8px] sm:text-[10px] tracking-[0.28em] text-zinc-700 dark:text-zinc-300 uppercase font-semibold opacity-80">
               Atelier
             </span>
           </Link>
@@ -247,7 +248,7 @@ export function SiteHeader() {
             href="/cart"
             onClick={() => setMenuOpen(false)}
             aria-label={`Shopping bag with ${count} items`}
-            className="hidden sm:flex items-center gap-1.5 sm:gap-2 rounded-full px-3 sm:px-4 py-2 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-zinc-950 dark:text-white font-black transition-all duration-300 text-left shadow-xs"
+            className="hidden sm:flex items-center gap-1 sm:gap-2 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-zinc-950 dark:text-white font-black transition-all duration-300 text-left shadow-xs"
           >
             <span className="font-sans text-xs sm:text-[13px] tracking-[0.1em] text-left uppercase font-bold">
               Bag
@@ -259,16 +260,16 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* ── Mobile Floating Bag Button (for non-shop pages) ── */}
-      {!isShopPage && (
+      {/* ── Mobile Floating Bag Button (for non-product, non-shop pages) ── */}
+      {!isShopPage && !isProductPage && !isCartOrCheckout && (
         <Link
           href="/cart"
           onClick={() => setMenuOpen(false)}
           aria-label={`Shopping bag with ${count} items`}
-          className="fixed bottom-5 right-4 z-40 sm:hidden pointer-events-auto flex items-center gap-1.5 rounded-full px-4 py-2.5 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-[0_12px_36px_rgba(0,0,0,0.4)] border border-white/30 active:scale-95 transition-all font-mono text-xs font-black"
+          className="fixed bottom-5 right-4 z-40 sm:hidden pointer-events-auto flex items-center gap-1.5 rounded-full px-4 py-2.5 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-[0_12px_36px_rgba(0,0,0,0.4)] border border-white/30 active:scale-95 transition-all font-mono text-xs font-black animate-fade-in"
         >
-          <span className="font-sans text-xs uppercase tracking-wider font-bold">Bag</span>
-          <span className="font-sans text-xs font-bold">({count})</span>
+          <span className="font-mono text-xs uppercase tracking-wider">Bag</span>
+          <span className="font-mono text-xs font-black">({count})</span>
         </Link>
       )}
 
@@ -278,14 +279,14 @@ export function SiteHeader() {
           {/* Header row inside expanding menu */}
           <div className="flex items-center justify-between border-b border-white/25 dark:border-white/15 pb-3 sm:pb-4 text-left">
             <span className="label-ui text-[11px] tracking-[0.2em] text-foreground font-bold text-left">
-              Atelier Directory
+              Menu
             </span>
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
               className="label-ui text-[10px] text-foreground font-bold hover:underline transition-colors cursor-pointer text-left whitespace-nowrap"
             >
-              [ Close Directory ]
+              [ Close ]
             </button>
           </div>
 
@@ -366,7 +367,7 @@ export function SiteHeader() {
                 onClick={() => setMenuOpen(false)}
                 className="flex items-center gap-2 rounded-full px-4 py-2 bg-white/30 hover:bg-white/45 dark:bg-white/15 dark:hover:bg-white/25 border border-white/35 dark:border-white/25 text-xs text-foreground font-bold label-ui tracking-wider transition-all text-left"
               >
-                <span>{user ? "Client Suite" : "Client Sign In"}</span>
+                <span>{user ? "My Account" : "Sign In"}</span>
               </Link>
             </div>
           </div>

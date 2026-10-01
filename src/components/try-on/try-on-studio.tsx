@@ -29,10 +29,10 @@ const BODY_TYPES = [
 ] as const;
 
 const STEPS = [
-  "Isolating torso geometry & spatial boundaries…",
-  "Simulating cloth draping physics & tension lines…",
-  "Computing contour alignment & grading tolerances…",
-  "Synthesizing volumetric 3D lookbook render…",
+  "Detecting body shape and proportions…",
+  "Fitting fabric drape and size…",
+  "Checking style and fit matching…",
+  "Preparing your 3D try-on view…",
 ];
 
 export function TryOnStudio({
@@ -233,7 +233,7 @@ export function TryOnStudio({
                   <div className="w-full max-w-sm text-left text-white">
                     <IconImage type="tryon" size={24} className="border-none mb-3" />
                     <p className="font-mono text-xs uppercase tracking-widest font-bold text-white text-left">
-                      VOLUMETRIC FITTING CONVERGING…
+                      CREATING 3D FIT PREVIEW…
                     </p>
                     <div className="mt-4 space-y-2 text-left">
                       {STEPS.map((s, i) => (
@@ -256,9 +256,9 @@ export function TryOnStudio({
               <div className="absolute left-3 top-3 flex gap-2 text-left">
                 <button
                   onClick={() => inputRef.current?.click()}
-                  className="border border-foreground/30 bg-background/90 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-foreground text-left"
+                  className="border border-foreground/30 bg-background/90 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-foreground text-left shadow-sm hover:bg-foreground/5 transition-colors"
                 >
-                  [REPLACE PLATE]
+                  CHANGE PHOTO
                 </button>
                 <button
                   onClick={() => {
@@ -266,15 +266,15 @@ export function TryOnStudio({
                     setResult(null);
                     setStatus("idle");
                   }}
-                  className="border border-foreground/30 bg-background/90 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-foreground text-left"
+                  className="border border-foreground/30 bg-background/90 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-foreground text-left shadow-sm hover:bg-foreground/5 transition-colors"
                 >
-                  [DISCARD]
+                  CLEAR
                 </button>
               </div>
 
               {status === "done" && (
                 <div className="absolute bottom-3 left-3 border border-white/20 bg-black/80 px-3 py-1.5 font-mono text-[9px] uppercase tracking-widest text-white text-left">
-                  DRAG HORIZONTALLY TO ROTATE 3D VOLUMETRIC PERSPECTIVE
+                  DRAG LEFT OR RIGHT TO ROTATE 3D VIEW
                 </div>
               )}
             </div>
