@@ -38,22 +38,22 @@ const MEMBERSHIP_HIGHLIGHTS = [
   {
     code: "01 // VALUATION",
     title: "~30% Archival Valuation",
-    desc: "Preferential guild pricing unlocked automatically on every single garment and archival edition.",
+    desc: "Flat ~30% off every garment, every order.",
   },
   {
     code: "02 // PRIORITY",
-    title: "48-Hour Early Drop Allocations",
-    desc: "Inspect and reserve new seasonal batch releases 48 hours prior to open public release.",
+    title: "48-Hour Early Access",
+    desc: "Reserve new drops 48 hours before public release.",
   },
   {
     code: "03 // COURIER",
-    title: "Complimentary Direct Carriage",
-    desc: "Zero minimum threshold. Every acquisition ships direct via insured expedited courier.",
+    title: "Free Express Shipping",
+    desc: "Complimentary insured shipping on every order.",
   },
   {
     code: "04 // WALLET",
-    title: "Double Credit Rebate Accrual",
-    desc: "Compounded credit reserves directly deposited to your atelier wallet on all dispatches.",
+    title: "Double Credit Rewards",
+    desc: "2× store credit earned on every purchase.",
   },
 ];
 
@@ -134,15 +134,13 @@ export default function HomePage() {
                 </h1>
               </Reveal>
 
-              <Reveal delay={160}>
                 <p
                   className="mt-6 max-w-lg text-[15px] leading-relaxed text-left"
                   style={{ fontFamily: "var(--font-sans)", color: "rgba(232,231,227,0.7)" }}
                 >
-                  Hand-padded horsehair canvas, sculpted silhouettes, and zero synthetic
-                  fusing. Pure wool architecture tailored for the modern frame.
+                  Pure wool architecture. Zero synthetic fusing.
+                  Sculpted for the modern frame.
                 </p>
-              </Reveal>
 
               <Reveal delay={240}>
                 <div className="mt-8 flex flex-wrap items-center gap-4 text-left">
@@ -206,7 +204,7 @@ export default function HomePage() {
                   </div>
                   <div className="mt-5 pt-4 border-t border-white/10 text-left">
                     <p className="text-[11px] leading-relaxed text-left" style={{ fontFamily: "var(--font-sans)", color: "rgba(232,231,227,0.4)" }}>
-                      Certified domestic weavers & European certified wool reserves. No petroleum-based synthetics.
+                      Certified domestic weavers · European wool reserves · No synthetics.
                     </p>
                   </div>
                 </div>
@@ -273,7 +271,7 @@ export default function HomePage() {
                   Fluid Silhouette. <span className="italic">Heavy Drape.</span>
                 </h2>
                 <p className="mt-3 max-w-xl text-[14px] sm:text-[15px] leading-relaxed text-left" style={{ fontFamily: "var(--font-sans)", color: "var(--text-subtle)" }}>
-                  Examining the physical weight of unwashed worsted wool and fluid wool crepe against the natural lines of the human frame. Each piece is hand-basted to a batch of fewer than twenty.
+                  Heavy unwashed worsted wool and fluid crepe. Each piece hand-basted, batch of fewer than twenty.
                 </p>
               </Reveal>
             </div>
@@ -287,7 +285,7 @@ export default function HomePage() {
                     <span>Batch 01 // 20 Allocated Units</span>
                   </div>
                   <p className="text-[12px]" style={{ fontFamily: "var(--font-sans)", color: "var(--text-subtle)" }}>
-                    Pure Biella Reserve Worsted Crepe · Zero Synthetic Fusing
+                    Biella Reserve Worsted · Zero Synthetic Fusing
                   </p>
                 </div>
               </Reveal>
@@ -428,7 +426,7 @@ export default function HomePage() {
                 </h2>
 
                 <p className="mt-4 text-[14px] sm:text-[15px] leading-relaxed text-left max-w-xl" style={{ fontFamily: "var(--font-sans)", color: "var(--text-subtle)" }}>
-                  Enrol in the {BRAND_NAME} Guild for {formatINR(MEMBERSHIP_PRICE)} annually. Unlock immediate ~30% preferential archival valuation, 48-hour priority access to limited edition drops, and bespoke complimentary white-glove carriage.
+                  Join the {BRAND_NAME} Guild for {formatINR(MEMBERSHIP_PRICE)}/year. Get ~30% off every order, 48-hour early access to drops, and free shipping.
                 </p>
               </Reveal>
 
@@ -541,9 +539,9 @@ export default function HomePage() {
             <Reveal delay={100}>
               <ol className="mt-8 space-y-4 text-[13px] text-left" style={{ fontFamily: "var(--font-sans)", color: "var(--text-subtle)" }}>
                 {[
-                  "Capture or upload a single pose photograph — processed ephemerally with zero biometric cloud storage.",
-                  "Calibrate volumetric drape simulation with millimeter shoulder width and hem fall estimation.",
-                  "Inspect 360-degree kinematic garment rotation verified against our 16 department size indexes.",
+                  "Upload a full-body photo — processed in memory, never stored.",
+                  "Get volumetric drape simulation with precise shoulder and hem estimation.",
+                  "Inspect 360° rotation verified against our 16 department size indexes.",
                 ].map((step, i) => (
                   <li key={step} className="flex items-start gap-3 text-left">
                     <span className="text-[12px] font-semibold shrink-0" style={{ fontFamily: "var(--font-mono)", color: "var(--accent)" }}>0{i + 1}</span>
@@ -609,8 +607,7 @@ export default function HomePage() {
                 Mineral & Earth Chromatic Equilibrium
               </h2>
               <p className="mt-3 max-w-lg text-[14px] leading-relaxed text-left" style={{ fontFamily: "var(--font-sans)", color: "var(--text-subtle)" }}>
-                Curated luxury palettes designed to illuminate natural skin undertones
-                without synthetic glare.
+                Curated palettes designed to complement natural skin undertones.
               </p>
             </Reveal>
             <Reveal delay={100}>
@@ -666,7 +663,7 @@ export default function HomePage() {
                 Give ₹250, Get ₹250 Store Credit
               </h2>
               <p className="mt-2 max-w-lg text-[13px] text-left" style={{ fontFamily: "var(--font-sans)", color: "var(--text-subtle)" }}>
-                Share your personal patron token. Credit is auto-settled into both ledgers instantly.
+                Share your patron token. Credit is settled into both accounts instantly.
               </p>
             </Reveal>
           </div>

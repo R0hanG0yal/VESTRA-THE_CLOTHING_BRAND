@@ -32,7 +32,7 @@ export default async function TryOnPage({
           </h1>
 
           <p className="mt-3 max-w-2xl text-sm text-foreground/60 text-left font-sans">
-            Calibrated real-time draping engine. Rotate the three-dimensional rendering to evaluate hem fall, shoulder structure, and optimal sizing metrics.
+            Real-time draping engine. Rotate the 3D render to evaluate fit, hem fall, and sizing.
           </p>
         </div>
       </section>

@@ -188,7 +188,7 @@ export function SiteHeader() {
                 )}
               />
             </span>
-            <span className="hidden sm:inline font-mono text-xs sm:text-[13px] tracking-[0.15em] text-left font-black text-zinc-950 dark:text-white uppercase">
+            <span className="hidden sm:inline font-sans text-xs sm:text-[13px] tracking-[0.1em] text-left font-bold text-zinc-950 dark:text-white uppercase">
               {menuOpen ? "Close" : "Menu"}
             </span>
           </button>
@@ -217,24 +217,13 @@ export function SiteHeader() {
           <Link
             href="/shop"
             onClick={() => setMenuOpen(false)}
-            className="flex items-center rounded-full px-3 sm:px-3.5 py-1.5 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-xs sm:text-sm font-black text-zinc-950 dark:text-white tracking-[0.15em] uppercase transition-all duration-300 shadow-xs"
+            className="flex items-center rounded-full px-3 sm:px-3.5 py-1.5 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-xs sm:text-sm font-bold text-zinc-950 dark:text-white tracking-[0.1em] uppercase transition-all duration-300 shadow-xs"
+            style={{ fontFamily: "var(--font-sans)" }}
           >
             <span className="sm:hidden">Shop</span>
             <span className="hidden sm:inline">Collections</span>
           </Link>
-          {!isAppInstalled && (
-            <button
-              type="button"
-              onClick={() => {
-                if (typeof window !== "undefined") {
-                  window.dispatchEvent(new CustomEvent("vestra_open_install_modal"));
-                }
-              }}
-              className="hidden md:flex items-center rounded-full px-3.5 py-1.5 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-xs sm:text-sm font-black text-zinc-950 dark:text-white tracking-[0.15em] uppercase transition-all duration-300 shadow-xs cursor-pointer"
-            >
-              <span>Download App</span>
-            </button>
-          )}
+
         </nav>
 
         {/* ── Right Actions: Search (Top) + Bag (Desktop Only) ── */}
@@ -260,10 +249,10 @@ export function SiteHeader() {
             aria-label={`Shopping bag with ${count} items`}
             className="hidden sm:flex items-center gap-1.5 sm:gap-2 rounded-full px-3 sm:px-4 py-2 bg-white/40 hover:bg-white/60 dark:bg-white/[0.14] dark:hover:bg-white/[0.22] border border-white/40 dark:border-white/25 text-zinc-950 dark:text-white font-black transition-all duration-300 text-left shadow-xs"
           >
-            <span className="font-mono text-xs sm:text-[13px] tracking-[0.15em] text-left uppercase">
+            <span className="font-sans text-xs sm:text-[13px] tracking-[0.1em] text-left uppercase font-bold">
               Bag
             </span>
-            <span className="font-mono text-xs sm:text-[13px] text-zinc-950 dark:text-white font-black text-left">
+            <span className="font-sans text-xs sm:text-[13px] text-zinc-950 dark:text-white font-bold text-left">
               ({count})
             </span>
           </Link>
@@ -278,8 +267,8 @@ export function SiteHeader() {
           aria-label={`Shopping bag with ${count} items`}
           className="fixed bottom-5 right-4 z-40 sm:hidden pointer-events-auto flex items-center gap-1.5 rounded-full px-4 py-2.5 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-[0_12px_36px_rgba(0,0,0,0.4)] border border-white/30 active:scale-95 transition-all font-mono text-xs font-black"
         >
-          <span className="font-mono text-xs uppercase tracking-wider">Bag</span>
-          <span className="font-mono text-xs font-black">({count})</span>
+          <span className="font-sans text-xs uppercase tracking-wider font-bold">Bag</span>
+          <span className="font-sans text-xs font-bold">({count})</span>
         </Link>
       )}
 
@@ -371,20 +360,6 @@ export function SiteHeader() {
             </button>
 
             <div className="flex items-center gap-2">
-              {!isAppInstalled && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMenuOpen(false);
-                    if (typeof window !== "undefined") {
-                      window.dispatchEvent(new CustomEvent("vestra_open_install_modal"));
-                    }
-                  }}
-                  className="flex items-center gap-1.5 rounded-full px-3.5 py-2 bg-white text-zinc-950 dark:bg-white dark:text-zinc-950 font-mono text-xs font-black uppercase tracking-wider hover:opacity-90 transition-opacity cursor-pointer shadow-xs"
-                >
-                  <span>Download App</span>
-                </button>
-              )}
 
               <Link
                 href="/account"

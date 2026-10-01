@@ -94,7 +94,7 @@ export function TryOnStudio({
     }, 700);
 
     try {
-      const res = await fetch("/api/try-on", {
+      const res = await fetch("/api/ai/tryon", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -177,7 +177,7 @@ export function TryOnStudio({
                 Upload Full-Body Portrait
               </h3>
               <p className="font-serif text-sm italic text-foreground/65 leading-relaxed text-left">
-                A front-facing, well-illuminated full-length portrait with arms slightly relaxed produces optimum volumetric calibration.
+                Front-facing, well-lit full-length portrait with relaxed arms works best.
               </p>
               <button
                 onClick={() => inputRef.current?.click()}
@@ -443,7 +443,7 @@ export function TryOnStudio({
           <div className="mt-6 flex items-start gap-2 border-t border-foreground/10 pt-4 text-left">
             <IconImage type="shield" size={14} className="mt-0.5" />
             <p className="font-mono text-[9px] uppercase tracking-wider text-foreground/50 leading-relaxed text-left">
-              DATA SECURITY GUARANTEE: ENCRYPTED IN-TRANSIT, ZERO PERSISTENCE ON VOLUMES, DISCARDED POST-SESSION.
+              ENCRYPTED IN-TRANSIT · ZERO STORAGE · DISCARDED POST-SESSION.
             </p>
           </div>
         </div>
