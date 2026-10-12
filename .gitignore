@@ -51,3 +51,20 @@ android/build/
 .gemini/
 .agent/
 .gsd/
+
+# python & vton engine weights
+vton-engine/.venv/
+.venv/
+venv/
+vton-engine/weights/
+weights/
+*.safetensors
+*.onnx
+*.pt
+*.bin
+**/*.pyc
+**/__pycache__/
+vton-engine/*.png
+vton-engine/*.jpg
+vton-engine/*.jpeg
+

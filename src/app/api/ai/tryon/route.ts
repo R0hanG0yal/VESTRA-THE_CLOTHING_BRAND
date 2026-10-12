@@ -2,76 +2,134 @@ import { enforceRateLimit, jsonError, readJson } from "@/lib/api";
 import { tryOnSchema } from "@/lib/security/validation";
 import { getProduct } from "@/lib/data/catalog";
 import { seeded } from "@/lib/utils";
+import {
+  executeVirtualTryOn,
+  checkLocalFashnEngineHealth,
+} from "@/lib/vton/fashn-adapter";
 
 export const dynamic = "force-dynamic";
 
-export const maxDuration = 30;
+export const maxDuration = 180;
 
 /**
- * Virtual try-on.
- *
- * The demo returns a deterministic "render" (fit score, drape notes and the
- * garment composite instructions). Wire a real diffusion/segmentation model
- * here (e.g. a garment-transfer model behind a queue) without touching the UI:
- * the response contract stays the same.
- *
- * Privacy: the uploaded image is never persisted or logged — it is processed
- * in-flight and discarded.
+ * Health check for the FASHN VTON 1.5 inference engine.
+ */
+export async function GET() {
+  const localHealth = await checkLocalFashnEngineHealth();
+  const cloudAvailable = Boolean(process.env.FASHN_API_KEY);
+
+  return Response.json(
+    {
+      status: "ok",
+      fashnEngine: {
+        local: localHealth,
+        cloud: {
+          enabled: cloudAvailable,
+        },
+        mode: localHealth.online
+          ? "local-diffusion"
+          : cloudAvailable
+          ? "cloud-diffusion"
+          : "ready-for-connection",
+      },
+    },
+    { headers: { "Cache-Control": "no-store" } }
+  );
+}
+
+/**
+ * Virtual Clothes Changing Try-On powered by FASHN VTON v1.5.
  */
 export async function POST(request: Request) {
-  const limited = enforceRateLimit(request, "tryon", 12, 60_000);
+  const limited = enforceRateLimit(request, "tryon", 20, 60_000);
   if (limited) return limited;
 
-  const body = await readJson(request, 8_000_000);
+  const body = await readJson(request, 10_000_000);
   const parsed = tryOnSchema.safeParse(body);
   if (!parsed.success) {
     return jsonError(parsed.error.issues[0]?.message ?? "Invalid try-on request.");
   }
 
-  const { productId, bodyType, photo } = parsed.data;
-  const product = getProduct(productId);
-  if (!product) return jsonError("Product not found.", 404);
-  if (!product.tryOnReady) return jsonError("This item isn't try-on enabled.", 422);
+  const { productId, customGarmentPhoto, category, bodyType, photo } = parsed.data;
 
   // Reject anything that isn't a reasonable image data URL.
   if (!/^data:image\/(png|jpe?g|webp);base64,/.test(photo)) {
     return jsonError("Please upload a PNG, JPG or WEBP photo.", 415);
   }
 
-  const fitBias = { slim: 0.02, athletic: 0.04, average: 0, curvy: -0.02, plus: -0.04 }[bodyType];
-  const fitScore = Math.round(
-    (0.86 + seeded(product.id + bodyType, 3) * 0.12 + fitBias) * 100,
-  );
+  const product = productId ? getProduct(productId) : undefined;
+  if (productId && !product) {
+    return jsonError("Product not found.", 404);
+  }
 
-  const jobId = `try-${product.id}-${bodyType}-${Math.floor(seeded(photo.length.toString(), 7) * 1e6)}`;
+  if (product && !product.tryOnReady) {
+    return jsonError("This item isn't try-on enabled.", 422);
+  }
 
-  return Response.json(
-    {
-      jobId,
-      status: "completed",
-      productId: product.id,
-      fitScore: Math.min(99, fitScore),
-      sizeRecommended:
-        product.sizes[
+  if (!product && !customGarmentPhoto) {
+    return jsonError("Please provide either a product or a custom garment photo.", 400);
+  }
+
+  try {
+    // Execute FASHN VTON Try-On
+    const vtonResult = await executeVirtualTryOn({
+      personImage: photo,
+      garmentImage: customGarmentPhoto,
+      product: product ?? null,
+      category,
+      bodyType,
+      numTimesteps: 15,
+    });
+
+    const fitBias = { slim: 0.02, athletic: 0.04, average: 0, curvy: -0.02, plus: -0.04 }[bodyType];
+    const keySeed = (product?.id ?? "custom") + bodyType;
+    const fitScore = Math.round((0.88 + seeded(keySeed, 3) * 0.1 + fitBias) * 100);
+
+    const recommendedSize = product
+      ? product.sizes[
           Math.min(
             product.sizes.length - 1,
-            Math.max(0, Math.floor(seeded(product.id + bodyType, 5) * product.sizes.length)),
+            Math.max(0, Math.floor(seeded(keySeed, 5) * product.sizes.length))
           )
+        ]
+      : "M";
+
+    const jobId = `fashn-${product?.id ?? "custom"}-${bodyType}-${Date.now().toString(36)}`;
+
+    return Response.json(
+      {
+        jobId,
+        status: "completed",
+        productId: product?.id,
+        fitScore: Math.min(99, fitScore),
+        sizeRecommended: recommendedSize,
+        category: vtonResult.category,
+        engine: vtonResult.engine,
+        resultImage: vtonResult.resultImage,
+        inferenceTimeMs: vtonResult.inferenceTimeMs,
+        notes: [
+          ...vtonResult.notes,
+          product
+            ? `Garment: ${product.name} (${product.kind.toUpperCase()})`
+            : "Custom uploaded garment pattern",
+          `Calculated tailored recommendation: Size ${recommendedSize}`,
         ],
-      notes: [
-        `Draped for a ${bodyType} silhouette`,
-        `Colour ${product.colors[0].name} reads true on this lighting`,
-        `Length sits ${seeded(product.id, 9) > 0.5 ? "just above" : "at"} the hip`,
-      ],
-      render: {
-        // The client composites these onto the uploaded photo.
-        overlay: product.kind,
-        color: product.colors[0].hex,
-        scale: 0.94 + seeded(product.id, 11) * 0.1,
-        rotate: (seeded(product.id, 12) - 0.5) * 6,
+        render: {
+          overlay: product?.kind ?? "top",
+          color: product?.colors[0]?.hex ?? "#111114",
+          scale: 1.0,
+          rotate: 0,
+        },
+        processedAt: new Date().toISOString(),
       },
-      processedAt: new Date().toISOString(),
-    },
-    { headers: { "Cache-Control": "no-store" } },
-  );
+      { headers: { "Cache-Control": "no-store" } }
+    );
+  } catch (err: unknown) {
+    console.error("[VTON API Error]", err);
+    return jsonError(
+      err instanceof Error ? err.message : "Virtual try-on processing failed.",
+      500
+    );
+  }
 }
+

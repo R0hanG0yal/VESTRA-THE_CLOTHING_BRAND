@@ -66,9 +66,11 @@ export const upiCreateSchema = z.object({
 });
 
 export const tryOnSchema = z.object({
-  productId: z.string().regex(/^p\d{3,6}$/),
+  productId: z.string().regex(/^p\d{3,6}$/).optional(),
+  customGarmentPhoto: z.string().startsWith("data:image/").max(8_000_000).optional(),
+  category: z.enum(["tops", "bottoms", "one-pieces"]).optional(),
   /** Data URL of the uploaded photo — size capped in the route. */
-  photo: z.string().startsWith("data:image/").max(6_000_000),
+  photo: z.string().startsWith("data:image/").max(8_000_000),
   bodyType: z.enum(["slim", "athletic", "average", "curvy", "plus"]).default("average"),
 });
 
