@@ -14,8 +14,9 @@ export const maxDuration = 180;
 /**
  * Health check for the FASHN VTON 1.5 inference engine.
  */
-export async function GET() {
-  const localHealth = await checkLocalFashnEngineHealth();
+export async function GET(request: Request) {
+  const customEngineUrl = request.headers.get("x-vton-engine-url") || undefined;
+  const localHealth = await checkLocalFashnEngineHealth(customEngineUrl);
   const cloudAvailable = Boolean(process.env.FASHN_API_KEY);
 
   return Response.json(
@@ -44,6 +45,7 @@ export async function POST(request: Request) {
   const limited = enforceRateLimit(request, "tryon", 20, 60_000);
   if (limited) return limited;
 
+  const customEngineUrl = request.headers.get("x-vton-engine-url") || undefined;
   const body = await readJson(request, 10_000_000);
   const parsed = tryOnSchema.safeParse(body);
   if (!parsed.success) {
@@ -79,6 +81,7 @@ export async function POST(request: Request) {
       category,
       bodyType,
       numTimesteps: 15,
+      customEngineUrl,
     });
 
     const fitBias = { slim: 0.02, athletic: 0.04, average: 0, curvy: -0.02, plus: -0.04 }[bodyType];

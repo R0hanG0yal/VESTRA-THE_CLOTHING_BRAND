@@ -11,6 +11,7 @@ export interface FashnTryOnOptions {
   category?: FashnCategory;
   bodyType?: string;
   numTimesteps?: number;
+  customEngineUrl?: string;
 }
 
 export interface FashnTryOnResult {
@@ -65,20 +66,23 @@ export async function getProductGarmentBase64(product: Product): Promise<string 
 /**
  * Checks if the local FASHN VTON 1.5 microservice is online and healthy.
  */
-export async function checkLocalFashnEngineHealth(): Promise<{
+export async function checkLocalFashnEngineHealth(customUrl?: string): Promise<{
   online: boolean;
   weightsReady?: boolean;
   cudaAvailable?: boolean;
   gpuName?: string;
   url: string;
 }> {
-  const localUrl = process.env.FASHN_VTON_URL || "http://127.0.0.1:8000";
+  const localUrl = customUrl || process.env.FASHN_VTON_URL || "http://127.0.0.1:8000";
   try {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 2000);
-    const res = await fetch(`${localUrl}/health`, {
+    const timer = setTimeout(() => controller.abort(), 4000);
+    const res = await fetch(`${localUrl.replace(/\/+$/, "")}/health`, {
       signal: controller.signal,
       cache: "no-store",
+      headers: {
+        "Bypass-Tunnel-Reminder": "true",
+      },
     });
     clearTimeout(timer);
 
@@ -100,9 +104,9 @@ export async function checkLocalFashnEngineHealth(): Promise<{
 
 /**
  * Executes Virtual Try-On using FASHN VTON 1.5:
- * 1. Checks Local FASHN VTON 1.5 Python Microservice.
+ * 1. Checks Local/Tunneled FASHN VTON 1.5 Python Microservice.
  * 2. If unavailable, checks FASHN Cloud API (if FASHN_API_KEY is configured).
- * 3. Gracefully falls back to high-fidelity seamless neural preview synthesis.
+ * 3. Informs user clearly with local and tunnel options.
  */
 export async function executeVirtualTryOn({
   personImage,
@@ -111,6 +115,7 @@ export async function executeVirtualTryOn({
   category,
   bodyType = "athletic",
   numTimesteps = 30,
+  customEngineUrl,
 }: FashnTryOnOptions): Promise<FashnTryOnResult> {
   const t0 = Date.now();
 
@@ -131,12 +136,15 @@ export async function executeVirtualTryOn({
   // Determine photo type: catalog photos are worn by models ("model"), flat-lays are standalone ("flat-lay")
   const photoType: "model" | "flat-lay" = product ? "model" : "flat-lay";
 
-  // --- ATTEMPT 1: Local FASHN VTON Microservice ---
-  const localBaseUrl = process.env.FASHN_VTON_URL || "http://127.0.0.1:8000";
+  // --- ATTEMPT 1: Local / Tunneled FASHN VTON Microservice ---
+  const localBaseUrl = (customEngineUrl || process.env.FASHN_VTON_URL || "http://127.0.0.1:8000").replace(/\/+$/, "");
   try {
     const localRes = await fetch(`${localBaseUrl}/tryon`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Bypass-Tunnel-Reminder": "true",
+      },
       body: JSON.stringify({
         person_image: personImage,
         garment_image: resolvedGarment,
@@ -160,7 +168,7 @@ export async function executeVirtualTryOn({
           engine: "fashn-vton-local",
           inferenceTimeMs: data.inference_time_ms || Date.now() - t0,
           notes: data.notes || [
-            `Synthesized via Local FASHN VTON 1.5 MMDiT Engine`,
+            `Synthesized via FASHN VTON 1.5 MMDiT Diffusion Engine`,
             `Category: ${resolvedCategory.toUpperCase()}`,
             `Body: ${bodyType.toUpperCase()}`,
           ],
@@ -176,7 +184,7 @@ export async function executeVirtualTryOn({
     if (err instanceof Error && err.name !== "AbortError" && !err.message.includes("fetch failed")) {
       throw err;
     }
-    console.info("[VTON Adapter] Local FASHN engine not reachable or timed out, checking cloud fallback.");
+    console.info("[VTON Adapter] FASHN engine not reachable or timed out, checking cloud fallback.");
   }
 
   // --- ATTEMPT 2: FASHN AI Cloud API (if API Key provided) ---
@@ -239,8 +247,8 @@ export async function executeVirtualTryOn({
     }
   }
 
-  // If local engine and cloud are both not ready, fail clearly rather than returning broken composite
+  // If local engine and cloud are both not ready, inform user clearly
   throw new Error(
-    "FASHN VTON 1.5 Engine is offline. Start the local server by running 'vton-engine/run_server.bat' or configure FASHN_API_KEY in .env.local."
+    "FASHN VTON 1.5 GPU Engine is not connected to this cloud server. Open 'http://localhost:3000/try-on' to run on your local RTX 3050 GPU directly, or connect your GPU tunnel in [ENGINE INFO]."
   );
 }

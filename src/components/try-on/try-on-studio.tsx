@@ -84,28 +84,58 @@ export function TryOnStudio({
   const [viewMode, setViewMode] = useState<ViewMode>("result");
   const [sliderPos, setSliderPos] = useState(50); // percentage 0-100
   const [engineOnline, setEngineOnline] = useState<boolean | null>(null);
+  const [engineGpuName, setEngineGpuName] = useState<string | null>(null);
+  const [customEngineUrl, setCustomEngineUrl] = useState<string>("");
+  const [tunnelInput, setTunnelInput] = useState<string>("");
   const [showEngineModal, setShowEngineModal] = useState(false);
+  const [testingConnection, setTestingConnection] = useState(false);
 
   // 3D Motion state
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const sliderDragging = useRef(false);
 
-  // Check engine health on mount
-  useEffect(() => {
-    async function checkHealth() {
-      try {
-        const res = await fetch("/api/ai/tryon");
-        if (res.ok) {
-          const data = await res.json();
-          setEngineOnline(data?.fashnEngine?.local?.online || data?.fashnEngine?.cloud?.enabled || true);
+  // Check engine health
+  const checkHealth = useCallback(async (overrideUrl?: string) => {
+    try {
+      const headers: Record<string, string> = {};
+      const url = overrideUrl !== undefined ? overrideUrl : customEngineUrl;
+      if (url) headers["x-vton-engine-url"] = url;
+      const res = await fetch("/api/ai/tryon", { headers });
+      if (res.ok) {
+        const data = await res.json();
+        const local = data?.fashnEngine?.local;
+        const cloud = data?.fashnEngine?.cloud;
+        if (local?.online) {
+          setEngineOnline(true);
+          setEngineGpuName(local.gpuName || "Local / Tunneled GPU");
+          return true;
+        } else if (cloud?.enabled) {
+          setEngineOnline(true);
+          setEngineGpuName("Cloud Fashn API");
+          return true;
+        } else {
+          setEngineOnline(false);
+          setEngineGpuName(null);
+          return false;
         }
-      } catch {
-        setEngineOnline(false);
       }
+    } catch {
+      setEngineOnline(false);
+      setEngineGpuName(null);
+      return false;
     }
-    checkHealth();
-  }, []);
+    return false;
+  }, [customEngineUrl]);
+
+  useEffect(() => {
+    const saved = typeof window !== "undefined" ? localStorage.getItem("vton_custom_engine_url") || "" : "";
+    if (saved) {
+      setCustomEngineUrl(saved);
+      setTunnelInput(saved);
+    }
+    checkHealth(saved);
+  }, [checkHealth]);
 
   function onUserPhoto(file?: File | null) {
     if (!file) return;
@@ -179,9 +209,14 @@ export function TryOnStudio({
         payload.category = customCategory;
       }
 
+      const reqHeaders: Record<string, string> = { "Content-Type": "application/json" };
+      if (customEngineUrl) {
+        reqHeaders["x-vton-engine-url"] = customEngineUrl;
+      }
+
       const res = await fetch("/api/ai/tryon", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: reqHeaders,
         body: JSON.stringify(payload),
       });
 
@@ -204,11 +239,15 @@ export function TryOnStudio({
     } catch (err: unknown) {
       clearInterval(stepInterval);
       setStatus("error");
+      const errMsg = err instanceof Error ? err.message : "Please try again with a clear photo.";
       push({
         title: "Virtual drape failed to converge",
-        description: err instanceof Error ? err.message : "Please try again with a clear photo.",
+        description: errMsg,
         variant: "error",
       });
+      if (errMsg.toLowerCase().includes("not connected") || errMsg.toLowerCase().includes("offline")) {
+        setShowEngineModal(true);
+      }
     }
   }
 
@@ -291,48 +330,149 @@ export function TryOnStudio({
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-foreground/15 pb-2 text-left">
           <div className="flex items-center gap-2 text-left">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              <span
+                className={cn(
+                  "absolute inline-flex h-full w-full animate-ping rounded-full opacity-75",
+                  engineOnline ? "bg-emerald-400" : "bg-amber-400"
+                )}
+              />
+              <span
+                className={cn(
+                  "relative inline-flex h-2 w-2 rounded-full",
+                  engineOnline ? "bg-emerald-500" : "bg-amber-500"
+                )}
+              />
             </span>
             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-foreground">
-              FASHN VTON v1.5 ENGINE
+              FASHN VTON v1.5 {engineOnline ? "GPU ACTIVE" : "ENGINE"}
             </span>
-            <span className="font-mono text-[9px] text-foreground/50 border border-foreground/20 px-1.5 py-0.5">
-              PIXEL SPACE · MASKLESS
+            <span className="font-mono text-[9px] text-foreground/60 border border-foreground/20 px-1.5 py-0.5">
+              {engineOnline
+                ? engineGpuName || "PIXEL-SPACE DIFFUSION"
+                : "CLOUD HOSTED (GPU UNLINKED)"}
             </span>
           </div>
 
           <button
             onClick={() => setShowEngineModal(!showEngineModal)}
-            className="font-mono text-[10px] uppercase text-foreground/60 hover:text-foreground underline"
+            className={cn(
+              "font-mono text-[10px] uppercase underline transition",
+              engineOnline
+                ? "text-emerald-600 dark:text-emerald-400 hover:opacity-80"
+                : "text-amber-600 dark:text-amber-400 font-bold hover:underline"
+            )}
           >
-            {engineOnline ? "[LOCAL / CLOUD READY]" : "[ENGINE INFO]"}
+            {engineOnline ? "[GPU LINKED · CONFIG]" : "[CONNECT LOCAL GPU / LOCALHOST]"}
           </button>
         </div>
 
-        {/* Engine Info Dropdown */}
+        {/* Engine Info & Connection Modal */}
         {showEngineModal && (
-          <div className="mb-4 border border-foreground/25 bg-surface p-4 text-xs font-mono text-foreground space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                ● FASHN VTON v1.5 ARCHITECTURE
+          <div className="mb-4 border border-foreground/30 bg-surface p-4 text-xs font-mono text-foreground space-y-3 shadow-md">
+            <div className="flex items-center justify-between border-b border-foreground/15 pb-2">
+              <span className="font-bold uppercase tracking-wider flex items-center gap-2">
+                <span className={cn("h-2 w-2 rounded-full", engineOnline ? "bg-emerald-500" : "bg-amber-500")} />
+                FASHN VTON 1.5 GPU PIPELINE SETUP
               </span>
               <button
                 onClick={() => setShowEngineModal(false)}
-                className="text-foreground/50 hover:text-foreground"
+                className="text-foreground/50 hover:text-foreground text-xs"
               >
                 [CLOSE]
               </button>
             </div>
+
             <p className="text-[11px] leading-relaxed text-foreground/80 font-sans">
-              Unlike legacy systems that paste 2D stickers over your photo, FASHN VTON 1.5 runs a
-              multimodal diffusion transformer (MMDiT) in pixel space. It segments original clothing, detects
-              body landmarks with DWPose, and generates a photorealistic dressed image preserving body identity.
+              FASHN VTON 1.5 runs an open-source <strong>Multimodal Diffusion Transformer (MMDiT)</strong> that realistically drapes garments onto your portrait in pixel space. Because this web deployment is hosted on Antideploy cloud servers without a dedicated GPU, connect inference via one of the two methods below:
             </p>
-            <div className="pt-2 border-t border-foreground/15 flex flex-wrap gap-2 text-[10px]">
-              <span className="bg-surface-muted px-2 py-1">Local Server: http://127.0.0.1:8000</span>
-              <span className="bg-surface-muted px-2 py-1">Command: run_server.bat</span>
-              <span className="bg-surface-muted px-2 py-1">RTX GPU / CPU Accelerated</span>
+
+            <div className="grid gap-3 pt-1 sm:grid-cols-2">
+              {/* Option 1: Localhost Direct */}
+              <div className="border border-foreground/20 bg-surface-muted p-3 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-[10px] uppercase text-emerald-600 dark:text-emerald-400">
+                    METHOD 1: DIRECT LOCALHOST
+                  </span>
+                  <span className="text-[9px] bg-foreground/10 px-1 py-0.5">FASTEST</span>
+                </div>
+                <p className="text-[10px] text-foreground/70 font-sans">
+                  Your machine is running the local Python GPU microservice on port 8000. Open the local web app to run directly on your NVIDIA RTX 3050:
+                </p>
+                <a
+                  href="http://localhost:3000/try-on"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block w-full text-center border border-foreground bg-foreground px-3 py-2 font-mono text-[10px] uppercase tracking-wider text-background hover:opacity-90"
+                >
+                  OPEN LOCALHOST:3000/TRY-ON &rarr;
+                </a>
+              </div>
+
+              {/* Option 2: Cloud Tunnel Connection */}
+              <div className="border border-foreground/20 bg-surface-muted p-3 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-[10px] uppercase text-sky-600 dark:text-sky-400">
+                    METHOD 2: CONNECT TO CLOUD
+                  </span>
+                  <span className="text-[9px] bg-foreground/10 px-1 py-0.5">REMOTE</span>
+                </div>
+                <p className="text-[10px] text-foreground/70 font-sans">
+                  Link your local GPU to this cloud URL by running a tunnel, or paste your tunnel address:
+                </p>
+                <div className="bg-background/80 p-1.5 text-[9px] text-foreground/80 select-all border border-foreground/10">
+                  npx -y localtunnel --port 8000
+                </div>
+                <div className="flex gap-1">
+                  <input
+                    type="url"
+                    value={tunnelInput}
+                    onChange={(e) => setTunnelInput(e.target.value)}
+                    placeholder="https://crazy-kings-spend.loca.lt"
+                    className="flex-1 border border-foreground/30 bg-background px-2 py-1 text-[10px] font-mono text-foreground focus:outline-none"
+                  />
+                  <button
+                    disabled={testingConnection}
+                    onClick={async () => {
+                      setTestingConnection(true);
+                      const cleaned = tunnelInput.trim();
+                      const success = await checkHealth(cleaned);
+                      setTestingConnection(false);
+                      if (success) {
+                        setCustomEngineUrl(cleaned);
+                        localStorage.setItem("vton_custom_engine_url", cleaned);
+                        push({
+                          title: "GPU Engine Connected Successfully",
+                          description: `Linked to remote GPU microservice`,
+                          variant: "success",
+                        });
+                      } else {
+                        push({
+                          title: "Connection Failed",
+                          description: `Could not reach ${cleaned || "endpoint"}/health`,
+                          variant: "error",
+                        });
+                      }
+                    }}
+                    className="border border-foreground bg-foreground px-2 py-1 text-[9px] uppercase tracking-wider text-background hover:opacity-90 disabled:opacity-50"
+                  >
+                    {testingConnection ? "..." : "CONNECT"}
+                  </button>
+                </div>
+                {customEngineUrl && (
+                  <button
+                    onClick={() => {
+                      setCustomEngineUrl("");
+                      setTunnelInput("");
+                      localStorage.removeItem("vton_custom_engine_url");
+                      checkHealth("");
+                      push({ title: "Custom tunnel URL reset", variant: "info" });
+                    }}
+                    className="text-[9px] text-foreground/50 hover:underline"
+                  >
+                    [Reset to Default]
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         )}
